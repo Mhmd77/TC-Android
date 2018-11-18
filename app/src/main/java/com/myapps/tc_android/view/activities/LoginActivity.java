@@ -1,7 +1,9 @@
-package com.myapps.tc_android;
+package com.myapps.tc_android.view.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.myapps.tc_android.R;
 
 public class LoginActivity extends AppCompatActivity {
 
