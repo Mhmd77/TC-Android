@@ -2,22 +2,22 @@ package com.myapps.tc_android.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class LoginResponse {
+public class ApiResponse<T>{
     @SerializedName("status")
     private String status;
     @SerializedName("object")
-    private User user;
+    private T object;
 
-    public LoginResponse(String status, User user) {
+    public ApiResponse(String status, T user) {
         this.status = status;
-        this.user = user;
+        this.object = user;
     }
 
     public String getStatus() {
         return status;
     }
 
-    public User getUser() {
-        return user;
+    public T getObject() {
+        return object;
     }
 }

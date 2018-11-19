@@ -5,6 +5,7 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatEditText;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -13,7 +14,8 @@ import com.myapps.tc_android.R;
 import com.myapps.tc_android.controller.network.ApiService;
 import com.myapps.tc_android.controller.network.RetrofitClientInstance;
 import com.myapps.tc_android.model.LoginInfo;
-import com.myapps.tc_android.model.LoginResponse;
+import com.myapps.tc_android.model.ApiResponse;
+import com.myapps.tc_android.model.User;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,16 +47,17 @@ public class LoginActivity extends AppCompatActivity {
             case R.id.button_signin:
                 if (validate()) {
                     ApiService service = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
-                    Call<LoginResponse> call = service.loginUser(new LoginInfo(edittextsigninUsername.getText().toString(),
+                    Call<ApiResponse<User>> call = service.loginUser(new LoginInfo(edittextsigninUsername.getText().toString(),
                             edittextsigninPassword.getText().toString()));
-                    call.enqueue(new Callback<LoginResponse>() {
+                    call.enqueue(new Callback<ApiResponse<User>>() {
                         @Override
-                        public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                        public void onResponse(Call<ApiResponse<User>> call, Response<ApiResponse<User>> response) {
                             if (response.isSuccessful()) {
                                 Toast.makeText(LoginActivity.this, response.body().getStatus(), Toast.LENGTH_SHORT).show();
                                 if (response.body().getStatus().equals("OK")) {
-                                    if (/*response.body().getUser().getRole().equals("admin") && */checkboxSigninAdmin.isChecked()) {
+                                    if (response.body().getObject().getRole().equals("admin") && checkboxSigninAdmin.isChecked()) {
                                         //TODO Implement Admin
+                                        Log.i("TAAAG", "" + response.body().getObject().getName());
                                     } else {
                                         //TODO Implement Home Activity
 
@@ -66,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onFailure(Call<LoginResponse> call, Throwable t) {
+                        public void onFailure(Call<ApiResponse<User>> call, Throwable t) {
                             Toast.makeText(LoginActivity.this, "Failed", Toast.LENGTH_SHORT).show();
                         }
                     });
