@@ -34,6 +34,42 @@ public class User {
         this.role = role;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public int getIdentificationId() {
+        return identificationId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
     public class UserBuilder {
         private int id;
         private String name;
