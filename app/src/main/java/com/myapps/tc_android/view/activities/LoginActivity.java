@@ -29,16 +29,12 @@ public class LoginActivity extends AppCompatActivity {
     AppCompatEditText edittextsigninUsername;
     @BindView(R.id.edittext_signin_password)
     AppCompatEditText edittextsigninPassword;
-    @BindView(R.id.checkbox_signin_admin)
-    AppCompatCheckBox checkboxSigninAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        checkboxSigninAdmin.setTypeface(ResourcesCompat.getFont(LoginActivity.this, R.font.font_normal));
-
     }
 
     @OnClick({R.id.button_signin, R.id.button_signup})
@@ -55,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
                             if (response.isSuccessful()) {
                                 Toast.makeText(LoginActivity.this, response.body().getStatus(), Toast.LENGTH_SHORT).show();
                                 if (response.body().getStatus().equals("OK")) {
-                                    if (response.body().getObject().getRole().equals("admin") && checkboxSigninAdmin.isChecked()) {
+                                    if (response.body().getObject().getRole().equals("admin")) {
                                         //TODO Implement Admin
                                         Log.i("TAAAG", "" + response.body().getObject().getName());
                                     } else {
