@@ -19,8 +19,10 @@ public class User {
     private String email;
     @SerializedName("password")
     private String password;
+    @SerializedName("role")
+    private String role;
 
-    private User(int id, String name, String username, String lastName, int age, int identificationId, String email, String password) {
+    private User(int id, String name, String username, String lastName, int age, int identificationId, String email, String password, String role) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -29,6 +31,7 @@ public class User {
         this.identificationId = identificationId;
         this.email = email;
         this.password = password;
+        this.role = role;
     }
 
     public class UserBuilder {
@@ -40,6 +43,7 @@ public class User {
         private int identificationId;
         private String email;
         private String password;
+        private String role;
 
         public UserBuilder setId(int id) {
             this.id = id;
@@ -81,8 +85,13 @@ public class User {
             return this;
         }
 
+        public UserBuilder setRole(String role) {
+            this.role = role;
+            return this;
+        }
+
         public User createUser() {
-            return new User(id, name, username, lastName, age, identificationId, email, password);
+            return new User(id, name, username, lastName, age, identificationId, email, password, role);
         }
     }
 }
