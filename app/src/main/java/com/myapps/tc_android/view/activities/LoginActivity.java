@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.button_signup:
-                //TODO Implement SignUp Activity
+                startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
                 break;
         }
     }
