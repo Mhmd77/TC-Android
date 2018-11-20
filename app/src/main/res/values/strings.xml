@@ -1,8 +1,19 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Tc-Android</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="admin">Admin</string>
     <string name="create_new_account">Create New Account</string>
     <string name="login">Login</string>
+    <string name="delete" tools:ignore="ExtraTranslation">Delete</string>
+    <string name="update">Update</string>
+    <string name="price">Price</string>
+    <string name="kilometer">Kilometer</string>
+    <string name="factory">Factory</string>
+    <string name="car_name">Car Name</string>
+    <string name="add_car">Add Car</string>
+    <string name="update_car">Update Car</string>
+    <string name="is_automate">Automate</string>
+    <string name="color">Color</string>
+    <string name="year">Year</string>
 </resources>
