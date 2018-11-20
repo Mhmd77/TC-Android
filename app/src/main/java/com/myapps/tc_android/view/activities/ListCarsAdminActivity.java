@@ -57,7 +57,24 @@ public class ListCarsAdminActivity extends AppCompatActivity implements Callback
 
             @Override
             public void deleteOnClick(View view , final int position) {
-                //TODO
+                Call<ApiResponse<Object>> call = service.deleteCar(cars.get(position).getId());
+                call.enqueue(new Callback<ApiResponse<Object>>() {
+                    @Override
+                    public void onResponse(@NonNull Call<ApiResponse<Object>> call, @NonNull Response<ApiResponse<Object>> response) {
+                        if (response.isSuccessful()) {
+                            Log.i("Conncection", "Car " + cars.get(position).getId() + " deleted");
+                            updateList();
+                        } else {
+                            Log.e("Conncection", "Deleting Car Failed : " + response.message());
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<ApiResponse<Object>> call, @NonNull Throwable t) {
+                        Log.e("Conncection", "Deleting Car Failed : " + t.getMessage());
+                    }
+                });
 
             }
 

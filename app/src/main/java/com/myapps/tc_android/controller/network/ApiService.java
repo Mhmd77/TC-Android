@@ -9,8 +9,10 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface ApiService<C> {
 
@@ -20,5 +22,8 @@ public interface ApiService<C> {
 
     @GET("/api/v1/cars")
     Call<ApiResponse<List<Car>>> getAllCars();
+
+    @DELETE("/api/v1/cars/{id}")
+    Call<ApiResponse<Object>> deleteCar(@Path("id") int id);
 
 }
