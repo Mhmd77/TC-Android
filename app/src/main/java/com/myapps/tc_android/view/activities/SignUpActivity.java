@@ -8,8 +8,13 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.myapps.tc_android.R;
+import com.myapps.tc_android.controller.network.ApiService;
+import com.myapps.tc_android.controller.network.RetrofitClientInstance;
+import com.myapps.tc_android.model.ApiResponse;
+import com.myapps.tc_android.model.User;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,8 +22,12 @@ import java.util.regex.Pattern;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity implements Callback<ApiResponse<User>> {
 
     @BindView(R.id.edittext_signup_email)
     AppCompatEditText edittextSignupEmail;
@@ -45,7 +54,13 @@ public class SignUpActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.button_signup:
                 if (validate()) {
-
+                    User.UserBuilder builder = new User.UserBuilder();
+                    builder.setEmail(edittextSignupEmail.getText().toString())
+                            .setPassword(edittextSignupPassword.getText().toString())
+                            .setIdentificationId(edittextSignupId.getText().toString())
+                            .setUsername(edittextSignupUsername.getText().toString());
+                    Call<ApiResponse<User>> call = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class).signUpUser(builder.createUser());
+                    call.enqueue(this);
                 }
                 break;
             case R.id.button_signin:
@@ -101,5 +116,23 @@ public class SignUpActivity extends AppCompatActivity {
         if (view.requestFocus()) {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
+    }
+
+    @Override
+    public void onResponse(Call<ApiResponse<User>> call, Response<ApiResponse<User>> response) {
+        if (response.isSuccessful()) {
+            if (response.body().getStatus().equals("OK")) {
+                User user = response.body().getObject();
+            } else {
+                Toast.makeText(SignUpActivity.this, " " + response.body().getStatus(), Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(SignUpActivity.this, "Please Try Again", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onFailure(Call<ApiResponse<User>> call, Throwable t) {
+        Toast.makeText(SignUpActivity.this, "Failed", Toast.LENGTH_SHORT).show();
     }
 }

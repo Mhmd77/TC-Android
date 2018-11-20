@@ -29,4 +29,7 @@ public interface ApiService<C> {
     @POST("/api/v1/cars")
     Call<Car> addCar(@Body Car car);
 
+    @POST("/api/v1/auth/signup")
+    Call<ApiResponse<User>> signUpUser(@Body User user);
+
 }
