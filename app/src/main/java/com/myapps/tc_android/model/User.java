@@ -14,7 +14,7 @@ public class User {
     @SerializedName("age")
     private int age;
     @SerializedName("identificationId")
-    private int identificationId;
+    private String identificationId;
     @SerializedName("email")
     private String email;
     @SerializedName("password")
@@ -22,7 +22,7 @@ public class User {
     @SerializedName("role")
     private String role;
 
-    private User(int id, String name, String username, String lastName, int age, int identificationId, String email, String password, String role) {
+    private User(int id, String name, String username, String lastName, int age, String identificationId, String email, String password, String role) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -54,7 +54,7 @@ public class User {
         return age;
     }
 
-    public int getIdentificationId() {
+    public String getIdentificationId() {
         return identificationId;
     }
 
@@ -76,7 +76,7 @@ public class User {
         private String username;
         private String lastName;
         private int age;
-        private int identificationId;
+        private String identificationId;
         private String email;
         private String password;
         private String role;
@@ -106,7 +106,7 @@ public class User {
             return this;
         }
 
-        public UserBuilder setIdentificationId(int identificationId) {
+        public UserBuilder setIdentificationId(String identificationId) {
             this.identificationId = identificationId;
             return this;
         }
