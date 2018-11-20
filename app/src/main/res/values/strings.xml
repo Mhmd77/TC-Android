@@ -5,4 +5,8 @@
     <string name="admin">Admin</string>
     <string name="create_new_account">Create New Account</string>
     <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="identification_id">ID</string>
+    <string name="have_account">LOG IN TO ACCOUNT</string>
+    <string name="signup">Sign Up</string>
 </resources>
