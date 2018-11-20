@@ -70,7 +70,7 @@ public class User {
         return role;
     }
 
-    public class UserBuilder {
+    public static class UserBuilder {
         private int id;
         private String name;
         private String username;
