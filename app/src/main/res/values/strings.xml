@@ -16,4 +16,8 @@
     <string name="is_automate">Automate</string>
     <string name="color">Color</string>
     <string name="year">Year</string>
+    <string name="email">Email</string>
+    <string name="identification_id">ID</string>
+    <string name="have_account">LOG IN TO ACCOUNT</string>
+    <string name="signup">Sign Up</string>
 </resources>
