@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(LoginActivity.this, response.body().getStatus(), Toast.LENGTH_SHORT).show();
                                 if (response.body().getStatus().equals("OK")) {
                                     if (response.body().getObject().getRole().equals("admin")) {
-                                        //TODO Implement Admin
+                                        startActivity(new Intent(LoginActivity.this,ListCarsAdminActivity.class));
                                         Log.i("TAAAG", "" + response.body().getObject().getName());
                                     } else {
                                         startActivity(new Intent(LoginActivity.this,ListCarsActivity.class));
