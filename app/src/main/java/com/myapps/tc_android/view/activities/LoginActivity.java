@@ -1,5 +1,6 @@
 package com.myapps.tc_android.view.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -72,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.button_signup:
-                //TODO Implement SignUp Activity
+                startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
                 break;
         }
     }
