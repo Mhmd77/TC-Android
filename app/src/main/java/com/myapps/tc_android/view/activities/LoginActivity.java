@@ -1,5 +1,6 @@
 package com.myapps.tc_android.view.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -55,8 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                                         //TODO Implement Admin
                                         Log.i("TAAAG", "" + response.body().getObject().getName());
                                     } else {
-                                        //TODO Implement Home Activity
-
+                                        startActivity(new Intent(LoginActivity.this,ListCarsActivity.class));
                                     }
                                 }
                             } else {
