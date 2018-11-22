@@ -12,6 +12,7 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface ApiService<C> {
@@ -25,5 +26,8 @@ public interface ApiService<C> {
 
     @DELETE("/api/v1/cars/{id}")
     Call<ApiResponse<Object>> deleteCar(@Path("id") int id);
+
+    @PUT("/api/v1/cars/update/{id}")
+    Call<Car> updateCar(@Body Car car,@Path("id") int id);
 
 }
