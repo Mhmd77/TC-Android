@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activities.UpdateCarAdminActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/editText_updateCar_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/font_normal"
+                android:hint="@string/car_name" />
+
+            <EditText
+                android:id="@+id/editText_updateCar_factory"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/font_normal"
+                android:hint="@string/factory" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/editText_updateCar_year"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/font_normal"
+            android:inputType="number"
+            android:hint="@string/year" />
+
+        <EditText
+            android:id="@+id/editText_updateCar_kilometer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/font_normal"
+            android:inputType="number"
+            android:hint="@string/kilometer" />
+
+        <EditText
+            android:id="@+id/editText_updateCar_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/font_normal"
+            android:hint="@string/color" />
+
+        <CheckBox
+            android:id="@+id/checkbox_updateCar_automate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/font_normal"
+            android:hint="@string/is_automate" />
+
+        <EditText
+            android:id="@+id/editText_updateCar_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/font_normal"
+            android:inputType="number"
+            android:hint="@string/price" />
+
+        <Button
+            android:id="@+id/button_updateCar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/update_car" />
+    </LinearLayout>
+</ScrollView>

@@ -19,7 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.activities.ListCarsActivity" />
-        <activity android:name=".view.activities.ListCarsAdminActivity"></activity>
+        <activity android:name=".view.activities.ListCarsAdminActivity" />
+        <activity android:name=".view.activities.UpdateCarAdminActivity"></activity>
     </application>
 
 </manifest>
