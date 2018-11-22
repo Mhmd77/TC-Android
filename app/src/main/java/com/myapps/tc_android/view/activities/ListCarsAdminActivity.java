@@ -89,6 +89,11 @@ public class ListCarsAdminActivity extends AppCompatActivity implements Callback
 
             }
 
+            @Override
+            public void carProfileOnClick(View view, int position) {
+                //TODO
+            }
+
 
         });
         recyclerViewMainCars.setLayoutManager(new LinearLayoutManager(this));

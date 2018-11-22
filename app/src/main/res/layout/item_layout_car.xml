@@ -9,11 +9,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <ImageView
+        <Button
             android:layout_width="match_parent"
+            android:id="@+id/button_car_profile"
             android:layout_height="150dp"
             android:scaleType="fitXY"
-            android:src="@drawable/sample" />
+            android:background="@drawable/sample"/>
 
         <TextView
             android:id="@+id/textview_car_name"
