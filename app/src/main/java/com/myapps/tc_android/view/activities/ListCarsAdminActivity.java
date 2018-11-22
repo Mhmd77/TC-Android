@@ -62,17 +62,18 @@ public class ListCarsAdminActivity extends AppCompatActivity implements Callback
                     @Override
                     public void onResponse(@NonNull Call<ApiResponse<Object>> call, @NonNull Response<ApiResponse<Object>> response) {
                         if (response.isSuccessful()) {
-                            Log.i("Conncection", "Car " + cars.get(position).getId() + " deleted");
+                            Toast.makeText(ListCarsAdminActivity.this, "Car : " + cars.get(position).getName() + " deleted", Toast.LENGTH_SHORT).show();
+                            Log.i("Connection", "Car " + cars.get(position).getId() + " deleted");
                             updateList();
                         } else {
-                            Log.e("Conncection", "Deleting Car Failed : " + response.message());
+                            Log.e("Connection", "Deleting Car Failed : " + response.message());
                         }
 
                     }
 
                     @Override
                     public void onFailure(@NonNull Call<ApiResponse<Object>> call, @NonNull Throwable t) {
-                        Log.e("Conncection", "Deleting Car Failed : " + t.getMessage());
+                        Log.e("Connection", "Deleting Car Failed : " + t.getMessage());
                     }
                 });
 
