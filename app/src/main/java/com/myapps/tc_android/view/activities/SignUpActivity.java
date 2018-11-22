@@ -137,6 +137,6 @@ public class SignUpActivity extends AppCompatActivity implements Callback<ApiRes
 
     @Override
     public void onFailure(Call<ApiResponse<User>> call, Throwable t) {
-//        Toast.makeText(SignUpActivity.this, "Signup failed!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(SignUpActivity.this, "Signup failed!", Toast.LENGTH_SHORT).show();
     }
 }
