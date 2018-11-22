@@ -1,10 +1,8 @@
 package com.myapps.tc_android.view.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -17,19 +15,16 @@ import com.myapps.tc_android.model.ApiResponse;
 import com.myapps.tc_android.model.SignUpInfo;
 import com.myapps.tc_android.model.User;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class SignUpActivity extends AppCompatActivity implements Callback<ApiResponse<User>> {
 
+    private static final int MAXIMUM_INPUT_LENGTH = 20;
     @BindView(R.id.edittext_signup_email)
     AppCompatEditText edittextSignupEmail;
     @BindView(R.id.edittext_signup_username)
@@ -85,8 +80,12 @@ public class SignUpActivity extends AppCompatActivity implements Callback<ApiRes
         } else {
             edittextSignupEmail.setError(null);
         }
-        if (password.isEmpty()) {
-            edittextSignupPassword.setError("Password is empty");
+        if (password.length() < 5) {
+            edittextSignupPassword.setError("Password is less than 5 character");
+            requestFocus(edittextSignupPassword);
+            valid = false;
+        } else if (password.length() > MAXIMUM_INPUT_LENGTH) {
+            edittextSignupPassword.setError("Password is too long");
             requestFocus(edittextSignupPassword);
             valid = false;
         } else {
@@ -96,12 +95,20 @@ public class SignUpActivity extends AppCompatActivity implements Callback<ApiRes
             edittextSignupUsername.setError("Username is empty");
             requestFocus(edittextSignupUsername);
             valid = false;
+        }else if (username.length() > MAXIMUM_INPUT_LENGTH) {
+            edittextSignupUsername.setError("Username is too long");
+            requestFocus(edittextSignupPassword);
+            valid = false;
         } else {
             edittextSignupUsername.setError(null);
         }
-        if (id.isEmpty()) {
-            edittextSignupId.setError("ID is empty");
+        if (id.length() < 5) {
+            edittextSignupId.setError("ID is less than 5 digit");
             requestFocus(edittextSignupId);
+            valid = false;
+        }else if (id.length() > 10) {
+            edittextSignupId.setError("ID is too long");
+            requestFocus(edittextSignupPassword);
             valid = false;
         } else {
             edittextSignupId.setError(null);
@@ -130,6 +137,6 @@ public class SignUpActivity extends AppCompatActivity implements Callback<ApiRes
 
     @Override
     public void onFailure(Call<ApiResponse<User>> call, Throwable t) {
-//        Toast.makeText(SignUpActivity.this, "" + call., Toast.LENGTH_SHORT).show();
+//        Toast.makeText(SignUpActivity.this, "Signup failed!", Toast.LENGTH_SHORT).show();
     }
 }
