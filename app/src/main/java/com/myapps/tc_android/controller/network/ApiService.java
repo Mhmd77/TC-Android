@@ -26,4 +26,7 @@ public interface ApiService<C> {
     @DELETE("/api/v1/cars/{id}")
     Call<ApiResponse<Object>> deleteCar(@Path("id") int id);
 
+    @POST("/api/v1/cars")
+    Call<Car> addCar(@Body Car car);
+
 }
