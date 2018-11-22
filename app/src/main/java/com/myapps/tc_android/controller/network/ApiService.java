@@ -3,6 +3,7 @@ package com.myapps.tc_android.controller.network;
 import com.myapps.tc_android.model.Car;
 import com.myapps.tc_android.model.LoginInfo;
 import com.myapps.tc_android.model.ApiResponse;
+import com.myapps.tc_android.model.SignUpInfo;
 import com.myapps.tc_android.model.User;
 
 import java.util.List;
@@ -30,6 +31,6 @@ public interface ApiService<C> {
     Call<Car> addCar(@Body Car car);
 
     @POST("/api/v1/auth/signup")
-    Call<ApiResponse<User>> signUpUser(@Body User user);
+    Call<ApiResponse<User>> signUpUser(@Body SignUpInfo user);
 
 }
