@@ -97,7 +97,8 @@ public class ListCarsAdminActivity extends AppCompatActivity implements Callback
 
     @OnClick(R.id.actionButton_main_add_car)
     public void onViewClicked() {
-        //Todo
+        Intent intent = new Intent(ListCarsAdminActivity.this, AddCarAdminActivity.class);
+        startActivity(intent);
 
     }
 

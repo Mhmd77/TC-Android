@@ -21,6 +21,8 @@
         <activity android:name=".view.activities.ListCarsActivity" />
         <activity android:name=".view.activities.ListCarsAdminActivity" />
         <activity android:name=".view.activities.UpdateCarAdminActivity"></activity>
+        <activity android:name=".view.activities.AddCarAdminActivity" />
+        <activity android:name=".view.activities.SignUpActivity"/>
     </application>
 
 </manifest>
