@@ -2,6 +2,7 @@ package com.myapps.tc_android.controller.network;
 
 import com.myapps.tc_android.model.LoginInfo;
 import com.myapps.tc_android.model.ApiResponse;
+import com.myapps.tc_android.model.SignUpInfo;
 import com.myapps.tc_android.model.User;
 
 import retrofit2.Call;
@@ -15,6 +16,6 @@ public interface ApiService {
     Call<ApiResponse<User>> loginUser(@Body LoginInfo user);
 
     @POST("/api/v1/auth/signup")
-    Call<ApiResponse<User>> signUpUser(@Body User user);
+    Call<ApiResponse<User>> signUpUser(@Body SignUpInfo user);
 
 }

@@ -14,6 +14,7 @@ import com.myapps.tc_android.R;
 import com.myapps.tc_android.controller.network.ApiService;
 import com.myapps.tc_android.controller.network.RetrofitClientInstance;
 import com.myapps.tc_android.model.ApiResponse;
+import com.myapps.tc_android.model.SignUpInfo;
 import com.myapps.tc_android.model.User;
 
 import java.util.regex.Matcher;
@@ -54,12 +55,9 @@ public class SignUpActivity extends AppCompatActivity implements Callback<ApiRes
         switch (view.getId()) {
             case R.id.button_signup:
                 if (validate()) {
-                    User.UserBuilder builder = new User.UserBuilder();
-                    builder.setEmail(edittextSignupEmail.getText().toString())
-                            .setPassword(edittextSignupPassword.getText().toString())
-                            .setIdentificationId(edittextSignupId.getText().toString())
-                            .setUsername(edittextSignupUsername.getText().toString());
-                    Call<ApiResponse<User>> call = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class).signUpUser(builder.createUser());
+                    SignUpInfo info = new SignUpInfo(edittextSignupUsername.getText().toString(), edittextSignupPassword.getText().toString(),
+                            edittextSignupId.getText().toString(), edittextSignupEmail.getText().toString());
+                    Call<ApiResponse<User>> call = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class).signUpUser(info);
                     call.enqueue(this);
                 }
                 break;
@@ -123,9 +121,8 @@ public class SignUpActivity extends AppCompatActivity implements Callback<ApiRes
         if (response.isSuccessful()) {
             if (response.body().getStatus().equals("OK")) {
                 User user = response.body().getObject();
-            } else {
-                Toast.makeText(SignUpActivity.this, " " + response.body().getStatus(), Toast.LENGTH_SHORT).show();
             }
+            Toast.makeText(SignUpActivity.this, " " + response.body().getStatus(), Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(SignUpActivity.this, "Please Try Again", Toast.LENGTH_SHORT).show();
         }
@@ -133,6 +130,6 @@ public class SignUpActivity extends AppCompatActivity implements Callback<ApiRes
 
     @Override
     public void onFailure(Call<ApiResponse<User>> call, Throwable t) {
-        Toast.makeText(SignUpActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(SignUpActivity.this, "" + call., Toast.LENGTH_SHORT).show();
     }
 }
