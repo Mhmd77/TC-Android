@@ -59,8 +59,9 @@ public class ListCarsActivity extends AppCompatActivity implements Callback<ApiR
                 //TODO
             }
 
+
             @Override
-            public void carProfileOnClick(View view, int position) {
+            public void cartOnClick(View view, int position) {
                 Car car =  cars.get(position);
                 Intent intent = new Intent(ListCarsActivity.this,UpdateCarAdminActivity.class);
                 intent.putExtra("Car",car);

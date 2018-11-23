@@ -1,6 +1,7 @@
 package com.myapps.tc_android.controller.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +21,8 @@ import butterknife.OnClick;
 public class CarsRecyclerView extends RecyclerView.Adapter<CarsRecyclerView.ViewHolder> {
 
 
-
+    @BindView(R.id.cart_onclick)
+    CardView cartOnclick;
     private Context context;
     private List<Car> list;
     private OnItemClickListener onItemClickListener;
@@ -38,10 +40,6 @@ public class CarsRecyclerView extends RecyclerView.Adapter<CarsRecyclerView.View
         this.list = list;
         this.onItemClickListener = null;
         isAdmin = false;
-    }
-
-    @OnClick(R.id.button_car_profile)
-    public void onViewClicked() {
     }
 
 
@@ -65,7 +63,6 @@ public class CarsRecyclerView extends RecyclerView.Adapter<CarsRecyclerView.View
             super(itemView);
             ButterKnife.bind(this, itemView);
 
-
             buttonCarUpdate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -78,10 +75,10 @@ public class CarsRecyclerView extends RecyclerView.Adapter<CarsRecyclerView.View
                     onItemClickListener.deleteOnClick(v, getAdapterPosition());
                 }
             });
-            buttonCarProfile.setOnClickListener(new View.OnClickListener() {
+            cartOnclick.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onItemClickListener.carProfileOnClick(v, getAdapterPosition());
+                    onItemClickListener.cartOnClick(v, getAdapterPosition());
                 }
             });
 
@@ -130,7 +127,7 @@ public class CarsRecyclerView extends RecyclerView.Adapter<CarsRecyclerView.View
 
         void updateOnClick(View view, int position);
 
-        void carProfileOnClick(View view,int position);
+        void cartOnClick(View view, int position);
 
 
     }
