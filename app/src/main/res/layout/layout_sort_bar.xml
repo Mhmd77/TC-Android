@@ -1,0 +1,38 @@
+<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/radioGroupSortItems"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_login_edittext"
+    android:orientation="horizontal">
+
+    <RadioButton
+        android:id="@+id/radioButtonSortAscending"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:checked="true"
+        android:fontFamily="@font/font_normal"
+        android:gravity="center"
+        android:text="@string/ascending" />
+
+    <RadioButton
+        android:id="@+id/radioButtonSortDescending"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:checked="false"
+        android:fontFamily="@font/font_normal"
+        android:gravity="center"
+        android:text="@string/descending" />
+    <Button
+        android:id="@+id/buttonSortCars"
+        android:layout_width="wrap_content"
+        android:background="@drawable/background_button_red_color"
+        android:text="Sort"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="#FFF"
+        android:fontFamily="@font/font_normal"
+        android:layout_height="wrap_content" />
+</RadioGroup>
