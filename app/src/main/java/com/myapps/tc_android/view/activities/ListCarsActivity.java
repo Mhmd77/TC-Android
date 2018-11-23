@@ -47,15 +47,15 @@ public class ListCarsActivity extends AppCompatActivity implements Callback<ApiR
     Toolbar toolbar;
     @BindView(R.id.actionButton_main_add_car)
     FloatingActionButton actionButtonMainAddCar;
-    RadioGroup radioGroupSortItems;
     private CarsRecyclerView adapter;
     private ApiService service;
     @BindView(R.id.sortbar)
     View sortBar;
+    private String field;
+    private int ascending = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_cars);
         ButterKnife.bind(this);
@@ -65,8 +65,20 @@ public class ListCarsActivity extends AppCompatActivity implements Callback<ApiR
     }
 
     private void initSortBar() {
-        radioGroupSortItems = findViewById(R.id.radioGroupSortItems);
         Utils.collapse(sortBar);
+        ((RadioGroup) sortBar).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.radioButtonSortDescending:
+                        ascending = 0;
+                        break;
+                    case R.id.radioButtonSortAscending:
+                        ascending = 1;
+                        break;
+                }
+            }
+        });
     }
 
     private void updateList() {
@@ -105,12 +117,34 @@ public class ListCarsActivity extends AppCompatActivity implements Callback<ApiR
         switch (view.getId()) {
             case R.id.buttonSortYear:
                 Utils.expand(sortBar);
+                field = "year";
                 break;
             case R.id.buttonSortCost:
                 Utils.expand(sortBar);
+                field = "price";
                 break;
             case R.id.buttonSortCars:
-                Utils.collapse(sortBar);
+                Call<ApiResponse<List<Car>>> call = service.sortCars(field, ascending);
+                call.enqueue(new Callback<ApiResponse<List<Car>>>() {
+                    @Override
+                    public void onResponse(Call<ApiResponse<List<Car>>> call, Response<ApiResponse<List<Car>>> response) {
+                        if (response.isSuccessful()) {
+                            if (response.body().getStatus().equals("OK")) {
+                                adapter.setList(response.body().getObject());
+                                Utils.collapse(sortBar);
+                            } else {
+                                Log.e("Sort Error", " status : " + response.body().getStatus());
+                            }
+                        } else {
+                            Log.e("Sort Error", " error code: " + response.code());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ApiResponse<List<Car>>> call, Throwable t) {
+                        Toast.makeText(ListCarsActivity.this, "Something went wrong. please try again!", Toast.LENGTH_SHORT).show();
+                    }
+                });
                 break;
         }
     }

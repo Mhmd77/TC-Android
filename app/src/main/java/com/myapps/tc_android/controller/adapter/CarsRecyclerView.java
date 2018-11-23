@@ -17,7 +17,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CarsRecyclerView extends  RecyclerView.Adapter<CarsRecyclerView.ViewHolder> {
+public class CarsRecyclerView extends RecyclerView.Adapter<CarsRecyclerView.ViewHolder> {
 
 
     private Context context;
@@ -39,6 +39,11 @@ public class CarsRecyclerView extends  RecyclerView.Adapter<CarsRecyclerView.Vie
         isAdmin = false;
     }
 
+    public void setList(List<Car> list) {
+        this.list.clear();
+        this.list.addAll(list);
+        notifyDataSetChanged();
+    }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.textview_car_name)
@@ -114,8 +119,6 @@ public class CarsRecyclerView extends  RecyclerView.Adapter<CarsRecyclerView.Vie
         void deleteOnClick(View view, int position);
 
         void updateOnClick(View view, int position);
-
-
     }
 
 }

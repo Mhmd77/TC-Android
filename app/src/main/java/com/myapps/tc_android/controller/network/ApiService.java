@@ -29,7 +29,7 @@ public interface ApiService<C> {
     Call<ApiResponse<Object>> deleteCar(@Path("id") int id);
 
     @PUT("/api/v1/cars/{id}")
-    Call<Car> updateCar(@Body Car car,@Path("id") int id);
+    Call<Car> updateCar(@Body Car car, @Path("id") int id);
 
     @POST("/api/v1/cars")
     Call<Car> addCar(@Body Car car);
@@ -37,4 +37,6 @@ public interface ApiService<C> {
     @POST("/api/v1/auth/signup")
     Call<ApiResponse<User>> signUpUser(@Body SignUpInfo user);
 
+    @GET("/api/v1/sort/cars/{field}/{ascending}")
+    Call<ApiResponse<List<Car>>> sortCars(@Path("field") String field, @Path("ascending") int ascending);
 }
