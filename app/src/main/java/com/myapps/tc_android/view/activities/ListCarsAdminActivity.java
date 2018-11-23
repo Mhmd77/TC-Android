@@ -90,6 +90,16 @@ public class ListCarsAdminActivity extends AppCompatActivity implements Callback
             }
 
 
+
+            @Override
+            public void cartOnClick(View view, int position) {
+                Car car =  cars.get(position);
+                Intent intent = new Intent(ListCarsAdminActivity.this,CarProfileActivity.class);
+                intent.putExtra("Car",car);
+                startActivity(intent);
+            }
+
+
         });
         recyclerViewMainCars.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewMainCars.setAdapter(adapter);

@@ -1,6 +1,7 @@
 package com.myapps.tc_android.controller.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,15 +12,17 @@ import android.widget.TextView;
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.model.Car;
 
-
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class CarsRecyclerView extends RecyclerView.Adapter<CarsRecyclerView.ViewHolder> {
 
 
+    @BindView(R.id.cart_onclick)
+    CardView cartOnclick;
     private Context context;
     private List<Car> list;
     private OnItemClickListener onItemClickListener;
@@ -58,11 +61,12 @@ public class CarsRecyclerView extends RecyclerView.Adapter<CarsRecyclerView.View
         Button buttonCarDelete;
         @BindView(R.id.button_car_update)
         Button buttonCarUpdate;
+        @BindView(R.id.button_car_profile)
+        Button buttonCarProfile;
 
         ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-
 
             buttonCarUpdate.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -76,6 +80,13 @@ public class CarsRecyclerView extends RecyclerView.Adapter<CarsRecyclerView.View
                     onItemClickListener.deleteOnClick(v, getAdapterPosition());
                 }
             });
+            cartOnclick.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListener.cartOnClick(v, getAdapterPosition());
+                }
+            });
+
 
         }
     }
@@ -99,6 +110,7 @@ public class CarsRecyclerView extends RecyclerView.Adapter<CarsRecyclerView.View
         holder.textviewCarFactory.setText(item.getFactory());
         holder.textviewCarKilometer.setText(String.valueOf(item.getKilometer()));
         holder.textviewCarPrice.setText(String.valueOf(item.getPrice()));
+        holder.buttonCarProfile.setVisibility(View.VISIBLE);
         if (!isAdmin) {
             holder.buttonCarDelete.setVisibility(View.GONE);
             holder.buttonCarUpdate.setVisibility(View.GONE);
@@ -119,6 +131,10 @@ public class CarsRecyclerView extends RecyclerView.Adapter<CarsRecyclerView.View
         void deleteOnClick(View view, int position);
 
         void updateOnClick(View view, int position);
+
+        void cartOnClick(View view, int position);
+
+
     }
 
 }

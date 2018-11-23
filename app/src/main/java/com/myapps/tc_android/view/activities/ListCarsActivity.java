@@ -1,6 +1,7 @@
 package com.myapps.tc_android.view.activities;
 
 import android.os.Bundle;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.view.View;
 import android.widget.Toast;
 
 import com.github.ybq.android.spinkit.SpinKitView;
@@ -98,7 +100,26 @@ public class ListCarsActivity extends AppCompatActivity implements Callback<ApiR
     }
 
     private void generateDataList(final List<Car> cars) {
-        adapter = new CarsRecyclerView(this, cars);
+        adapter = new CarsRecyclerView(this, cars,new CarsRecyclerView.OnItemClickListener(){
+            @Override
+            public void deleteOnClick(View view, int position) {
+                //TODO
+            }
+
+            @Override
+            public void updateOnClick(View view, int position) {
+                //TODO
+            }
+
+
+            @Override
+            public void cartOnClick(View view, int position) {
+                Car car =  cars.get(position);
+                Intent intent = new Intent(ListCarsActivity.this,UpdateCarAdminActivity.class);
+                intent.putExtra("Car",car);
+                startActivity(intent);
+            }
+        });
         recyclerViewMainCars.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewMainCars.setAdapter(adapter);
     }
