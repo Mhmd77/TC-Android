@@ -1,5 +1,6 @@
 package com.myapps.tc_android.view.activities;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -60,7 +61,10 @@ public class ListCarsActivity extends AppCompatActivity implements Callback<ApiR
 
             @Override
             public void carProfileOnClick(View view, int position) {
-                //TODO
+                Car car =  cars.get(position);
+                Intent intent = new Intent(ListCarsActivity.this,UpdateCarAdminActivity.class);
+                intent.putExtra("Car",car);
+                startActivity(intent);
             }
         });
         recyclerViewMainCars.setLayoutManager(new LinearLayoutManager(this));
