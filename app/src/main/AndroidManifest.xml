@@ -25,6 +25,7 @@
         <activity android:name=".view.activities.SignUpActivity" />
         <activity android:name=".view.activities.CarProfileActivity" />
         <activity android:name=".view.activities.PhotoActivity" />
+        <activity android:name=".view.activities.AddCarUserActivity"></activity>
     </application>
 
 </manifest>

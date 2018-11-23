@@ -1,7 +1,7 @@
 package com.myapps.tc_android.view.activities;
 
-import android.os.Bundle;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.view.View;
 import android.widget.Toast;
 
 import com.github.ybq.android.spinkit.SpinKitView;
@@ -100,7 +99,7 @@ public class ListCarsActivity extends AppCompatActivity implements Callback<ApiR
     }
 
     private void generateDataList(final List<Car> cars) {
-        adapter = new CarsRecyclerView(this, cars,new CarsRecyclerView.OnItemClickListener(){
+        adapter = new CarsRecyclerView(this, cars, new CarsRecyclerView.OnItemClickListener() {
             @Override
             public void deleteOnClick(View view, int position) {
                 //TODO
@@ -114,9 +113,9 @@ public class ListCarsActivity extends AppCompatActivity implements Callback<ApiR
 
             @Override
             public void cartOnClick(View view, int position) {
-                Car car =  cars.get(position);
-                Intent intent = new Intent(ListCarsActivity.this,UpdateCarAdminActivity.class);
-                intent.putExtra("Car",car);
+                Car car = cars.get(position);
+                Intent intent = new Intent(ListCarsActivity.this, UpdateCarAdminActivity.class);
+                intent.putExtra("Car", car);
                 startActivity(intent);
             }
         });
@@ -184,4 +183,8 @@ public class ListCarsActivity extends AppCompatActivity implements Callback<ApiR
     }
 
 
+    @OnClick(R.id.actionButton_main_add_car)
+    public void onViewClicked() {
+        startActivity(new Intent(ListCarsActivity.this,AddCarAdminActivity.class));
+    }
 }
