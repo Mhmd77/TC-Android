@@ -20,4 +20,5 @@
     <string name="identification_id">ID</string>
     <string name="have_account">LOG IN TO ACCOUNT</string>
     <string name="signup">Sign Up</string>
+    <string name="photos">Photos</string>
 </resources>
