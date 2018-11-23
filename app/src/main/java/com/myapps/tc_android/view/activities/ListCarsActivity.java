@@ -1,17 +1,24 @@
 package com.myapps.tc_android.view.activities;
 
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.myapps.tc_android.R;
+import com.myapps.tc_android.controller.Utils;
+import com.myapps.tc_android.controller.adapter.CarsRecyclerView;
 import com.myapps.tc_android.controller.network.ApiService;
 import com.myapps.tc_android.controller.network.RetrofitClientInstance;
-import com.myapps.tc_android.controller.adapter.CarsRecyclerView;
 import com.myapps.tc_android.model.ApiResponse;
 import com.myapps.tc_android.model.Car;
 
@@ -19,6 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,17 +35,38 @@ public class ListCarsActivity extends AppCompatActivity implements Callback<ApiR
 
     @BindView(R.id.recyclerView_main_cars)
     RecyclerView recyclerViewMainCars;
+    @BindView(R.id.radioButtonSortAscending)
+    RadioButton radioButtonSortAscending;
+    @BindView(R.id.radioButtonSortDescending)
+    RadioButton radioButtonSortDescending;
+    @BindView(R.id.buttonSortYear)
+    Button buttonSortYear;
+    @BindView(R.id.buttonSortCost)
+    Button buttonSortCost;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.actionButton_main_add_car)
+    FloatingActionButton actionButtonMainAddCar;
+    RadioGroup radioGroupSortItems;
     private CarsRecyclerView adapter;
     private ApiService service;
+    @BindView(R.id.sortbar)
+    View sortBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_cars);
         ButterKnife.bind(this);
-
         service = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
         updateList();
+        initSortBar();
+    }
+
+    private void initSortBar() {
+        radioGroupSortItems = findViewById(R.id.radioGroupSortItems);
+        Utils.collapse(sortBar);
     }
 
     private void updateList() {
@@ -70,4 +99,21 @@ public class ListCarsActivity extends AppCompatActivity implements Callback<ApiR
         super.onResume();
         updateList();
     }
+
+    @OnClick({R.id.buttonSortYear, R.id.buttonSortCost, R.id.buttonSortCars})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.buttonSortYear:
+                Utils.expand(sortBar);
+                break;
+            case R.id.buttonSortCost:
+                Utils.expand(sortBar);
+                break;
+            case R.id.buttonSortCars:
+                Utils.collapse(sortBar);
+                break;
+        }
+    }
+
+
 }
