@@ -10,9 +10,9 @@
         android:id="@+id/sortbar"
         layout="@layout/layout_sort_bar"
         android:layout_width="match_parent"
-        android:layout_centerInParent="true"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar" />
+        android:layout_below="@id/toolbar"
+        android:layout_centerInParent="true" />
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -71,5 +71,15 @@
         android:layout_margin="16dp"
         android:src="@drawable/ic_add_white_24dp"
         app:fabSize="normal" />
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:id="@+id/spinnerLoading"
+        style="@style/SpinKitView.Large.Circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:SpinKit_Color="@color/colorAccent" />
 
 </RelativeLayout>

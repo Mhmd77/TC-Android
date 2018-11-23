@@ -14,6 +14,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.github.ybq.android.spinkit.SpinKitView;
+import com.github.ybq.android.spinkit.sprite.Sprite;
+import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.controller.Utils;
 import com.myapps.tc_android.controller.adapter.CarsRecyclerView;
@@ -47,6 +50,8 @@ public class ListCarsActivity extends AppCompatActivity implements Callback<ApiR
     Toolbar toolbar;
     @BindView(R.id.actionButton_main_add_car)
     FloatingActionButton actionButtonMainAddCar;
+    @BindView(R.id.spinnerLoading)
+    SpinKitView spinnerLoading;
     private CarsRecyclerView adapter;
     private ApiService service;
     @BindView(R.id.sortbar)
@@ -62,6 +67,12 @@ public class ListCarsActivity extends AppCompatActivity implements Callback<ApiR
         service = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
         updateList();
         initSortBar();
+        initSpinner();
+    }
+
+    private void initSpinner() {
+        Sprite doubleBounce = new DoubleBounce();
+        spinnerLoading.setIndeterminateDrawable(doubleBounce);
     }
 
     private void initSortBar() {
@@ -124,10 +135,12 @@ public class ListCarsActivity extends AppCompatActivity implements Callback<ApiR
                 field = "price";
                 break;
             case R.id.buttonSortCars:
+                spinnerLoading.setVisibility(View.VISIBLE);
                 Call<ApiResponse<List<Car>>> call = service.sortCars(field, ascending);
                 call.enqueue(new Callback<ApiResponse<List<Car>>>() {
                     @Override
                     public void onResponse(Call<ApiResponse<List<Car>>> call, Response<ApiResponse<List<Car>>> response) {
+                        spinnerLoading.setVisibility(View.GONE);
                         if (response.isSuccessful()) {
                             if (response.body().getStatus().equals("OK")) {
                                 adapter.setList(response.body().getObject());
