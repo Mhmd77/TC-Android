@@ -16,6 +16,7 @@ import com.myapps.tc_android.R;
 import com.myapps.tc_android.controller.CarBuilder;
 import com.myapps.tc_android.controller.network.ApiService;
 import com.myapps.tc_android.controller.network.RetrofitClientInstance;
+import com.myapps.tc_android.model.ApiResponse;
 import com.myapps.tc_android.model.Car;
 
 import butterknife.BindView;
@@ -25,7 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddCarUserActivity extends AppCompatActivity implements Callback<Car> {
+public class AddCarUserActivity extends AppCompatActivity implements Callback<ApiResponse<Car>> {
 
     @BindView(R.id.editText_addCar_name)
     EditText editTextAddCarName;
@@ -71,7 +72,7 @@ public class AddCarUserActivity extends AppCompatActivity implements Callback<Ca
         String name = editTextAddCarName.getText().toString();
         String color = editTextAddCarColor.getText().toString();
         String factory = editTextAddCarFactory.getText().toString();
-        String kilometer =editTextAddCarKilometer.getText().toString();
+        String kilometer = editTextAddCarKilometer.getText().toString();
         String price = editTextAddCarPrice.getText().toString();
         String year = editTextAddCarYear.getText().toString();
 
@@ -129,6 +130,7 @@ public class AddCarUserActivity extends AppCompatActivity implements Callback<Ca
 
         return valid;
     }
+
     private void requestFocus(View view) {
         if (view.requestFocus()) {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
@@ -137,24 +139,28 @@ public class AddCarUserActivity extends AppCompatActivity implements Callback<Ca
 
     private void addCar(Car car) {
         ApiService service = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
-        Call<Car> call = service.addCar(car);
+        Call<ApiResponse<Car>> call = service.addCar(car);
         call.enqueue(this);
     }
 
     @Override
-    public void onResponse(@NonNull Call<Car> call, @NonNull Response<Car> response) {
+    public void onResponse(@NonNull Call<ApiResponse<Car>> call, @NonNull Response<ApiResponse<Car>> response) {
         if (response.isSuccessful()) {
-            Toast.makeText(AddCarUserActivity.this, "Car Added Successfully ", Toast.LENGTH_SHORT).show();
-            Log.i("Connection", "Car Added Successfully with id " + response.body().getId());
-            finish();
-            startActivity(new Intent(AddCarUserActivity.this, ListCarsActivity.class));
+            if (response.body().getStatus().equals("OK")) {
+                Toast.makeText(AddCarUserActivity.this, "Car Added Successfully ", Toast.LENGTH_SHORT).show();
+                finish();
+                startActivity(new Intent(AddCarUserActivity.this, ListCarsActivity.class));
+            } else {
+                Log.e("Add Car Error", " status : " + response.body().getStatus());
+            }
+
         } else {
             Log.e("Connection", "Failed To Add Car : " + response.message());
         }
     }
 
     @Override
-    public void onFailure(@NonNull Call<Car> call, @NonNull Throwable t) {
+    public void onFailure(@NonNull Call<ApiResponse<Car>> call, @NonNull Throwable t) {
         Log.e("Connection", "Failed To Connect : " + t.getMessage());
 
     }

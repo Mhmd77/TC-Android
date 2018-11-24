@@ -32,7 +32,7 @@ public interface ApiService<C> {
     Call<Car> updateCar(@Body Car car, @Path("id") int id);
 
     @POST("/api/v1/cars")
-    Call<Car> addCar(@Body Car car);
+    Call<ApiResponse<Car>> addCar(@Body Car car);
 
     @POST("/api/v1/auth/signup")
     Call<ApiResponse<User>> signUpUser(@Body SignUpInfo user);
