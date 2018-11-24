@@ -94,28 +94,28 @@ public class UpdateCarAdminActivity extends AppCompatActivity implements Callbac
         String kilometer =editTextUpdateCarKilometer.getText().toString();
         String price = editTextUpdateCarPrice.getText().toString();
         String year = editTextUpdateCarYear.getText().toString();
-        if (name.isEmpty() || name.length() > 15) {
+        if (name.isEmpty() || name.length() > 20) {
             editTextUpdateCarName.setError("enter a valid name");
             requestFocus(editTextUpdateCarName);
             valid = false;
         } else {
             editTextUpdateCarName.setError(null);
         }
-        if (color.isEmpty() || color.length() > 9) {
+        if (color.isEmpty() || color.length() > 20) {
             editTextUpdateCarColor.setError("enter a valid color");
             requestFocus(editTextUpdateCarColor);
             valid = false;
         } else {
             editTextUpdateCarColor.setError(null);
         }
-        if (factory.isEmpty() || factory.length() > 9) {
+        if (factory.isEmpty() || factory.length() > 20) {
             editTextUpdateCarFactory.setError("enter a valid factory");
             requestFocus(editTextUpdateCarFactory);
             valid = false;
         } else {
             editTextUpdateCarFactory.setError(null);
         }
-        if (kilometer.isEmpty() || kilometer.length() > 9) {
+        if (kilometer.isEmpty() || kilometer.length() > 6) {
             editTextUpdateCarKilometer.setError("enter a valid kilometer");
             requestFocus(editTextUpdateCarKilometer);
             valid = false;
@@ -129,7 +129,7 @@ public class UpdateCarAdminActivity extends AppCompatActivity implements Callbac
         } else {
             editTextUpdateCarPrice.setError(null);
         }
-        if (year.isEmpty() || year.length() > 9) {
+        if (year.isEmpty() || year.length() > 4) {
             editTextUpdateCarPrice.setError("enter a valid year");
             requestFocus(editTextUpdateCarPrice);
             valid = false;
