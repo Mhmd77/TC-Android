@@ -166,7 +166,7 @@ public class ListCarsActivity extends AppCompatActivity implements Callback<ApiR
 
     @OnClick(R.id.actionButton_main_add_car)
     public void onViewClicked() {
-        startActivity(new Intent(ListCarsActivity.this, AddCarAdminActivity.class));
+        startActivity(new Intent(ListCarsActivity.this, AddCarUserActivity.class));
     }
 
     @Override
