@@ -77,7 +77,7 @@ public class AddCarAdminActivity extends AppCompatActivity implements Callback<A
         String year = editTextAddCarYear.getText().toString();
 
 
-        if (name.isEmpty() || name.length() > 15) {
+        if (name.isEmpty() || name.length() > 20) {
             editTextAddCarName.setError("enter a valid name");
             requestFocus(editTextAddCarName);
             valid = false;
@@ -86,7 +86,7 @@ public class AddCarAdminActivity extends AppCompatActivity implements Callback<A
         }
 
 
-        if (color.isEmpty() || color.length() > 9) {
+        if (color.isEmpty() || color.length() > 20) {
             editTextAddCarColor.setError("enter a valid color");
             requestFocus(editTextAddCarColor);
             valid = false;
@@ -95,7 +95,7 @@ public class AddCarAdminActivity extends AppCompatActivity implements Callback<A
         }
 
 
-        if (factory.isEmpty() || factory.length() > 9) {
+        if (factory.isEmpty() || factory.length() > 20) {
             editTextAddCarFactory.setError("enter a valid factory");
             requestFocus(editTextAddCarFactory);
             valid = false;
@@ -104,7 +104,7 @@ public class AddCarAdminActivity extends AppCompatActivity implements Callback<A
         }
 
 
-        if (kilometer.isEmpty() || kilometer.length() > 9) {
+        if (kilometer.isEmpty() || kilometer.length() > 6) {
             editTextAddCarKilometer.setError("enter a valid kilometer");
             requestFocus(editTextAddCarKilometer);
             valid = false;
@@ -112,7 +112,7 @@ public class AddCarAdminActivity extends AppCompatActivity implements Callback<A
             editTextAddCarKilometer.setError(null);
         }
 
-        if (price.isEmpty() || price.length() > 9) {
+        if (price.isEmpty() || price.length() > 10) {
             editTextAddCarPrice.setError("enter a valid price");
             requestFocus(editTextAddCarPrice);
             valid = false;
@@ -120,7 +120,7 @@ public class AddCarAdminActivity extends AppCompatActivity implements Callback<A
             editTextAddCarPrice.setError(null);
         }
 
-        if (year.isEmpty() || year.length() > 9) {
+        if (year.isEmpty() || year.length() > 4) {
             editTextAddCarYear.setError("enter a valid year");
             requestFocus(editTextAddCarYear);
             valid = false;
