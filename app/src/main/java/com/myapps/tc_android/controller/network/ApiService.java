@@ -29,7 +29,7 @@ public interface ApiService<C> {
     Call<ApiResponse<Object>> deleteCar(@Path("id") int id);
 
     @PUT("/api/v1/cars/{id}")
-    Call<Car> updateCar(@Body Car car, @Path("id") int id);
+    Call<ApiResponse<Car>> updateCar(@Body Car car, @Path("id") int id);
 
     @POST("/api/v1/cars")
     Call<ApiResponse<Car>> addCar(@Body Car car);

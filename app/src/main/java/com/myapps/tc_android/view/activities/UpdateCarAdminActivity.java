@@ -10,11 +10,13 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.controller.CarBuilder;
 import com.myapps.tc_android.controller.network.ApiService;
 import com.myapps.tc_android.controller.network.RetrofitClientInstance;
+import com.myapps.tc_android.model.ApiResponse;
 import com.myapps.tc_android.model.Car;
 
 import butterknife.BindView;
@@ -24,7 +26,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UpdateCarAdminActivity extends AppCompatActivity implements Callback {
+public class UpdateCarAdminActivity extends AppCompatActivity implements Callback<ApiResponse<Car>> {
 
     @BindView(R.id.editText_updateCar_name)
     EditText editTextUpdateCarName;
@@ -42,7 +44,6 @@ public class UpdateCarAdminActivity extends AppCompatActivity implements Callbac
     EditText editTextUpdateCarPrice;
     @BindView(R.id.button_updateCar)
     Button button_update_car;
-
 
 
     Car car;
@@ -91,7 +92,7 @@ public class UpdateCarAdminActivity extends AppCompatActivity implements Callbac
         String name = editTextUpdateCarName.getText().toString();
         String color = editTextUpdateCarColor.getText().toString();
         String factory = editTextUpdateCarFactory.getText().toString();
-        String kilometer =editTextUpdateCarKilometer.getText().toString();
+        String kilometer = editTextUpdateCarKilometer.getText().toString();
         String price = editTextUpdateCarPrice.getText().toString();
         String year = editTextUpdateCarYear.getText().toString();
         if (name.isEmpty() || name.length() > 20) {
@@ -138,6 +139,7 @@ public class UpdateCarAdminActivity extends AppCompatActivity implements Callbac
         }
         return valid;
     }
+
     private void requestFocus(View view) {
         if (view.requestFocus()) {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
@@ -146,26 +148,29 @@ public class UpdateCarAdminActivity extends AppCompatActivity implements Callbac
 
     private void updateCar(Car car) {
         ApiService service = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
-        Call call = service.updateCar(car, this.car.getId());
+        Call<ApiResponse<Car>> call = service.updateCar(car, this.car.getId());
         call.enqueue(this);
     }
 
+
     @Override
-    public void onResponse(@NonNull Call call, @NonNull Response response) {
+    public void onResponse(@NonNull Call<ApiResponse<Car>> call, @NonNull Response<ApiResponse<Car>> response) {
         if (response.isSuccessful()) {
-            Log.i("Connection", "Car Updated Successfully with id " + car.getId());
-            finish();
-            startActivity(new Intent(UpdateCarAdminActivity.this,ListCarsAdminActivity.class));
-            finish();
+            if (response.body().getStatus().equals("OK")) {
+                Toast.makeText(UpdateCarAdminActivity.this, "Car Updated Successfully ", Toast.LENGTH_SHORT).show();
+                finish();
+                startActivity(new Intent(UpdateCarAdminActivity.this, ListCarsAdminActivity.class));
+            } else {
+                Log.e("Update Car Error", " status : " + response.body().getStatus());
+            }
         } else {
-            Log.e("Connection", "Failed To Updated Car : " + response.message());
+            Log.e("Connection", "Failed To Add Car : " + response.message());
         }
     }
 
     @Override
-    public void onFailure(@NonNull Call call, @NonNull Throwable t) {
+    public void onFailure(@NonNull Call<ApiResponse<Car>> call, @NonNull Throwable t) {
         Log.e("Connection", "Failed To Connect : " + t.getMessage());
-
 
     }
 }
