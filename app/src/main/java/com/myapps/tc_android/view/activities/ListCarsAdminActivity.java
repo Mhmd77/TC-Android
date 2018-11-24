@@ -53,7 +53,7 @@ public class ListCarsAdminActivity extends AppCompatActivity implements Callback
     }
 
     private void generateDataList(final List<Car> cars) {
-        adapter = new CarsRecyclerView(this, cars, new CarsRecyclerView.OnItemClickListener() {
+        adapter = new CarsRecyclerView(this, cars, new CarsRecyclerView.AdminOnItemClickListener() {
 
 
             @Override
@@ -92,7 +92,7 @@ public class ListCarsAdminActivity extends AppCompatActivity implements Callback
 
 
             @Override
-            public void cartOnClick(View view, int position) {
+            public void cardOnClick(View view, int position) {
                 Car car =  cars.get(position);
                 Intent intent = new Intent(ListCarsAdminActivity.this,CarProfileActivity.class);
                 intent.putExtra("Car",car);

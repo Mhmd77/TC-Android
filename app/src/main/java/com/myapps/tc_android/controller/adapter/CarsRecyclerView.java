@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.myapps.tc_android.R;
@@ -16,7 +17,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class CarsRecyclerView extends RecyclerView.Adapter<CarsRecyclerView.ViewHolder> {
 
@@ -25,20 +25,20 @@ public class CarsRecyclerView extends RecyclerView.Adapter<CarsRecyclerView.View
     CardView cartOnclick;
     private Context context;
     private List<Car> list;
-    private OnItemClickListener onItemClickListener;
+    private UserOnItemClickListener onItemClickListener;
     private boolean isAdmin = true;
 
     public CarsRecyclerView(Context context, List<Car> list,
-                            OnItemClickListener onItemClickListener) {
+                            AdminOnItemClickListener onItemClickListener) {
         this.context = context;
         this.list = list;
         this.onItemClickListener = onItemClickListener;
     }
 
-    public CarsRecyclerView(Context context, List<Car> list) {
+    public CarsRecyclerView(Context context, List<Car> list, UserOnItemClickListener onItemClickListener) {
         this.context = context;
         this.list = list;
-        this.onItemClickListener = null;
+        this.onItemClickListener = onItemClickListener;
         isAdmin = false;
     }
 
@@ -46,6 +46,10 @@ public class CarsRecyclerView extends RecyclerView.Adapter<CarsRecyclerView.View
         this.list.clear();
         this.list.addAll(list);
         notifyDataSetChanged();
+    }
+
+    public List<Car> getList() {
+        return list;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -62,32 +66,31 @@ public class CarsRecyclerView extends RecyclerView.Adapter<CarsRecyclerView.View
         @BindView(R.id.button_car_update)
         Button buttonCarUpdate;
         @BindView(R.id.button_car_profile)
-        Button buttonCarProfile;
+        ImageView buttonCarProfile;
 
-        ViewHolder(View itemView) {
+        ViewHolder(final View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-
-            buttonCarUpdate.setOnClickListener(new View.OnClickListener() {
+            if (onItemClickListener instanceof AdminOnItemClickListener) {
+                buttonCarUpdate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ((AdminOnItemClickListener) onItemClickListener).updateOnClick(v, getAdapterPosition());
+                    }
+                });
+                buttonCarDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ((AdminOnItemClickListener) onItemClickListener).deleteOnClick(v, getAdapterPosition());
+                    }
+                });
+            }
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onItemClickListener.updateOnClick(v, getAdapterPosition());
+                    onItemClickListener.cardOnClick(itemView, getLayoutPosition());
                 }
             });
-            buttonCarDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemClickListener.deleteOnClick(v, getAdapterPosition());
-                }
-            });
-            cartOnclick.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemClickListener.cartOnClick(v, getAdapterPosition());
-                }
-            });
-
-
         }
     }
 
@@ -127,14 +130,14 @@ public class CarsRecyclerView extends RecyclerView.Adapter<CarsRecyclerView.View
         return list.size();
     }
 
-    public interface OnItemClickListener {
+    public interface AdminOnItemClickListener extends UserOnItemClickListener {
         void deleteOnClick(View view, int position);
 
         void updateOnClick(View view, int position);
+    }
 
-        void cartOnClick(View view, int position);
-
-
+    public interface UserOnItemClickListener {
+        void cardOnClick(View view, int position);
     }
 
 }

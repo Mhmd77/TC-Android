@@ -35,7 +35,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ListCarsActivity extends AppCompatActivity implements Callback<ApiResponse<List<Car>>> {
+public class ListCarsActivity extends AppCompatActivity implements Callback<ApiResponse<List<Car>>>, CarsRecyclerView.UserOnItemClickListener {
 
     @BindView(R.id.recyclerView_main_cars)
     RecyclerView recyclerViewMainCars;
@@ -99,26 +99,7 @@ public class ListCarsActivity extends AppCompatActivity implements Callback<ApiR
     }
 
     private void generateDataList(final List<Car> cars) {
-        adapter = new CarsRecyclerView(this, cars, new CarsRecyclerView.OnItemClickListener() {
-            @Override
-            public void deleteOnClick(View view, int position) {
-                //TODO
-            }
-
-            @Override
-            public void updateOnClick(View view, int position) {
-                //TODO
-            }
-
-
-            @Override
-            public void cartOnClick(View view, int position) {
-                Car car = cars.get(position);
-                Intent intent = new Intent(ListCarsActivity.this, UpdateCarAdminActivity.class);
-                intent.putExtra("Car", car);
-                startActivity(intent);
-            }
-        });
+        adapter = new CarsRecyclerView(this, cars, this);
         recyclerViewMainCars.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewMainCars.setAdapter(adapter);
     }
@@ -185,6 +166,14 @@ public class ListCarsActivity extends AppCompatActivity implements Callback<ApiR
 
     @OnClick(R.id.actionButton_main_add_car)
     public void onViewClicked() {
-        startActivity(new Intent(ListCarsActivity.this,AddCarAdminActivity.class));
+        startActivity(new Intent(ListCarsActivity.this, AddCarAdminActivity.class));
+    }
+
+    @Override
+    public void cardOnClick(View view, int position) {
+        Car car = adapter.getList().get(position);
+        Intent intent = new Intent(ListCarsActivity.this, CarProfileActivity.class);
+        intent.putExtra("Car", car);
+        startActivity(intent);
     }
 }
