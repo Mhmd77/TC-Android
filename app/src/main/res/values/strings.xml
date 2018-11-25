@@ -2,7 +2,6 @@
     <string name="app_name">Tc-Android</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="admin">Admin</string>
     <string name="create_new_account">Create New Account</string>
     <string name="login">Login</string>
     <string name="delete" tools:ignore="ExtraTranslation">Delete</string>
@@ -20,8 +19,8 @@
     <string name="identification_id">ID</string>
     <string name="have_account">LOG IN TO ACCOUNT</string>
     <string name="signup">Sign Up</string>
-    <string name="photos">Photos</string>
     <string name="cost">Cost</string>
     <string name="ascending">Ascending</string>
     <string name="descending">Descending</string>
+    <string name="description">Description</string>
 </resources>

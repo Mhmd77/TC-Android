@@ -1,182 +1,242 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_image"
-    android:orientation="vertical"
-    android:weightSum="1">
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline_top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.25" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline_bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.85" />
-
+    android:fillViewport="true">
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:layout_marginStart="10dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/guideline_bottom"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="10dp">
+            android:background="#333" />
 
-            <TextView
-                android:id="@+id/txtCarName"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/bg_login_edittext"
-                android:drawableLeft="@drawable/ic_directions_car_white_24dp"
-                android:drawablePadding="10dp"
-                android:fontFamily="@font/font_normal"
-                android:gravity="center_vertical"
-                android:text="@string/car_name"
-                android:textColor="@android:color/white"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txtFactory"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_login_edittext"
-                android:drawableLeft="@drawable/ic_build_white_24dp"
-                android:drawablePadding="10dp"
-                android:fontFamily="@font/font_normal"
-                android:gravity="center_vertical"
-                android:text="@string/factory"
-                android:textColor="@android:color/white"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="10dp">
+            android:layout_weight="1"
+            android:background="#242424"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtKilometer"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/bg_login_edittext"
-                android:drawableLeft="@drawable/ic_ev_station_white_24dp"
-                android:drawablePadding="10dp"
-                android:fontFamily="@font/font_normal"
-                android:gravity="center_vertical"
-                android:text="@string/kilometer"
-                android:textColor="@android:color/white" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="10dp">
-
-            <TextView
-                android:id="@+id/txtColor"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/bg_login_edittext"
-                android:drawableLeft="@drawable/ic_format_color_fill_white_24dp"
-                android:drawablePadding="10dp"
-                android:fontFamily="@font/font_normal"
-                android:gravity="center_vertical"
-                android:text="@string/color"
-                android:textColor="@android:color/white" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="10dp">
-
-            <TextView
-                android:id="@+id/txtYear"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/bg_login_edittext"
-                android:drawableLeft="@drawable/ic_perm_contact_calendar_white_24dp"
-                android:drawablePadding="10dp"
-                android:fontFamily="@font/font_normal"
-                android:gravity="center_vertical"
-                android:text="@string/year"
-                android:textColor="@android:color/white" />
-
-            <CheckBox
-                android:id="@+id/isAutomate"
-                android:layout_width="0dp"
+            <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_login_edittext"
-                android:enabled="false"
-                android:fontFamily="@font/font_normal"
-                android:gravity="center_vertical"
-                android:text="@string/is_automate"
-                android:textColor="@android:color/white" />
-        </LinearLayout>
+                android:background="#242424"
+                android:orientation="vertical">
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/guideline_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.3" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imageview_car_logo"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/sample"
+                    app:civ_border_color="#FFF"
+                    app:civ_border_width="5dp"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline_header"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textview_carprofile_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/font_normal"
+                    android:text="2014"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                    android:textColor="#FFF"
+                    app:layout_constraintStart_toEndOf="@+id/imageview_car_logo"
+                    app:layout_constraintTop_toTopOf="@+id/imageview_car_logo" />
+
+                <TextView
+                    android:id="@+id/textview_carprofile_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/font_normal"
+                    android:text="KIA"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textColor="#FFF"
+                    app:layout_constraintStart_toStartOf="@+id/textview_carprofile_year"
+                    app:layout_constraintTop_toBottomOf="@+id/textview_carprofile_year" />
+
+                <TextView
+                    android:id="@+id/textview_carprofile_factory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/font_normal"
+                    android:text="SORENTO LE"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textColor="#FFF"
+                    app:layout_constraintStart_toStartOf="@+id/textview_carprofile_year"
+                    app:layout_constraintTop_toBottomOf="@+id/textview_carprofile_name" />
+
+                <TextView
+                    android:id="@+id/textview_carprofile_kilometer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:drawableLeft="@drawable/ic_ev_station_white_18dp"
+                    android:drawablePadding="8dp"
+                    android:drawableStart="@drawable/ic_ev_station_white_18dp"
+                    android:fontFamily="@font/font_normal"
+                    android:gravity="center"
+                    android:text="100000 kilometer"
+                    android:textColor="#FFF"
+                    app:layout_constraintStart_toStartOf="@+id/textview_carprofile_year"
+                    app:layout_constraintTop_toBottomOf="@+id/textview_carprofile_factory" />
+
+                <TextView
+                    android:id="@+id/textview_carprofile_header_cost"
+                    style="@style/HeaderText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="8dp"
+                    android:drawableLeft="@drawable/ic_price_car"
+                    android:drawablePadding="16dp"
+                    android:drawableStart="@drawable/ic_price_car"
+                    android:text="@string/price"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/guideline_header" />
+
+                <View
+                    android:id="@+id/view_divider1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="2dp"
+                    android:alpha="0.7"
+                    android:background="@color/colorPrimaryDark"
+                    app:layout_constraintLeft_toLeftOf="@id/textview_carprofile_header_cost"
+                    app:layout_constraintTop_toBottomOf="@id/textview_carprofile_header_cost" />
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="10dp">
+                <TextView
+                    android:id="@+id/textview_carprofile_cost"
+                    style="@style/ValueText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="$ 1,000,000"
+                    app:layout_constraintStart_toStartOf="@+id/view_divider1"
+                    app:layout_constraintTop_toBottomOf="@+id/view_divider1" />
 
-            <Button
-                android:id="@+id/button_photos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
-                android:background="@drawable/bg_login_button"
-                android:fontFamily="@font/font_normal"
-                android:text="@string/photos"
-                android:textColor="#FFF"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent" />
+                <TextView
+                    android:id="@+id/textview_carprofile_header_color"
+                    style="@style/HeaderText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="16dp"
+                    android:drawableLeft="@drawable/ic_color_lens_white_24dp"
+                    android:drawablePadding="20dp"
+                    android:drawableStart="@drawable/ic_color_lens_white_24dp"
+                    android:text="@string/color"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textview_carprofile_cost" />
 
-            <TextView
-                android:id="@+id/txtPrice"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/bg_login_edittext"
-                android:drawableLeft="@drawable/ic_attach_money_white_24dp"
-                android:drawablePadding="10dp"
-                android:fontFamily="@font/font_normal"
-                android:text="@string/price"
-                android:textColor="@android:color/white" />
-        </LinearLayout>
+                <View
+                    android:id="@+id/view_divider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="2dp"
+                    android:alpha="0.7"
+                    android:background="@color/colorPrimaryDark"
+                    app:layout_constraintLeft_toLeftOf="@id/textview_carprofile_header_color"
+                    app:layout_constraintTop_toBottomOf="@id/textview_carprofile_header_color" />
+
+
+                <TextView
+                    android:id="@+id/textview_carprofile_color"
+                    style="@style/ValueText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Sefide Yakhchali"
+                    app:layout_constraintStart_toStartOf="@+id/view_divider2"
+                    app:layout_constraintTop_toBottomOf="@+id/view_divider2" />
+
+                <TextView
+                    android:id="@+id/textview_carprofile_header_description"
+                    style="@style/HeaderText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="16dp"
+                    android:drawableLeft="@drawable/ic_description_white_24dp"
+                    android:drawablePadding="20dp"
+                    android:drawableStart="@drawable/ic_description_white_24dp"
+                    android:text="@string/description"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textview_carprofile_color" />
+
+                <View
+                    android:id="@+id/view_divider3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="2dp"
+                    android:alpha="0.7"
+                    android:background="@color/colorPrimaryDark"
+                    app:layout_constraintLeft_toLeftOf="@id/textview_carprofile_header_description"
+                    app:layout_constraintTop_toBottomOf="@id/textview_carprofile_header_description" />
+
+
+                <TextView
+                    android:id="@+id/textview_carprofile_description"
+                    style="@style/ValueText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Atutomated"
+                    app:layout_constraintStart_toStartOf="@+id/view_divider3"
+                    app:layout_constraintTop_toBottomOf="@+id/view_divider3" />
+
+                <ImageButton
+                    android:id="@+id/button_edit_carprofile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_edit_white_24dp"
+                    app:layout_constraintRight_toRightOf="@id/view_divider1"
+                    app:layout_constraintTop_toTopOf="@id/imageview_car_logo" />
+
+            </android.support.constraint.ConstraintLayout>
+
+
+        </android.support.constraint.ConstraintLayout>
     </LinearLayout>
-
-
-</android.support.constraint.ConstraintLayout>
+</ScrollView>
