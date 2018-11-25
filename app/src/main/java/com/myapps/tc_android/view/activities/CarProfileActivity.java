@@ -3,8 +3,7 @@ package com.myapps.tc_android.view.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Button;
-import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.myapps.tc_android.R;
@@ -16,23 +15,23 @@ import butterknife.OnClick;
 
 public class CarProfileActivity extends AppCompatActivity {
 
-    @BindView(R.id.txtCarName)
-    TextView txtCarName;
-    @BindView(R.id.txtFactory)
-    TextView txtFactory;
-    @BindView(R.id.txtKilometer)
-    TextView txtKilometer;
-    @BindView(R.id.txtColor)
-    TextView txtColor;
-    @BindView(R.id.txtYear)
-    TextView txtYear;
-    @BindView(R.id.isAutomate)
-    CheckBox isAutomate;
-    @BindView(R.id.button_photos)
-    Button buttonPhotos;
-    @BindView(R.id.txtPrice)
-    TextView txtPrice;
     Car car;
+    @BindView(R.id.textview_carprofile_year)
+    TextView textviewCarprofileYear;
+    @BindView(R.id.textview_carprofile_name)
+    TextView textviewCarprofileName;
+    @BindView(R.id.textview_carprofile_factory)
+    TextView textviewCarprofileFactory;
+    @BindView(R.id.textview_carprofile_kilometer)
+    TextView textviewCarprofileKilometer;
+    @BindView(R.id.textview_carprofile_cost)
+    TextView textviewCarprofileCost;
+    @BindView(R.id.textview_carprofile_color)
+    TextView textviewCarprofileColor;
+    @BindView(R.id.textview_carprofile_description)
+    TextView textviewCarprofileDescription;
+    @BindView(R.id.button_edit_carprofile)
+    ImageButton buttonEditCarprofile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,17 +44,23 @@ public class CarProfileActivity extends AppCompatActivity {
     }
 
     private void setVariables(Car car) {
-        txtCarName.setText(car.getName());
-        txtFactory.setText(car.getFactory());
-        txtYear.setText(String.valueOf(car.getYear()));
-        txtKilometer.setText(String.valueOf(car.getKilometer()));
-        txtColor.setText(car.getColor());
-        isAutomate.setChecked(car.isAutomate());
-        txtPrice.setText(String.valueOf(car.getPrice()));
+        textviewCarprofileName.setText(car.getName());
+        textviewCarprofileFactory.setText(car.getFactory());
+        textviewCarprofileYear.setText(String.valueOf(car.getYear()));
+        textviewCarprofileKilometer.setText(String.valueOf(car.getKilometer()));
+        textviewCarprofileColor.setText(car.getColor());
+        textviewCarprofileCost.setText(String.valueOf(car.getPrice()));
+        if (car.isAutomate()) {
+            textviewCarprofileDescription.setText("AUTOMATE");
+        } else {
+            textviewCarprofileDescription.setText("MANUAL");
+        }
+
     }
 
-    @OnClick(R.id.button_photos)
+    @OnClick(R.id.button_edit_carprofile)
     public void onViewClicked() {
-        startActivity(new Intent(CarProfileActivity.this,PhotoActivity.class));
+        //TODO Update Profile
     }
+
 }
