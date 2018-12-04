@@ -19,7 +19,7 @@ import retrofit2.http.Path;
 public interface ApiService<C> {
 
 
-    @POST("/api/v1/auth/login")
+    @POST("/api/v1/users/login")
     Call<ApiResponse<User>> loginUser(@Body LoginInfo user);
 
     @GET("/api/v1/cars")
@@ -34,7 +34,7 @@ public interface ApiService<C> {
     @POST("/api/v1/cars")
     Call<ApiResponse<Car>> addCar(@Body Car car);
 
-    @POST("/api/v1/auth/signup")
+    @POST("/api/v1/users/signup")
     Call<ApiResponse<User>> signUpUser(@Body SignUpInfo user);
 
     @GET("/api/v1/sort/cars/{field}/{ascending}")
