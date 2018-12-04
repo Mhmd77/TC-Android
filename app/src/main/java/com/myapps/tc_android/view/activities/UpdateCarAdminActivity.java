@@ -67,8 +67,6 @@ public class UpdateCarAdminActivity extends AppCompatActivity implements Callbac
         editTextUpdateCarColor.setText(car.getColor());
         checkboxUpdateCarAutomate.setChecked(car.isAutomate());
         editTextUpdateCarPrice.setText(String.valueOf(car.getPrice()));
-
-
     }
 
     @OnClick(R.id.button_updateCar)
@@ -82,7 +80,6 @@ public class UpdateCarAdminActivity extends AppCompatActivity implements Callbac
                     .setPrice(Integer.parseInt(editTextUpdateCarPrice.getText().toString()))
                     .setYear(Integer.parseInt(editTextUpdateCarYear.getText().toString()))
                     .setAutomate(checkboxUpdateCarAutomate.isChecked());
-
             updateCar(builder.createCar());
         }
     }
@@ -159,7 +156,9 @@ public class UpdateCarAdminActivity extends AppCompatActivity implements Callbac
             if (response.body().getStatus().equals("OK")) {
                 Toast.makeText(UpdateCarAdminActivity.this, "Car Updated Successfully ", Toast.LENGTH_SHORT).show();
                 finish();
-                startActivity(new Intent(UpdateCarAdminActivity.this, ListCarsAdminActivity.class));
+
+//                Intent intent = new Intent(UpdateCarAdminActivity.this, ListCarsAdminActivity.class);
+//                startActivity(intent);
             } else {
                 Log.e("Update Car Error", " status : " + response.body().getStatus());
             }

@@ -2,9 +2,7 @@ package com.myapps.tc_android.view.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatEditText;
 import android.util.Log;
 import android.view.View;
@@ -14,8 +12,8 @@ import android.widget.Toast;
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.controller.network.ApiService;
 import com.myapps.tc_android.controller.network.RetrofitClientInstance;
-import com.myapps.tc_android.model.LoginInfo;
 import com.myapps.tc_android.model.ApiResponse;
+import com.myapps.tc_android.model.LoginInfo;
 import com.myapps.tc_android.model.User;
 
 import butterknife.BindView;
