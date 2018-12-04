@@ -32,7 +32,8 @@
             android:hint="@string/car_name"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            tools:ignore="RtlCompat" />
+            tools:ignore="RtlCompat"
+            android:enabled="false"/>
 
 
         <EditText
