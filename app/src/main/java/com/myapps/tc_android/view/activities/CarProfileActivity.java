@@ -60,7 +60,11 @@ public class CarProfileActivity extends AppCompatActivity {
 
     @OnClick(R.id.button_edit_carprofile)
     public void onViewClicked() {
-        //TODO Update Profile
+        Intent intent = new Intent(CarProfileActivity.this,UpdateCarAdminActivity.class);
+        finish();
+        intent.putExtra("Car",car);
+        startActivity(intent);
+
     }
 
 }
