@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/title_home" />
+
+    <item
+        android:id="@+id/navigation_rent"
+        android:icon="@drawable/ic_attach_money_black_24dp"
+        android:title="@string/title_rent" />
+
+    <item
+        android:id="@+id/navigation_cars"
+        android:icon="@drawable/ic_directions_car_black_24dp"
+        android:title="@string/title_my_cars" />
+
 </menu>
