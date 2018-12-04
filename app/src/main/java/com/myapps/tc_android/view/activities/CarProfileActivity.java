@@ -3,11 +3,13 @@ package com.myapps.tc_android.view.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.model.Car;
+import com.myapps.tc_android.model.SingeltonUser;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +43,9 @@ public class CarProfileActivity extends AppCompatActivity {
         Intent i = getIntent();
         car = (Car) i.getSerializableExtra("Car");
         setVariables(car);
+        if(SingeltonUser.Instance().getUser().getName().equals("admin") == false){
+            buttonEditCarprofile.setVisibility(View.GONE);
+        }
     }
 
     private void setVariables(Car car) {
