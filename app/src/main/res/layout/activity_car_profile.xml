@@ -224,6 +224,14 @@
                 android:src="@drawable/ic_edit_white_24dp"
                 app:layout_constraintRight_toRightOf="@id/view_divider1"
                 app:layout_constraintTop_toTopOf="@id/imageview_car_logo" />
+            <ImageButton
+                android:id="@+id/button_delete_car_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintRight_toRightOf="@id/view_divider1"
+                app:layout_constraintTop_toTopOf="@id/textview_carprofile_name"
+                app:layout_constraintTop_toBottomOf="@id/button_edit_carprofile"
+                android:background="@drawable/ic_delete_forever_white_24dp"/>
 
         </android.support.constraint.ConstraintLayout>
 
