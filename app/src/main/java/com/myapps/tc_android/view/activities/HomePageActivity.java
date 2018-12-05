@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.view.fragments.HomeFragment;
+import com.myapps.tc_android.view.fragments.ProfileFragment;
 import com.myapps.tc_android.view.fragments.RentFragment;
 
 import butterknife.BindView;
@@ -49,7 +50,7 @@ public class HomePageActivity extends AppCompatActivity implements BottomNavigat
         fm = getSupportFragmentManager();
         homeFragment = HomeFragment.newInstance();
         rentFragment = RentFragment.newInstance();
-        profileFragment = RentFragment.newInstance();
+        profileFragment = ProfileFragment.newInstance();
         active = homeFragment;
         fm.beginTransaction().add(R.id.frame_layout_container, profileFragment, "3").hide(profileFragment).commit();
         fm.beginTransaction().add(R.id.frame_layout_container, rentFragment, "2").hide(rentFragment).commit();
@@ -62,18 +63,21 @@ public class HomePageActivity extends AppCompatActivity implements BottomNavigat
             case R.id.navigation_home:
                 fm.beginTransaction().hide(active).show(homeFragment).commit();
                 active = homeFragment;
+                getSupportActionBar().show();
                 buttonSortYear.setVisibility(View.VISIBLE);
                 buttonSortCost.setVisibility(View.VISIBLE);
                 return true;
             case R.id.navigation_rent:
                 fm.beginTransaction().hide(active).show(rentFragment).commit();
                 active = rentFragment;
+                getSupportActionBar().show();
                 buttonSortYear.setVisibility(View.INVISIBLE);
                 buttonSortCost.setVisibility(View.INVISIBLE);
                 return true;
             case R.id.navigation_profile:
-                fm.beginTransaction().hide(active).show(rentFragment).commit();
-                active = rentFragment;
+                fm.beginTransaction().hide(active).show(profileFragment).commit();
+                active = profileFragment;
+                getSupportActionBar().hide();
                 buttonSortYear.setVisibility(View.INVISIBLE);
                 buttonSortCost.setVisibility(View.INVISIBLE);
                 return true;
