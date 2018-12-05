@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -32,7 +31,7 @@ public class HomePageActivity extends AppCompatActivity implements BottomNavigat
     public Button buttonSortYear;
     @BindView(R.id.buttonSortCost)
     public Button buttonSortCost;
-    private Fragment homeFragment, rentFragment, carFragment, active;
+    private Fragment homeFragment, rentFragment, profileFragment, active;
     private FragmentManager fm;
 
     @Override
@@ -50,9 +49,9 @@ public class HomePageActivity extends AppCompatActivity implements BottomNavigat
         fm = getSupportFragmentManager();
         homeFragment = HomeFragment.newInstance();
         rentFragment = RentFragment.newInstance();
-        carFragment = RentFragment.newInstance();
+        profileFragment = RentFragment.newInstance();
         active = homeFragment;
-        fm.beginTransaction().add(R.id.frame_layout_container, carFragment, "3").hide(carFragment).commit();
+        fm.beginTransaction().add(R.id.frame_layout_container, profileFragment, "3").hide(profileFragment).commit();
         fm.beginTransaction().add(R.id.frame_layout_container, rentFragment, "2").hide(rentFragment).commit();
         fm.beginTransaction().add(R.id.frame_layout_container, homeFragment, "1").commit();
     }
@@ -72,7 +71,7 @@ public class HomePageActivity extends AppCompatActivity implements BottomNavigat
                 buttonSortYear.setVisibility(View.INVISIBLE);
                 buttonSortCost.setVisibility(View.INVISIBLE);
                 return true;
-            case R.id.navigation_cars:
+            case R.id.navigation_profile:
                 fm.beginTransaction().hide(active).show(rentFragment).commit();
                 active = rentFragment;
                 buttonSortYear.setVisibility(View.INVISIBLE);
