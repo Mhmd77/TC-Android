@@ -29,4 +29,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="cars">Cars</string>
+    <string name="string_see_all_cars">See All Cars</string>
 </resources>
