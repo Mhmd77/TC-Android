@@ -39,4 +39,7 @@ public interface ApiService<C> {
 
     @GET("/api/v1/sort/cars/{field}/{ascending}")
     Call<ApiResponse<List<Car>>> sortCars(@Path("field") String field, @Path("ascending") int ascending);
+
+    @GET("/api/v1/cars/user")
+    Call<ApiResponse<List<Car>>> getUserCar();
 }
