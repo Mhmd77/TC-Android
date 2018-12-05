@@ -1,16 +1,16 @@
 package com.myapps.tc_android.model;
 
-public class SingeltonUser {
-    private static SingeltonUser instance;
+public class UserHolder {
+    private static UserHolder instance;
     private User user;
     //no outer class can initialize this class's object
-    private SingeltonUser() {}
+    private UserHolder() {}
 
-    public static SingeltonUser Instance()
+    public static UserHolder Instance()
     {
         if (instance == null)
         {
-            instance = new SingeltonUser();
+            instance = new UserHolder();
         }
         return instance;
     }

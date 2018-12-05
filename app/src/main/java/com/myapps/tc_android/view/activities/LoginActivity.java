@@ -2,9 +2,7 @@ package com.myapps.tc_android.view.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatEditText;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +14,7 @@ import com.myapps.tc_android.controller.network.ApiService;
 import com.myapps.tc_android.controller.network.RetrofitClientInstance;
 import com.myapps.tc_android.model.LoginInfo;
 import com.myapps.tc_android.model.ApiResponse;
-import com.myapps.tc_android.model.SingeltonUser;
+import com.myapps.tc_android.model.UserHolder;
 import com.myapps.tc_android.model.User;
 
 import butterknife.BindView;
@@ -53,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
                             if (response.isSuccessful()) {
                                 Toast.makeText(LoginActivity.this, response.body().getStatus(), Toast.LENGTH_SHORT).show();
                                 if (response.body().getStatus().equals("OK")) {
-                                    SingeltonUser.Instance().setUser((User) response.body().getObject());
+                                    UserHolder.Instance().setUser((User) response.body().getObject());
                                     if (response.body().getObject().getRole().equals("admin")) {
                                         startActivity(new Intent(LoginActivity.this, ListCarsAdminActivity.class));
                                         Log.i("TAAAG", "" + response.body().getObject().getName());
