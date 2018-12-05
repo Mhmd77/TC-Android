@@ -69,10 +69,10 @@ public class ProfileFragment extends Fragment implements Callback<ApiResponse<Li
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         unbinder = ButterKnife.bind(this, view);
-        Call<ApiResponse<List<Car>>> call = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class).getUserCar();
-        call.enqueue(this);
         recyclerViewProfileCars.getBuilder()
                 .setItemViewCacheSize(2);
+        Call<ApiResponse<List<Car>>> call = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class).getUserCar();
+        call.enqueue(this);
         fillUserInfo();
         return view;
     }
@@ -95,8 +95,8 @@ public class ProfileFragment extends Fragment implements Callback<ApiResponse<Li
     public void onResponse(Call<ApiResponse<List<Car>>> call, Response<ApiResponse<List<Car>>> response) {
         if (response.isSuccessful()) {
             if (response.body().getStatus().equals("OK")) {
-                for (Car c :
-                        response.body().getObject()) {
+                for (int i = 0; i < 2; i++) {
+                    Car c = response.body().getObject().get(i);
                     recyclerViewProfileCars.addView(new CarView(recyclerViewProfileCars, getActivity(), c));
                 }
             } else {
