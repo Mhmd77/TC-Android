@@ -38,4 +38,15 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-rc1'
     implementation 'com.github.ybq:Android-SpinKit:1.2.0'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.mindorks:placeholderview:0.2.7'
+}
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def requested = details.requested
+        if (requested.group == "com.android.support") {
+            if (!requested.name.startsWith("multidex")) {
+                details.useVersion "27.1.1"
+            }
+        }
+    }
 }
