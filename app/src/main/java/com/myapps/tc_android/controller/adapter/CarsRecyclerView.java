@@ -61,29 +61,29 @@ public class CarsRecyclerView extends RecyclerView.Adapter<CarsRecyclerView.View
         TextView textviewCarKilometer;
         @BindView(R.id.textview_car_price)
         TextView textviewCarPrice;
-        @BindView(R.id.button_car_delete)
-        Button buttonCarDelete;
-        @BindView(R.id.button_car_update)
-        Button buttonCarUpdate;
-        @BindView(R.id.button_car_profile)
-        ImageView buttonCarProfile;
+//        @BindView(R.id.button_car_delete)
+//        Button buttonCarDelete;
+//        @BindView(R.id.button_car_update)
+//        Button buttonCarUpdate;
+//        @BindView(R.id.button_car_profile)
+//        ImageView buttonCarProfile;
 
         ViewHolder(final View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             if (onItemClickListener instanceof AdminOnItemClickListener) {
-                buttonCarUpdate.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ((AdminOnItemClickListener) onItemClickListener).updateOnClick(v, getAdapterPosition());
-                    }
-                });
-                buttonCarDelete.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ((AdminOnItemClickListener) onItemClickListener).deleteOnClick(v, getAdapterPosition());
-                    }
-                });
+//                buttonCarUpdate.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        ((AdminOnItemClickListener) onItemClickListener).updateOnClick(v, getAdapterPosition());
+//                    }
+//                });
+//                buttonCarDelete.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        ((AdminOnItemClickListener) onItemClickListener).deleteOnClick(v, getAdapterPosition());
+//                    }
+//                });
             }
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -113,15 +113,15 @@ public class CarsRecyclerView extends RecyclerView.Adapter<CarsRecyclerView.View
         holder.textviewCarFactory.setText(item.getFactory());
         holder.textviewCarKilometer.setText(String.valueOf(item.getKilometer()));
         holder.textviewCarPrice.setText(String.valueOf(item.getPrice()));
-        holder.buttonCarProfile.setVisibility(View.VISIBLE);
-        if (!isAdmin) {
-            holder.buttonCarDelete.setVisibility(View.GONE);
-            holder.buttonCarUpdate.setVisibility(View.GONE);
-        } else {
-            holder.buttonCarDelete.setVisibility(View.VISIBLE);
-            holder.buttonCarUpdate.setVisibility(View.VISIBLE);
-
-        }
+//        holder.buttonCarProfile.setVisibility(View.VISIBLE);
+//        if (!isAdmin) {
+//            holder.buttonCarDelete.setVisibility(View.GONE);
+//            holder.buttonCarUpdate.setVisibility(View.GONE);
+//        } else {
+//            holder.buttonCarDelete.setVisibility(View.VISIBLE);
+//            holder.buttonCarUpdate.setVisibility(View.VISIBLE);
+//
+//        }
     }
 
 
