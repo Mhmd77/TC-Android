@@ -14,6 +14,7 @@ import com.myapps.tc_android.controller.network.ApiService;
 import com.myapps.tc_android.controller.network.RetrofitClientInstance;
 import com.myapps.tc_android.model.ApiResponse;
 import com.myapps.tc_android.model.LoginInfo;
+import com.myapps.tc_android.model.UserHolder;
 import com.myapps.tc_android.model.User;
 
 import butterknife.BindView;
@@ -50,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
                             if (response.isSuccessful()) {
                                 Toast.makeText(LoginActivity.this, response.body().getStatus(), Toast.LENGTH_SHORT).show();
                                 if (response.body().getStatus().equals("OK")) {
+                                    UserHolder.Instance().setUser((User) response.body().getObject());
                                     if (response.body().getObject().getRole().equals("admin")) {
                                         startActivity(new Intent(LoginActivity.this, ListCarsAdminActivity.class));
                                         Log.i("TAAAG", "" + response.body().getObject().getName());

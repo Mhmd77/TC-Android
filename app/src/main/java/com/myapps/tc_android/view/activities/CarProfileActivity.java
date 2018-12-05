@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.model.Car;
-import com.myapps.tc_android.model.SingeltonUser;
+import com.myapps.tc_android.model.UserHolder;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,7 +43,7 @@ public class CarProfileActivity extends AppCompatActivity {
         Intent i = getIntent();
         car = (Car) i.getSerializableExtra("Car");
         setVariables(car);
-        if(SingeltonUser.Instance().getUser().getName().equals("admin") == false){
+        if(UserHolder.Instance().getUser().getName().equals("admin") == false){
             buttonEditCarprofile.setVisibility(View.GONE);
         }
     }
