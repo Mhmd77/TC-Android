@@ -56,7 +56,7 @@ public class CarProfileActivity extends AppCompatActivity implements Callback<Ap
         Intent i = getIntent();
         car = (Car) i.getSerializableExtra("Car");
         setVariables(car);
-        if(UserHolder.Instance().getUser().getName().equals("admin") == false){
+        if(UserHolder.Instance().getUser().getRole().equals("admin") == false){
             buttonEditCarprofile.setVisibility(View.GONE);
             buttonDeleteCarProfile.setVisibility(View.GONE);
         }
