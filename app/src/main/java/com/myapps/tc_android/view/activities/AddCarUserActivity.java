@@ -1,9 +1,15 @@
 package com.myapps.tc_android.view.activities;
 
+import android.Manifest;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -22,6 +28,8 @@ import com.myapps.tc_android.model.Car;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import in.mayanknagwanshi.imagepicker.imageCompression.ImageCompressionListener;
+import in.mayanknagwanshi.imagepicker.imagePicker.ImagePicker;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,12 +52,14 @@ public class AddCarUserActivity extends AppCompatActivity implements Callback<Ap
     EditText editTextAddCarPrice;
     @BindView(R.id.button_addCar)
     Button buttonAddCar;
-
+    private ImagePicker imagePicker;
+    private String TAG = AddCarUserActivity.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_car_admin);
         ButterKnife.bind(this);
+        imagePicker = new ImagePicker();
     }
 
     @OnClick(R.id.button_addCar)
@@ -163,5 +173,64 @@ public class AddCarUserActivity extends AppCompatActivity implements Callback<Ap
     public void onFailure(@NonNull Call<ApiResponse<Car>> call, @NonNull Throwable t) {
         Log.e("Connection", "Failed To Connect : " + t.getMessage());
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, final int resultCode, Intent data) {
+        if (requestCode == ImagePicker.SELECT_IMAGE && resultCode == RESULT_OK) {
+            imagePicker.addOnCompressListener(new ImageCompressionListener() {
+                @Override
+                public void onStart() {
+
+                }
+
+                @Override
+                public void onCompressed(String filePath) {//filePath of the compressed image
+                    Bitmap selectedImage = BitmapFactory.decodeFile(filePath);
+                }
+            });
+        }
+        String filePath = imagePicker.getImageFilePath(data);
+        if (filePath != null) {
+            Bitmap selectedImage = BitmapFactory.decodeFile(filePath);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @OnClick(R.id.button_chooseImage)
+    public void onPickImage() {
+        if (isStoragePermissionGranted()) {
+            imagePicker.withActivity(this)
+                    .withCompression(false)
+                    .start();
+        }
+    }
+
+    public boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v(TAG, "Permission is granted");
+                return true;
+            } else {
+
+                Log.v(TAG, "Permission is revoked");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                return false;
+            }
+        } else { //permission is automatically granted on sdk<23 upon installation
+            Log.v(TAG, "Permission is granted");
+            return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Log.v(TAG, "Permission: " + permissions[0] + "was " + grantResults[0]);
+            //resume tasks needing this permission
+            onPickImage();
+        }
     }
 }
