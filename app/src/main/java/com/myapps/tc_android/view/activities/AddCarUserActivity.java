@@ -34,6 +34,10 @@ import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import in.mayanknagwanshi.imagepicker.imageCompression.ImageCompressionListener;
 import in.mayanknagwanshi.imagepicker.imagePicker.ImagePicker;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -60,6 +64,8 @@ public class AddCarUserActivity extends AppCompatActivity implements Callback<Ap
     CircleImageView imageviewPreviewImage;
     private ImagePicker imagePicker;
     private String TAG = AddCarUserActivity.class.getSimpleName();
+    private File image;
+    private Car car;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,9 +170,9 @@ public class AddCarUserActivity extends AppCompatActivity implements Callback<Ap
     public void onResponse(@NonNull Call<ApiResponse<Car>> call, @NonNull Response<ApiResponse<Car>> response) {
         if (response.isSuccessful()) {
             if (response.body().getStatus().equals("OK")) {
-                Toast.makeText(AddCarUserActivity.this, "Car Added Successfully ", Toast.LENGTH_SHORT).show();
-                finish();
-                startActivity(new Intent(AddCarUserActivity.this, ListCarsActivity.class));
+                car = response.body().getObject();
+                sendPhoto();
+                Toast.makeText(AddCarUserActivity.this, car.getName() + " Added Successfully ", Toast.LENGTH_SHORT).show();
             } else {
                 Log.e("Add Car Error", " status : " + response.body().getStatus());
             }
@@ -195,8 +201,7 @@ public class AddCarUserActivity extends AppCompatActivity implements Callback<Ap
                 public void onCompressed(String filePath) {
                     Bitmap bitmap = BitmapFactory.decodeFile(filePath);
                     imageviewPreviewImage.setImageBitmap(bitmap);
-                    File file = new File(filePath);
-                    Log.i(TAG, "file path: " + file.length());
+                    image = new File(filePath);
                 }
             });
         }
@@ -204,8 +209,7 @@ public class AddCarUserActivity extends AppCompatActivity implements Callback<Ap
         if (filePath != null) {
             Bitmap bitmap = BitmapFactory.decodeFile(filePath);
             imageviewPreviewImage.setImageBitmap(bitmap);
-            File file = new File(filePath);
-            Log.i(TAG, "file path: " + file.length());
+            image = new File(filePath);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -244,5 +248,30 @@ public class AddCarUserActivity extends AppCompatActivity implements Callback<Ap
             Log.v(TAG, "Permission: " + permissions[0] + "was " + grantResults[0]);
             onPickImage();
         }
+    }
+
+    private void sendPhoto() {
+        ApiService service = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
+        RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), image);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file", image.getName(), reqFile);
+        Call req = service.uploadImage(body, car.getId());
+        req.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Log.i(TAG, response.body().toString());
+                    Log.i(TAG, "image " + image.getName() + " uploaded successfully");
+                    finish();
+                    startActivity(new Intent(AddCarUserActivity.this, HomePageActivity.class));
+                } else {
+                    Log.e(TAG, "uploading image failed with code " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 }
