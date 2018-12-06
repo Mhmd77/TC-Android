@@ -1,11 +1,13 @@
 package com.myapps.tc_android.view.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,11 +20,13 @@ import com.myapps.tc_android.model.Car;
 import com.myapps.tc_android.model.CarView;
 import com.myapps.tc_android.model.User;
 import com.myapps.tc_android.model.UserHolder;
+import com.myapps.tc_android.view.activities.AddCarUserActivity;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -111,5 +115,14 @@ public class ProfileFragment extends Fragment implements Callback<ApiResponse<Li
     @Override
     public void onFailure(Call<ApiResponse<List<Car>>> call, Throwable t) {
         Log.e("Error", "something went wrong!...");
+    }
+
+    @OnClick(R.id.button_profile_add_car)
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.button_profile_add_car:
+                startActivity(new Intent(getActivity(), AddCarUserActivity.class));
+                break;
+        }
     }
 }
