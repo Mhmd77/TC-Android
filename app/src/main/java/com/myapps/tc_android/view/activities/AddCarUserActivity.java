@@ -25,6 +25,8 @@ import com.myapps.tc_android.controller.network.RetrofitClientInstance;
 import com.myapps.tc_android.model.ApiResponse;
 import com.myapps.tc_android.model.Car;
 
+import java.io.File;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -54,6 +56,7 @@ public class AddCarUserActivity extends AppCompatActivity implements Callback<Ap
     Button buttonAddCar;
     private ImagePicker imagePicker;
     private String TAG = AddCarUserActivity.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -185,14 +188,16 @@ public class AddCarUserActivity extends AppCompatActivity implements Callback<Ap
                 }
 
                 @Override
-                public void onCompressed(String filePath) {//filePath of the compressed image
-                    Bitmap selectedImage = BitmapFactory.decodeFile(filePath);
+                public void onCompressed(String filePath) {
+                    File file = new File(filePath);
+                    Log.i(TAG, "file path: " + file.length());
                 }
             });
         }
         String filePath = imagePicker.getImageFilePath(data);
         if (filePath != null) {
-            Bitmap selectedImage = BitmapFactory.decodeFile(filePath);
+            File file = new File(filePath);
+            Log.i(TAG, "file path: " + file.length());
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -218,7 +223,7 @@ public class AddCarUserActivity extends AppCompatActivity implements Callback<Ap
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
                 return false;
             }
-        } else { //permission is automatically granted on sdk<23 upon installation
+        } else {
             Log.v(TAG, "Permission is granted");
             return true;
         }
@@ -229,7 +234,6 @@ public class AddCarUserActivity extends AppCompatActivity implements Callback<Ap
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             Log.v(TAG, "Permission: " + permissions[0] + "was " + grantResults[0]);
-            //resume tasks needing this permission
             onPickImage();
         }
     }
