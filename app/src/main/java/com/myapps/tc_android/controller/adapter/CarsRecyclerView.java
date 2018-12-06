@@ -11,7 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.myapps.tc_android.R;
+import com.myapps.tc_android.controller.network.ApiService;
+import com.myapps.tc_android.controller.network.RetrofitClientInstance;
 import com.myapps.tc_android.model.Car;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -61,6 +64,8 @@ public class CarsRecyclerView extends RecyclerView.Adapter<CarsRecyclerView.View
         TextView textviewCarKilometer;
         @BindView(R.id.textview_car_price)
         TextView textviewCarPrice;
+        @BindView(R.id.imageview_car_logo)
+        ImageView imageViewCarLogo;
 //        @BindView(R.id.button_car_delete)
 //        Button buttonCarDelete;
 //        @BindView(R.id.button_car_update)
@@ -113,6 +118,10 @@ public class CarsRecyclerView extends RecyclerView.Adapter<CarsRecyclerView.View
         holder.textviewCarFactory.setText(item.getFactory());
         holder.textviewCarKilometer.setText(String.valueOf(item.getKilometer()));
         holder.textviewCarPrice.setText(String.valueOf(item.getPrice()));
+        Picasso.get()
+                .load(RetrofitClientInstance.getBaseUrl() + ApiService.imageApi + item.getImageUrl())
+                .error(R.drawable.sample)
+                .into(holder.imageViewCarLogo);
 //        holder.buttonCarProfile.setVisibility(View.VISIBLE);
 //        if (!isAdmin) {
 //            holder.buttonCarDelete.setVisibility(View.GONE);
