@@ -1,29 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#242424"
-    android:fillViewport="true"
-    android:orientation="vertical"
-    tools:context=".view.activities.AddCarAdminActivity">
+    android:fillViewport="true">
 
-
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:fillViewport="true"
         android:orientation="vertical"
-        android:weightSum="1">
+        tools:context=".view.activities.AddCarAdminActivity">
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageview_previewImage"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:src="@android:color/transparent"
+            app:civ_border_color="@color/colorPrimaryDark"
+            app:civ_border_width="3dp"
+            app:civ_circle_background_color="@color/colorPrimary"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/button_chooseImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:layout_marginEnd="6dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_add_a_photo_white_24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageview_previewImage"
+            app:layout_constraintRight_toRightOf="@id/imageview_previewImage" />
 
         <EditText
             android:id="@+id/editText_addCar_name"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginStart="5dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/bg_login_edittext"
             android:drawablePadding="3dp"
@@ -32,137 +55,135 @@
             android:hint="@string/car_name"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/button_chooseImage"
+            app:layout_constraintLeft_toRightOf="@id/button_chooseImage"
+            app:layout_constraintRight_toRightOf="parent"
             tools:ignore="RtlCompat" />
 
-
-        <EditText
-            android:id="@+id/editText_addCar_factory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginStart="5dp"
-            android:background="@drawable/bg_login_edittext"
-            android:drawablePadding="3dp"
-            android:drawableStart="@drawable/ic_build_white_24dp"
-            android:fontFamily="@font/font_normal"
-            android:hint="@string/factory"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            tools:ignore="RtlCompat" />
-
-        <EditText
-            android:id="@+id/editText_addCar_year"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginStart="5dp"
-            android:background="@drawable/bg_login_edittext"
-            android:drawablePadding="3dp"
-            android:drawableStart="@drawable/ic_perm_contact_calendar_white_24dp"
-            android:fontFamily="@font/font_normal"
-            android:hint="@string/year"
-            android:inputType="number"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            tools:ignore="RtlCompat" />
-
-        <EditText
-            android:id="@+id/editText_addCar_kilometer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginStart="5dp"
-            android:background="@drawable/bg_login_edittext"
-            android:drawablePadding="3dp"
-            android:drawableStart="@drawable/ic_ev_station_white_24dp"
-            android:fontFamily="@font/font_normal"
-            android:hint="@string/kilometer"
-            android:inputType="number"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            tools:ignore="RtlCompat" />
-
-        <EditText
-            android:id="@+id/editText_addCar_color"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginStart="5dp"
-            android:background="@drawable/bg_login_edittext"
-            android:drawablePadding="3dp"
-            android:drawableStart="@drawable/ic_color_lens_white_24dp"
-            android:fontFamily="@font/font_normal"
-            android:hint="@string/color"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            tools:ignore="RtlCompat" />
-
-        <CheckBox
-            android:id="@+id/checkbox_addCar_automate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginStart="5dp"
-            android:background="@drawable/bg_login_edittext"
-            android:buttonTint="@color/white"
-            android:drawableLeft="@color/white"
-            android:drawablePadding="-15dp"
-            android:drawableStart="@color/white"
-            android:fontFamily="@font/font_normal"
-            android:hint="@string/is_automate"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white" />
-
-        <EditText
-            android:id="@+id/editText_addCar_price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginStart="5dp"
-            android:background="@drawable/bg_login_edittext"
-            android:drawablePadding="3dp"
-            android:drawableStart="@drawable/ic_attach_money_white_24dp"
-            android:fontFamily="@font/font_normal"
-            android:hint="@string/price"
-            android:inputType="number"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            tools:ignore="RtlCompat" />
-
-        <Button
-            android:id="@+id/button_chooseImage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:fontFamily="@font/font_normal"
-            android:text="@string/string_select_image"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
-
-        <View
+        <LinearLayout
+            android:id="@+id/linear_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.9" />
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            android:weightSum="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_chooseImage">
 
 
-        <Button
-            android:id="@+id/button_addCar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginEnd="5dp"
-            android:layout_marginStart="5dp"
-            android:background="@drawable/bg_login_button"
-            android:hint="@string/add_car"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white" />
+            <EditText
+                android:id="@+id/editText_addCar_factory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/bg_login_edittext"
+                android:drawablePadding="3dp"
+                android:drawableStart="@drawable/ic_build_white_24dp"
+                android:fontFamily="@font/font_normal"
+                android:hint="@string/factory"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                tools:ignore="RtlCompat" />
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/editText_addCar_year"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/bg_login_edittext"
+                android:drawablePadding="3dp"
+                android:drawableStart="@drawable/ic_perm_contact_calendar_white_24dp"
+                android:fontFamily="@font/font_normal"
+                android:hint="@string/year"
+                android:inputType="number"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                tools:ignore="RtlCompat" />
+
+            <EditText
+                android:id="@+id/editText_addCar_kilometer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/bg_login_edittext"
+                android:drawablePadding="3dp"
+                android:drawableStart="@drawable/ic_ev_station_white_24dp"
+                android:fontFamily="@font/font_normal"
+                android:hint="@string/kilometer"
+                android:inputType="number"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                tools:ignore="RtlCompat" />
+
+            <EditText
+                android:id="@+id/editText_addCar_color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/bg_login_edittext"
+                android:drawablePadding="3dp"
+                android:drawableStart="@drawable/ic_color_lens_white_24dp"
+                android:fontFamily="@font/font_normal"
+                android:hint="@string/color"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                tools:ignore="RtlCompat" />
+
+            <CheckBox
+                android:id="@+id/checkbox_addCar_automate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/bg_login_edittext"
+                android:buttonTint="@color/white"
+                android:drawableLeft="@color/white"
+                android:drawablePadding="-15dp"
+                android:drawableStart="@color/white"
+                android:fontFamily="@font/font_normal"
+                android:hint="@string/is_automate"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
+
+            <EditText
+                android:id="@+id/editText_addCar_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/bg_login_edittext"
+                android:drawablePadding="3dp"
+                android:drawableStart="@drawable/ic_attach_money_white_24dp"
+                android:fontFamily="@font/font_normal"
+                android:hint="@string/price"
+                android:inputType="number"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                tools:ignore="RtlCompat" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.9" />
 
 
-</android.support.constraint.ConstraintLayout>
+            <Button
+                android:id="@+id/button_addCar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/bg_login_button"
+                android:hint="@string/add_car"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
+
+        </LinearLayout>
+
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

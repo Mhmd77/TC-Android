@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -30,6 +31,7 @@ import java.io.File;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 import in.mayanknagwanshi.imagepicker.imageCompression.ImageCompressionListener;
 import in.mayanknagwanshi.imagepicker.imagePicker.ImagePicker;
 import retrofit2.Call;
@@ -54,6 +56,8 @@ public class AddCarUserActivity extends AppCompatActivity implements Callback<Ap
     EditText editTextAddCarPrice;
     @BindView(R.id.button_addCar)
     Button buttonAddCar;
+    @BindView(R.id.imageview_previewImage)
+    CircleImageView imageviewPreviewImage;
     private ImagePicker imagePicker;
     private String TAG = AddCarUserActivity.class.getSimpleName();
 
@@ -189,6 +193,8 @@ public class AddCarUserActivity extends AppCompatActivity implements Callback<Ap
 
                 @Override
                 public void onCompressed(String filePath) {
+                    Bitmap bitmap = BitmapFactory.decodeFile(filePath);
+                    imageviewPreviewImage.setImageBitmap(bitmap);
                     File file = new File(filePath);
                     Log.i(TAG, "file path: " + file.length());
                 }
@@ -196,6 +202,8 @@ public class AddCarUserActivity extends AppCompatActivity implements Callback<Ap
         }
         String filePath = imagePicker.getImageFilePath(data);
         if (filePath != null) {
+            Bitmap bitmap = BitmapFactory.decodeFile(filePath);
+            imageviewPreviewImage.setImageBitmap(bitmap);
             File file = new File(filePath);
             Log.i(TAG, "file path: " + file.length());
         }
@@ -213,7 +221,7 @@ public class AddCarUserActivity extends AppCompatActivity implements Callback<Ap
 
     public boolean isStoragePermissionGranted() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED) {
                 Log.v(TAG, "Permission is granted");
                 return true;
