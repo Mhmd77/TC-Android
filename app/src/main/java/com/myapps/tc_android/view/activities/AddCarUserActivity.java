@@ -171,7 +171,12 @@ public class AddCarUserActivity extends AppCompatActivity implements Callback<Ap
         if (response.isSuccessful()) {
             if (response.body().getStatus().equals("OK")) {
                 car = response.body().getObject();
-                sendPhoto();
+                if (image != null) {
+                    sendPhoto();
+                } else {
+                    finish();
+                    startActivity(new Intent(AddCarUserActivity.this, HomePageActivity.class));
+                }
                 Toast.makeText(AddCarUserActivity.this, car.getName() + " Added Successfully ", Toast.LENGTH_SHORT).show();
             } else {
                 Log.e("Add Car Error", " status : " + response.body().getStatus());
