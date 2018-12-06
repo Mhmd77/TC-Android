@@ -1,7 +1,6 @@
 package com.myapps.tc_android.model;
 
 
-
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -25,9 +24,11 @@ public class Car implements Serializable {
     private boolean automate;
     @SerializedName("price")
     private int price;
+    @SerializedName("image_url")
+    private String imageUrl;
     private int user_id;
 
-    public Car(int id, String name, String factory, int year, int kilometer, String color, String description, boolean automate, int price) {
+    public Car(int id, String name, String factory, int year, int kilometer, String color, String description, boolean automate, int price, String imageUrl) {
         this.id = id;
         this.name = name;
         this.factory = factory;
@@ -38,6 +39,7 @@ public class Car implements Serializable {
         this.automate = automate;
         this.price = price;
         this.user_id = 1;
+        this.imageUrl = imageUrl;
     }
 
     public String getName() {
@@ -74,5 +76,9 @@ public class Car implements Serializable {
 
     public int getId() {
         return id;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 }

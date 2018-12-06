@@ -13,6 +13,7 @@ public class CarBuilder {
     private String description;
     private boolean automate;
     private int price;
+    private String imageUrl;
 
     public CarBuilder setId(int id) {
         this.id = id;
@@ -59,7 +60,12 @@ public class CarBuilder {
         return this;
     }
 
+    public CarBuilder setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+        return this;
+    }
+
     public Car createCar() {
-        return new Car(id, name, factory, year, kilometer, color, description, automate, price);
+        return new Car(id, name, factory, year, kilometer, color, description, automate, price,imageUrl);
     }
 }
