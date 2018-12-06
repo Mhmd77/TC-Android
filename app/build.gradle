@@ -37,4 +37,5 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-rc1'
     implementation 'com.github.ybq:Android-SpinKit:1.2.0'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'nl.psdcompany:duo-navigation-drawer:2.0.8'
 }
