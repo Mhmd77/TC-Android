@@ -37,4 +37,8 @@ public class RetrofitClientInstance {
         }
         return retrofit;
     }
+
+    public static String getBaseUrl() {
+        return BASE_URL;
+    }
 }

@@ -22,7 +22,7 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface ApiService<C> {
-
+    String imageApi = "api/v1/images/";
 
     @POST("/api/v1/users/login")
     Call<ApiResponse<User>> loginUser(@Body LoginInfo user);
