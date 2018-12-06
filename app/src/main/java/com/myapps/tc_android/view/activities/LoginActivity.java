@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
                                 if (response.body().getStatus().equals("OK")) {
                                     UserHolder.Instance().setUser((User) response.body().getObject());
                                     if (response.body().getObject().getRole().equals("admin")) {
-                                        startActivity(new Intent(LoginActivity.this, ListCarsAdminActivity.class));
+                                        startActivity(new Intent(LoginActivity.this, HomePageAdminActivity.class));
                                         Log.i("TAAAG", "" + response.body().getObject().getName());
                                     } else {
                                         startActivity(new Intent(LoginActivity.this, HomePageActivity.class));

@@ -26,8 +26,13 @@
     <string name="title_home">Home</string>
     <string name="title_rent">Rent</string>
     <string name="title_my_cars">Cars</string>
+    <string name="home">Home</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="string_select_image">Select Image</string>
+    <string-array name="navigation_drawer_items_array">
+        <item>Cars</item>
+        <item>Users</item>
+    </string-array>
 </resources>

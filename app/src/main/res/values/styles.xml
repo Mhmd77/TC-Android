@@ -25,4 +25,8 @@
     <style name="BottomMenu" parent="Widget.Design.BottomNavigationView">
         <item name="android:fontFamily">@font/font_normal</item>
     </style>
+    <style name="MaterialDrawer.DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">false</item>
+        <item name="color">@android:color/white</item>
+    </style>
 </resources>
