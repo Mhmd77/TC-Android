@@ -27,6 +27,7 @@
     <string name="title_rent">Rent</string>
     <string name="title_my_cars">Cars</string>
     <string name="home">Home</string>
+    <string name="title_profile">Profile</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -35,4 +36,7 @@
         <item>Cars</item>
         <item>Users</item>
     </string-array>
+    <string name="cars">Cars</string>
+    <string name="string_see_all_cars">See All Cars</string>
+    <string name="string_add_new_car">Add A New Car</string>
 </resources>

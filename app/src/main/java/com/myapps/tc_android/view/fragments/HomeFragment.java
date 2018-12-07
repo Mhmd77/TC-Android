@@ -47,8 +47,6 @@ public class HomeFragment extends Fragment implements Callback<ApiResponse<List<
     RadioButton radioButtonSortAscending;
     @BindView(R.id.radioButtonSortDescending)
     RadioButton radioButtonSortDescending;
-    @BindView(R.id.actionButton_main_add_car)
-    FloatingActionButton actionButtonMainAddCar;
     @BindView(R.id.spinnerLoading)
     SpinKitView spinnerLoading;
     private CarsRecyclerView adapter;
@@ -133,12 +131,6 @@ public class HomeFragment extends Fragment implements Callback<ApiResponse<List<
     @Override
     public void onFailure(@NonNull Call<ApiResponse<List<Car>>> call, @NonNull Throwable t) {
         Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
-    }
-
-
-    @OnClick(R.id.actionButton_main_add_car)
-    public void onViewClicked() {
-        startActivity(new Intent(getActivity(), AddCarUserActivity.class));
     }
 
     @Override

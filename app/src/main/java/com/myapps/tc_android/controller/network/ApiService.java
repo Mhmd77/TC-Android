@@ -48,4 +48,7 @@ public interface ApiService<C> {
     @Multipart
     @POST("/api/v1/images/{carID}")
     Call<ResponseBody> uploadImage(@Part MultipartBody.Part image, @Path("carID") int carID);
+
+    @GET("/api/v1/cars/user")
+    Call<ApiResponse<List<Car>>> getUserCar();
 }
