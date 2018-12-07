@@ -21,7 +21,9 @@ import com.myapps.tc_android.model.CarView;
 import com.myapps.tc_android.model.User;
 import com.myapps.tc_android.model.UserHolder;
 import com.myapps.tc_android.view.activities.AddCarUserActivity;
+import com.myapps.tc_android.view.activities.UsersCarActivity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import butterknife.BindView;
@@ -51,6 +53,7 @@ public class ProfileFragment extends Fragment implements Callback<ApiResponse<Li
     @BindView(R.id.recyclerView_profile_cars)
     PlaceHolderView recyclerViewProfileCars;
     Unbinder unbinder;
+    private List<Car> cars;
 
     public ProfileFragment() {
     }
@@ -83,10 +86,12 @@ public class ProfileFragment extends Fragment implements Callback<ApiResponse<Li
 
     private void fillUserInfo() {
         User user = UserHolder.Instance().getUser();
-        textviewAge.setText(String.valueOf(user.getAge()));
-        textviewName.setText(user.getLastName() + ", " + user.getName());
-        textviewEmail.setText(user.getEmail());
-        textviewUsername.setText(user.getUsername());
+        if (user != null) {
+            textviewAge.setText(String.valueOf(user.getAge()));
+            textviewName.setText(user.getLastName() + ", " + user.getName());
+            textviewEmail.setText(user.getEmail());
+            textviewUsername.setText(user.getUsername());
+        }
     }
 
     @Override
@@ -99,6 +104,7 @@ public class ProfileFragment extends Fragment implements Callback<ApiResponse<Li
     public void onResponse(Call<ApiResponse<List<Car>>> call, Response<ApiResponse<List<Car>>> response) {
         if (response.isSuccessful()) {
             if (response.body().getStatus().equals("OK")) {
+                cars = response.body().getObject();
                 for (int i = 0; i < 2; i++) {
                     Car c = response.body().getObject().get(i);
                     recyclerViewProfileCars.addView(new CarView(recyclerViewProfileCars, getActivity(), c));
@@ -117,11 +123,16 @@ public class ProfileFragment extends Fragment implements Callback<ApiResponse<Li
         Log.e("Error", "something went wrong!...");
     }
 
-    @OnClick(R.id.button_profile_add_car)
+    @OnClick({R.id.button_profile_add_car, R.id.button_all_user_cars})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_profile_add_car:
                 startActivity(new Intent(getActivity(), AddCarUserActivity.class));
+                break;
+            case R.id.button_all_user_cars:
+                Intent intent = new Intent(getActivity(), UsersCarActivity.class);
+                intent.putExtra(UsersCarActivity.USERS_LIST_OF_CARS, (Serializable) cars);
+                startActivity(intent);
                 break;
         }
     }
