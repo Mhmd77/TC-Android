@@ -30,7 +30,10 @@ public interface ApiService<C> {
     @GET("/api/v1/cars")
     Call<ApiResponse<List<Car>>> getAllCars();
 
-    @DELETE("/api/v1/cars/{id}")
+    @GET("/api/v1/users")
+    Call<ApiResponse<List<User>>> getAllUsers();
+
+    @DELETE("/api/v1/users/{id}")
     Call<ApiResponse<Object>> deleteCar(@Path("id") int id);
 
     @PUT("/api/v1/cars/{id}")
