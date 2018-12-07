@@ -2,6 +2,8 @@
     <string name="app_name">Tc-Android</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
+    <string name="last_name">Last Name</string>
+    <string name="name">Name</string>
     <string name="create_new_account">Create New Account</string>
     <string name="login">Login</string>
     <string name="delete" tools:ignore="ExtraTranslation">Delete</string>
