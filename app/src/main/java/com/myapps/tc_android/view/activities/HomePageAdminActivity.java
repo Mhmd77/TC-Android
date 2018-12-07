@@ -22,6 +22,7 @@ import com.myapps.tc_android.R;
 import com.myapps.tc_android.controller.adapter.DrawerItemCustomAdapter;
 import com.myapps.tc_android.model.FragmentAdminData;
 import com.myapps.tc_android.view.fragments.ListCarsAdminFragment;
+import com.myapps.tc_android.view.fragments.ListUsersAdminFragment;
 import com.myapps.tc_android.view.fragments.RentFragment;
 
 import butterknife.BindView;
@@ -46,7 +47,7 @@ public class HomePageAdminActivity extends AppCompatActivity {
     private ListView mDrawerList;
     private CharSequence mTitle;
     ActionBarDrawerToggle mDrawerToggle;
-    private Fragment listCarsAdminFragment, rentFragment, active;
+    private Fragment listCarsAdminFragment, listUsersAdminFragment, active;
     private FragmentManager fragmentManager;
 
     @Override
@@ -81,10 +82,10 @@ public class HomePageAdminActivity extends AppCompatActivity {
     private void initFragmnets() {
         fragmentManager = getSupportFragmentManager();
         listCarsAdminFragment = ListCarsAdminFragment.newInstance();
-        rentFragment = RentFragment.newInstance();
+        listUsersAdminFragment = ListUsersAdminFragment.newInstance();
         active = listCarsAdminFragment;
 
-        fragmentManager.beginTransaction().add(R.id.content_frame, rentFragment).hide(rentFragment).commit();
+        fragmentManager.beginTransaction().add(R.id.content_frame, listUsersAdminFragment).hide(listUsersAdminFragment).commit();
         fragmentManager.beginTransaction().add(R.id.content_frame, listCarsAdminFragment).commit();
     }
 
@@ -114,7 +115,7 @@ public class HomePageAdminActivity extends AppCompatActivity {
                 break;
 
             case 1:
-                fragment = rentFragment;
+                fragment = listUsersAdminFragment;
                 actionButtonMainAddCar.setVisibility(View.GONE);
                 break;
 
