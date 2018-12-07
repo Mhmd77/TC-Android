@@ -17,9 +17,10 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView_main_cars"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_height="match_parent"
         android:layout_below="@id/sortbar"
-        android:layout_gravity="bottom">
+        android:layout_centerHorizontal="true">
 
     </android.support.v7.widget.RecyclerView>
 
