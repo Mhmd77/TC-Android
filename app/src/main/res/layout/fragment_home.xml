@@ -14,15 +14,13 @@
         android:layout_centerInParent="true" />
 
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView_main_cars"
+    <com.mindorks.placeholderview.PlaceHolderView
+        android:id="@+id/placeHolder_main_cars"
         android:layout_width="match_parent"
-        android:layout_margin="8dp"
         android:layout_height="match_parent"
         android:layout_below="@id/sortbar"
-        android:layout_centerHorizontal="true">
-
-    </android.support.v7.widget.RecyclerView>
+        android:layout_centerHorizontal="true"
+        android:layout_margin="8dp" />
 
 
     <com.github.ybq.android.spinkit.SpinKitView
