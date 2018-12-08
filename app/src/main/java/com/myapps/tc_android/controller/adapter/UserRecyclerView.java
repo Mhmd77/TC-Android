@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.model.User;
+import com.myapps.tc_android.model.UserHolder;
 
 import java.util.List;
 
@@ -62,10 +63,10 @@ public class UserRecyclerView extends RecyclerView.Adapter<UserRecyclerView.View
         ViewHolder(final View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(new View.OnClickListener() {
+            deleteUser.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onItemClickListener.deleteOnclick(itemView, getLayoutPosition());
+                    onItemClickListener.deleteOnclick(getLayoutPosition());
                 }
             });
         }
@@ -84,6 +85,12 @@ public class UserRecyclerView extends RecyclerView.Adapter<UserRecyclerView.View
     @Override
     public void onBindViewHolder(UserRecyclerView.ViewHolder holder, final int position) {
         User item = list.get(position);
+        if(item.getId() == UserHolder.Instance().getUser().getId()){
+            holder.deleteUser.setVisibility(View.GONE);
+        }
+        if(item.getRole().equals("super_admin")) {
+            holder.deleteUser.setVisibility(View.GONE);
+        }
         holder.textviewName.setText("Name : " + item.getName());
         holder.textviewUsername.setText("Username : " + item.getUsername());
         holder.textviewEmail.setText("Email : " + item.getEmail());
@@ -93,7 +100,7 @@ public class UserRecyclerView extends RecyclerView.Adapter<UserRecyclerView.View
 
     public interface OnItemClickListener  {
 
-        void deleteOnclick(View itemView, int layoutPosition);
+        void deleteOnclick(int layoutPosition);
     }
 
     @Override
