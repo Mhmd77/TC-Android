@@ -46,7 +46,7 @@ public class UpdateCarAdminActivity extends AppCompatActivity implements Callbac
     Button button_update_car;
 
 
-    Car car;
+    Car carOld;
 
 
     @Override
@@ -55,8 +55,8 @@ public class UpdateCarAdminActivity extends AppCompatActivity implements Callbac
         setContentView(R.layout.activity_update_car_admin);
         ButterKnife.bind(this);
         Intent i = getIntent();
-        car = (Car) i.getSerializableExtra("Car");
-        setVariables(car);
+        carOld = (Car) i.getSerializableExtra("Car");
+        setVariables(carOld);
     }
 
     private void setVariables(Car car) {
@@ -145,7 +145,7 @@ public class UpdateCarAdminActivity extends AppCompatActivity implements Callbac
 
     private void updateCar(Car car) {
         ApiService service = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
-        Call<ApiResponse<Car>> call = service.updateCar(car, this.car.getId());
+        Call<ApiResponse<Car>> call = service.updateCar(car, this.carOld.getId());
         call.enqueue(this);
     }
 
@@ -156,6 +156,7 @@ public class UpdateCarAdminActivity extends AppCompatActivity implements Callbac
             if (response.body().getStatus().equals("OK")) {
                 Toast.makeText(UpdateCarAdminActivity.this, "Car Updated Successfully ", Toast.LENGTH_SHORT).show();
                 finish();
+                startActivity(new Intent(UpdateCarAdminActivity.this, HomePageAdminActivity.class));
 
 //                Intent intent = new Intent(UpdateCarAdminActivity.this, ListCarsAdminActivity.class);
 //                startActivity(intent);

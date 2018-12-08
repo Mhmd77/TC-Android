@@ -102,9 +102,9 @@ public class ListCarsAdminFragment extends Fragment implements Callback<ApiRespo
 
     @Override
     public void cardOnClick(View view, int position) {
-        Car car = adapter.getList().get(position);
+        int carId = adapter.getList().get(position).getId();
         Intent intent = new Intent(getActivity(), CarProfileActivity.class);
-        intent.putExtra("Car", car);
+        intent.putExtra("carId",carId);
         startActivity(intent);
     }
     @Override
