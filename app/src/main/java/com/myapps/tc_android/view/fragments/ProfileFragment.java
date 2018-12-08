@@ -105,11 +105,9 @@ public class ProfileFragment extends Fragment implements Callback<ApiResponse<Li
         if (response.isSuccessful()) {
             if (response.body().getStatus().equals("OK")) {
                 cars = response.body().getObject();
-                if (cars.size() != 0) {
-                    for (int i = 0; i < 2; i++) {
-                        Car c = response.body().getObject().get(i);
-                        recyclerViewProfileCars.addView(new CarView(recyclerViewProfileCars, getActivity(), c));
-                    }
+                for (int i = 0; i < 2 && i < cars.size(); i++) {
+                    Car c = response.body().getObject().get(i);
+                    recyclerViewProfileCars.addView(new CarView(recyclerViewProfileCars, getActivity(), c));
                 }
             } else {
                 Log.e("Error", response.body().getStatus());
