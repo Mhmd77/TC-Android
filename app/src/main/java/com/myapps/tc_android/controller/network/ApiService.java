@@ -34,6 +34,9 @@ public interface ApiService<C> {
     Call<ApiResponse<List<User>>> getAllUsers();
 
     @DELETE("/api/v1/users/{id}")
+    Call<ApiResponse<Object>> deleteUser(@Path("id") int id);
+
+    @DELETE("/api/v1/cars/{id}")
     Call<ApiResponse<Object>> deleteCar(@Path("id") int id);
 
     @PUT("/api/v1/cars/{id}")
