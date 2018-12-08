@@ -1,6 +1,7 @@
 package com.myapps.tc_android.model;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.constraint.Placeholder;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PagerSnapHelper;
@@ -17,6 +18,7 @@ import com.mindorks.placeholderview.annotations.NonReusable;
 import com.mindorks.placeholderview.annotations.Resolve;
 import com.mindorks.placeholderview.annotations.View;
 import com.myapps.tc_android.R;
+import com.myapps.tc_android.view.activities.CarProfileActivity;
 
 import java.util.List;
 
@@ -68,4 +70,10 @@ public class CarView {
         flipper.showNext();
     }
 
+    @Click(R.id.viewFlipper_car)
+    public void cardOnClick() {
+        Intent intent = new Intent(context, CarProfileActivity.class);
+        intent.putExtra("Car", car);
+        context.startActivity(intent);
+    }
 }
