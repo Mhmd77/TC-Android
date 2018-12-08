@@ -5,8 +5,13 @@
     <font
         android:font="@font/amazons"
         android:fontStyle="normal"
-        app:font="@font/amazons"
+        app:font="@font/poppins_regular"
         app:fontStyle="normal"
         />
+    <font
+        android:font="@font/amazons"
+        android:fontStyle="italic"
+        app:font="@font/poppins_italic"
+        app:fontStyle="italic" />
 
 </font-family>

@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.activities.ListCarsActivity"
-    android:background="@color/gray">
+    tools:context=".view.activities.ListCarsActivity">
 
     <include
         android:id="@+id/sortbar"
@@ -15,14 +14,13 @@
         android:layout_centerInParent="true" />
 
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView_main_cars"
+    <com.mindorks.placeholderview.PlaceHolderView
+        android:id="@+id/placeHolder_main_cars"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/sortbar"
-        android:layout_gravity="bottom">
-
-    </android.support.v7.widget.RecyclerView>
+        android:layout_centerHorizontal="true"
+        android:layout_margin="8dp" />
 
 
     <com.github.ybq.android.spinkit.SpinKitView

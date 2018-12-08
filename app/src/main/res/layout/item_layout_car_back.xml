@@ -1,0 +1,71 @@
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardCornerRadius="8dp">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textview_car_description_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/amazons"
+            android:text="DESCRIPTION"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            android:alpha="0.3"
+            android:background="#000"
+            app:layout_constraintLeft_toLeftOf="@id/textview_car_description_title"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textview_car_description_title" />
+
+        <TextView
+            android:id="@+id/textview_car_description"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="16dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/font_normal"
+            android:text="It adopts several frame interfaces for users to add different places, hotels, workstations or new offices, etc. And every place is allowed to add further dates, photos, descriptions and more details so that it could help remember everything unforgettable. And its pure white background makes all added photos, tags, notes and descriptions more outstanding, which could be good for users to recall or share these memories with their friends or families."
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textColor="@android:color/black"
+            app:layout_constraintBottom_toTopOf="@id/button_see_car"
+            app:layout_constraintLeft_toLeftOf="@id/divider"
+            app:layout_constraintRight_toRightOf="@id/divider"
+            app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+        <Button
+            android:id="@+id/button_see_car"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:background="@android:color/transparent"
+            android:drawableLeft="@drawable/ic_keyboard_arrow_left_red_500_24dp"
+            android:drawableStart="@drawable/ic_keyboard_arrow_left_red_500_24dp"
+            android:text="BACK"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview_car_description" />
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

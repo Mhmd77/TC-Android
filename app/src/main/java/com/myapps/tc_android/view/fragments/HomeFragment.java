@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.DoubleBounce;
+import com.mindorks.placeholderview.PlaceHolderView;
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.controller.Utils;
 import com.myapps.tc_android.controller.adapter.CarsRecyclerView;
@@ -26,6 +27,7 @@ import com.myapps.tc_android.controller.network.ApiService;
 import com.myapps.tc_android.controller.network.RetrofitClientInstance;
 import com.myapps.tc_android.model.ApiResponse;
 import com.myapps.tc_android.model.Car;
+import com.myapps.tc_android.model.CarView;
 import com.myapps.tc_android.view.activities.AddCarUserActivity;
 import com.myapps.tc_android.view.activities.CarProfileActivity;
 import com.myapps.tc_android.view.activities.HomePageActivity;
@@ -41,15 +43,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomeFragment extends Fragment implements Callback<ApiResponse<List<Car>>>, CarsRecyclerView.UserOnItemClickListener, View.OnClickListener {
-    @BindView(R.id.recyclerView_main_cars)
-    RecyclerView recyclerViewMainCars;
+    @BindView(R.id.placeHolder_main_cars)
+    PlaceHolderView placeHolderMainCars;
     @BindView(R.id.radioButtonSortAscending)
     RadioButton radioButtonSortAscending;
     @BindView(R.id.radioButtonSortDescending)
     RadioButton radioButtonSortDescending;
     @BindView(R.id.spinnerLoading)
     SpinKitView spinnerLoading;
-    private CarsRecyclerView adapter;
     private ApiService service;
     @BindView(R.id.sortbar)
     View sortBar;
@@ -78,6 +79,7 @@ public class HomeFragment extends Fragment implements Callback<ApiResponse<List<
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         unbinder = ButterKnife.bind(this, view);
         service = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
+        placeHolderMainCars.getBuilder().setLayoutManager(new LinearLayoutManager(getActivity()));
         updateList();
         initSortBar();
         initSpinner();
@@ -114,9 +116,10 @@ public class HomeFragment extends Fragment implements Callback<ApiResponse<List<
     }
 
     private void generateDataList(final List<Car> cars) {
-        adapter = new CarsRecyclerView(getActivity(), cars, this);
-        recyclerViewMainCars.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerViewMainCars.setAdapter(adapter);
+        for (Car c :
+                cars) {
+            placeHolderMainCars.addView(new CarView(placeHolderMainCars, getActivity(), c));
+        }
     }
 
     @Override
@@ -135,7 +138,7 @@ public class HomeFragment extends Fragment implements Callback<ApiResponse<List<
 
     @Override
     public void cardOnClick(View view, int position) {
-        Car car = adapter.getList().get(position);
+        Car car = (Car) placeHolderMainCars.getViewResolverAtPosition(position);
         Intent intent = new Intent(getActivity(), CarProfileActivity.class);
         intent.putExtra("Car", car);
         startActivity(intent);
@@ -162,7 +165,7 @@ public class HomeFragment extends Fragment implements Callback<ApiResponse<List<
                         spinnerLoading.setVisibility(View.GONE);
                         if (response.isSuccessful()) {
                             if (response.body().getStatus().equals("OK")) {
-                                adapter.setList(response.body().getObject());
+                                generateDataList(response.body().getObject());
                                 Utils.collapse(sortBar);
                             } else {
                                 Log.e("Sort Error", " status : " + response.body().getStatus());
