@@ -165,7 +165,9 @@ public class HomeFragment extends Fragment implements Callback<ApiResponse<List<
                         spinnerLoading.setVisibility(View.GONE);
                         if (response.isSuccessful()) {
                             if (response.body().getStatus().equals("OK")) {
+                                placeHolderMainCars.removeAllViews();
                                 generateDataList(response.body().getObject());
+                                placeHolderMainCars.refresh();
                                 Utils.collapse(sortBar);
                             } else {
                                 Log.e("Sort Error", " status : " + response.body().getStatus());
