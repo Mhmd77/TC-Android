@@ -28,6 +28,8 @@ import retrofit2.Response;
 public class CarProfileActivity extends AppCompatActivity implements Callback<ApiResponse<Object>> {
 
     Car car;
+    int carId;
+    ApiService service;
     @BindView(R.id.textview_carprofile_year)
     TextView textviewCarprofileYear;
     @BindView(R.id.textview_carprofile_name)
@@ -56,12 +58,37 @@ public class CarProfileActivity extends AppCompatActivity implements Callback<Ap
         setContentView(R.layout.activity_car_profile);
         ButterKnife.bind(this);
         Intent i = getIntent();
-        car = (Car) i.getSerializableExtra("Car");
-        setVariables(car);
+        carId = i.getIntExtra("carId",-1);
+        getCar();
         if (UserHolder.Instance().getUser().getRole().equals("admin") == false) {
             buttonEditCarprofile.setVisibility(View.GONE);
             buttonDeleteCarProfile.setVisibility(View.GONE);
         }
+    }
+
+    private void getCar() {
+        service = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
+        Call call = service.getCar(carId);
+        call.enqueue(new Callback<ApiResponse<Car>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<Car>> call, Response<ApiResponse<Car>> response) {
+                if (response.isSuccessful()) {
+                    car = response.body().getObject();
+                    setVariables(car);
+//                    Toast.makeText(CarProfileActivity.this, "Car : " + car.getName(), Toast.LENGTH_SHORT).show();
+                    Log.i("GET Car", "Car " + car.getId() + " get");
+                }else {
+                    Log.e("GET car", "Failed : " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Car>> call, Throwable t) {
+                Log.e("GET car", "Failed : " + t.getMessage());
+            }
+        });
+
+
     }
 
     private void setVariables(Car car) {
@@ -89,12 +116,12 @@ public class CarProfileActivity extends AppCompatActivity implements Callback<Ap
         switch (view.getId()) {
             case R.id.button_edit_carprofile:
                 Intent intent = new Intent(CarProfileActivity.this, UpdateCarAdminActivity.class);
-                finish();
                 intent.putExtra("Car", car);
                 startActivity(intent);
+                finish();
                 break;
             case R.id.button_delete_car_profile:
-                ApiService service = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
+                service = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
                 Call<ApiResponse<Object>> call = service.deleteCar(car.getId());
                 call.enqueue(this);
                 break;
@@ -116,5 +143,11 @@ public class CarProfileActivity extends AppCompatActivity implements Callback<Ap
     @Override
     public void onFailure(Call<ApiResponse<Object>> call, Throwable t) {
         Log.e("Connection", "Deleting Car Failed : " + t.getMessage());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getCar();
     }
 }

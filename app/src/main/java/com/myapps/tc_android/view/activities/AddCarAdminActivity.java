@@ -174,7 +174,7 @@ public class AddCarAdminActivity extends AppCompatActivity implements Callback<A
                     sendPhoto();
                 } else {
                     finish();
-                    startActivity(new Intent(AddCarAdminActivity.this, ListCarsAdminActivity.class));
+                    startActivity(new Intent(AddCarAdminActivity.this, HomePageAdminActivity.class));
                 }
                 Toast.makeText(AddCarAdminActivity.this, car.getName() + " Added Successfully ", Toast.LENGTH_SHORT).show();
             } else {
@@ -264,7 +264,7 @@ public class AddCarAdminActivity extends AppCompatActivity implements Callback<A
                 if (response.isSuccessful()) {
                     Log.i(TAG, "image " + image.getName() + " uploaded successfully");
                     finish();
-                    startActivity(new Intent(AddCarAdminActivity.this, ListCarsAdminActivity.class));
+                    startActivity(new Intent(AddCarAdminActivity.this, HomePageAdminActivity.class));
                 } else {
                     Log.e(TAG, "uploading image failed with code " + response.code());
                 }
