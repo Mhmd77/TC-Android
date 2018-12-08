@@ -102,7 +102,25 @@ public class ListUsersAdminFragment extends Fragment implements Callback<ApiResp
     }
 
     @Override
-    public void deleteOnclick(View itemView, int layoutPosition) {
-        //TODO
+    public void deleteOnclick(final int layoutPosition) {
+        ApiService service = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
+        Call<ApiResponse<Object>> call = service.deleteUser(adapter.getList().get(layoutPosition).getId());
+        call.enqueue(new Callback<ApiResponse<Object>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<Object>> call, Response<ApiResponse<Object>> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(getActivity(), "User : " + adapter.getList().get(layoutPosition).getName() + " deleted", Toast.LENGTH_SHORT).show();
+                    Log.i("Connection", "User " + adapter.getList().get(layoutPosition).getId()+ " deleted");
+                    updateList();
+                } else {
+                    Log.e("Connection", "Deleting User Failed : " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Object>> call, Throwable t) {
+                Log.e("Connection", "Deleting User Failed : " + t.getMessage());
+            }
+        });
     }
 }
