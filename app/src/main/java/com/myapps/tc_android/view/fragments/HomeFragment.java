@@ -3,15 +3,17 @@ package com.myapps.tc_android.view.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.transition.ChangeBounds;
+import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.view.animation.AnticipateInterpolator;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -21,16 +23,14 @@ import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.mindorks.placeholderview.PlaceHolderView;
 import com.myapps.tc_android.R;
-import com.myapps.tc_android.controller.Utils;
+import com.myapps.tc_android.controller.CarBuilder;
 import com.myapps.tc_android.controller.adapter.CarsRecyclerView;
 import com.myapps.tc_android.controller.network.ApiService;
 import com.myapps.tc_android.controller.network.RetrofitClientInstance;
 import com.myapps.tc_android.model.ApiResponse;
 import com.myapps.tc_android.model.Car;
 import com.myapps.tc_android.model.CarView;
-import com.myapps.tc_android.view.activities.AddCarUserActivity;
 import com.myapps.tc_android.view.activities.CarProfileActivity;
-import com.myapps.tc_android.view.activities.HomePageActivity;
 
 import java.util.List;
 
@@ -92,10 +92,7 @@ public class HomeFragment extends Fragment implements Callback<ApiResponse<List<
     }
 
     private void initSortBar() {
-        ((HomePageActivity) getActivity()).buttonSortCost.setOnClickListener(this);
-        ((HomePageActivity) getActivity()).buttonSortYear.setOnClickListener(this);
-        Utils.collapse(sortBar);
-        ((RadioGroup) sortBar).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        ((RadioGroup) sortBar.findViewById(R.id.radioGroupSortBar)).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
@@ -111,15 +108,21 @@ public class HomeFragment extends Fragment implements Callback<ApiResponse<List<
     }
 
     private void updateList() {
-        Call<ApiResponse<List<Car>>> call = service.getAllCars();
-        call.enqueue(this);
+//        Call<ApiResponse<List<Car>>> call = service.getAllCars();
+//        call.enqueue(this);
+        generateDataList(null);
     }
 
     private void generateDataList(final List<Car> cars) {
-        for (Car c :
-                cars) {
-            placeHolderMainCars.addView(new CarView(placeHolderMainCars, getActivity(), c));
-        }
+        CarBuilder builder = new CarBuilder();
+        builder.setPrice(15000).setName("SET").setFactory("FACTORY").setKilometer(5000);
+        Car c = builder.createCar();
+        placeHolderMainCars.addView(new CarView(placeHolderMainCars, getActivity(), c));
+
+//        for (Car c :
+//                cars) {
+//            placeHolderMainCars.addView(new CarView(placeHolderMainCars, getActivity(), c));
+//        }
     }
 
     @Override
@@ -144,16 +147,16 @@ public class HomeFragment extends Fragment implements Callback<ApiResponse<List<
         startActivity(intent);
     }
 
-    @OnClick(R.id.buttonSortCars)
+    @OnClick({R.id.buttonSortCars, R.id.buttonSortYear, R.id.buttonSortCost})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.buttonSortYear:
-                Utils.expand(sortBar);
+                showSortDetails();
                 field = "year";
                 break;
             case R.id.buttonSortCost:
-                Utils.expand(sortBar);
+                showSortDetails();
                 field = "price";
                 break;
             case R.id.buttonSortCars:
@@ -166,7 +169,7 @@ public class HomeFragment extends Fragment implements Callback<ApiResponse<List<
                         if (response.isSuccessful()) {
                             if (response.body().getStatus().equals("OK")) {
                                 generateDataList(response.body().getObject());
-                                Utils.collapse(sortBar);
+                                hideSortDetails();
                             } else {
                                 Log.e("Sort Error", " status : " + response.body().getStatus());
                             }
@@ -177,6 +180,8 @@ public class HomeFragment extends Fragment implements Callback<ApiResponse<List<
 
                     @Override
                     public void onFailure(Call<ApiResponse<List<Car>>> call, Throwable t) {
+                        spinnerLoading.setVisibility(View.GONE);
+                        hideSortDetails();
                         Toast.makeText(getActivity(), "Something went wrong. please try again!", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -188,5 +193,25 @@ public class HomeFragment extends Fragment implements Callback<ApiResponse<List<
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    private void showSortDetails() {
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(getActivity(), R.layout.layout_sort_details);
+        ChangeBounds transition = new ChangeBounds();
+        transition.setInterpolator(new AnticipateInterpolator(1.0f));
+        transition.setDuration(600);
+        TransitionManager.beginDelayedTransition((ConstraintLayout) sortBar, transition);
+        constraintSet.applyTo((ConstraintLayout) sortBar);
+    }
+
+    private void hideSortDetails() {
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(getActivity(), R.layout.layout_sort);
+        ChangeBounds transition = new ChangeBounds();
+        transition.setInterpolator(new AnticipateInterpolator(1.0f));
+        transition.setDuration(600);
+        TransitionManager.beginDelayedTransition((ConstraintLayout) sortBar, transition);
+        constraintSet.applyTo((ConstraintLayout) sortBar);
     }
 }
