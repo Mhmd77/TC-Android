@@ -3,15 +3,13 @@ package com.myapps.tc_android.view.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -21,6 +19,7 @@ import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.mindorks.placeholderview.PlaceHolderView;
 import com.myapps.tc_android.R;
+import com.myapps.tc_android.controller.CarBuilder;
 import com.myapps.tc_android.controller.Utils;
 import com.myapps.tc_android.controller.adapter.CarsRecyclerView;
 import com.myapps.tc_android.controller.network.ApiService;
@@ -28,7 +27,6 @@ import com.myapps.tc_android.controller.network.RetrofitClientInstance;
 import com.myapps.tc_android.model.ApiResponse;
 import com.myapps.tc_android.model.Car;
 import com.myapps.tc_android.model.CarView;
-import com.myapps.tc_android.view.activities.AddCarUserActivity;
 import com.myapps.tc_android.view.activities.CarProfileActivity;
 import com.myapps.tc_android.view.activities.HomePageActivity;
 
@@ -42,7 +40,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeFragment extends Fragment implements Callback<ApiResponse<List<Car>>>, CarsRecyclerView.UserOnItemClickListener, View.OnClickListener {
+public class HomeFragment extends Fragment implements Callback<ApiResponse<List<Car>>>, CarsRecyclerView.UserOnItemClickListener, View.OnClickListener,
+        SwipeRefreshLayout.OnRefreshListener {
     @BindView(R.id.placeHolder_main_cars)
     PlaceHolderView placeHolderMainCars;
     @BindView(R.id.radioButtonSortAscending)
@@ -51,6 +50,8 @@ public class HomeFragment extends Fragment implements Callback<ApiResponse<List<
     RadioButton radioButtonSortDescending;
     @BindView(R.id.spinnerLoading)
     SpinKitView spinnerLoading;
+    @BindView(R.id.swipeLayout_main_cars)
+    SwipeRefreshLayout swipeLayoutMainCars;
     private ApiService service;
     @BindView(R.id.sortbar)
     View sortBar;
@@ -80,6 +81,7 @@ public class HomeFragment extends Fragment implements Callback<ApiResponse<List<
         unbinder = ButterKnife.bind(this, view);
         service = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
         placeHolderMainCars.getBuilder().setLayoutManager(new LinearLayoutManager(getActivity()));
+        swipeLayoutMainCars.setOnRefreshListener(this);
         updateList();
         initSortBar();
         initSpinner();
@@ -116,10 +118,13 @@ public class HomeFragment extends Fragment implements Callback<ApiResponse<List<
     }
 
     private void generateDataList(final List<Car> cars) {
+        placeHolderMainCars.removeAllViews();
         for (Car c :
                 cars) {
             placeHolderMainCars.addView(new CarView(placeHolderMainCars, getActivity(), c));
         }
+        placeHolderMainCars.refresh();
+        swipeLayoutMainCars.setRefreshing(false);
     }
 
     @Override
@@ -165,9 +170,9 @@ public class HomeFragment extends Fragment implements Callback<ApiResponse<List<
                         spinnerLoading.setVisibility(View.GONE);
                         if (response.isSuccessful()) {
                             if (response.body().getStatus().equals("OK")) {
-                                placeHolderMainCars.removeAllViews();
+//                                placeHolderMainCars.removeAllViews();
                                 generateDataList(response.body().getObject());
-                                placeHolderMainCars.refresh();
+//                                placeHolderMainCars.refresh();
                                 Utils.collapse(sortBar);
                             } else {
                                 Log.e("Sort Error", " status : " + response.body().getStatus());
@@ -190,5 +195,10 @@ public class HomeFragment extends Fragment implements Callback<ApiResponse<List<
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onRefresh() {
+        updateList();
     }
 }
