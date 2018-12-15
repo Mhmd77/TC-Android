@@ -6,8 +6,6 @@
     <string name="name">Name</string>
     <string name="create_new_account">Create New Account</string>
     <string name="login">Login</string>
-    <string name="delete" tools:ignore="ExtraTranslation">Delete</string>
-    <string name="update">Update</string>
     <string name="price">Price</string>
     <string name="kilometer">Kilometer</string>
     <string name="factory">Factory</string>
@@ -27,13 +25,9 @@
     <string name="description">Description</string>
     <string name="title_home">Home</string>
     <string name="title_rent">Rent</string>
-    <string name="title_my_cars">Cars</string>
-    <string name="home">Home</string>
     <string name="title_profile">Profile</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="string_select_image">Select Image</string>
     <string-array name="navigation_drawer_items_array">
         <item>Cars</item>
         <item>Users</item>
