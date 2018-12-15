@@ -13,15 +13,20 @@
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true" />
 
-
-    <com.mindorks.placeholderview.PlaceHolderView
-        android:id="@+id/placeHolder_main_cars"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeLayout_main_cars"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/sortbar"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="8dp" />
+        android:layout_margin="8dp">
 
+        <com.mindorks.placeholderview.PlaceHolderView
+            android:id="@+id/placeHolder_main_cars"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <com.github.ybq.android.spinkit.SpinKitView
         android:id="@+id/spinnerLoading"
