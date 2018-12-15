@@ -7,11 +7,10 @@
 
     <include
         android:id="@+id/sortbar"
-        layout="@layout/layout_sort_bar"
+        layout="@layout/layout_sort"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerInParent="true" />
+        android:layout_alignParentTop="true" />
 
 
     <com.mindorks.placeholderview.PlaceHolderView

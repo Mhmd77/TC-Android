@@ -1,8 +1,10 @@
 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/radioGroupSortBard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_login_edittext"
-    android:orientation="horizontal">
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:padding="10dp">
 
     <RadioButton
         android:id="@+id/radioButtonSortAscending"
@@ -25,13 +27,14 @@
         android:fontFamily="@font/font_normal"
         android:gravity="center"
         android:text="@string/descending" />
+
     <Button
         android:id="@+id/buttonSortCars"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/background_button_red_color"
+        android:fontFamily="@font/font_normal"
         android:text="Sort"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="#FFF"
-        android:fontFamily="@font/font_normal"
-        android:layout_height="wrap_content" />
+        android:textColor="#FFF" />
 </RadioGroup>
