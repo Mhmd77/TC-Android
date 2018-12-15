@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <include
-        layout="@layout/layout_sort_bar"
+        layout="@layout/layout_sort_options"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
