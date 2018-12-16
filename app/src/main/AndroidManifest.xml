@@ -36,6 +36,7 @@
         <activity android:name=".view.activities.HomePageActivity" />
         <activity android:name=".view.activities.HomePageAdminActivity" />
         <activity android:name=".view.activities.UsersCarActivity" />
+        <activity android:name=".view.activities.RentCarActivity"></activity>
     </application>
 
 </manifest>
