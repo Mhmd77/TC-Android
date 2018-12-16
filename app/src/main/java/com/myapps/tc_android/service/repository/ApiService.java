@@ -1,15 +1,14 @@
 package com.myapps.tc_android.service.repository;
 
+import com.myapps.tc_android.model.ApiResponse;
 import com.myapps.tc_android.model.Car;
 import com.myapps.tc_android.model.LoginInfo;
-import com.myapps.tc_android.model.ApiResponse;
 import com.myapps.tc_android.model.SignUpInfo;
 import com.myapps.tc_android.model.User;
 
 import java.util.List;
 
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -21,7 +20,8 @@ import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 
-public interface ApiService<C> {
+public interface ApiService {
+    String BASE_URL = "http://172.17.11.7:5000/";
     String imageApi = "api/v1/images/";
 
     @POST("/api/v1/users/login")
