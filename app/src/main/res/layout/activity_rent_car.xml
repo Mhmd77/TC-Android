@@ -1,0 +1,178 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/white"
+        app:cardCornerRadius="8dp">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/bg_rent"
+            android:paddingBottom="15dp">
+
+            <TextView
+                android:id="@+id/date_time_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/font_normal"
+                android:text=" Starting Date and Time : "
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/start_date_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/background_button_red_color"
+                android:padding="10dp"
+                android:src="@drawable/ic_date_range_black_24dp"
+                app:layout_constraintStart_toStartOf="@id/date_time_textview"
+                app:layout_constraintTop_toBottomOf="@id/date_time_textview" />
+
+            <TextView
+                android:id="@+id/start_date_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_date"
+                android:fontFamily="@font/font_normal"
+                android:hint="Day"
+                android:padding="8dp"
+                android:textColor="@color/blackColor"
+                android:textColorHint="@color/blackColor"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="@id/start_date_picker"
+                app:layout_constraintStart_toEndOf="@id/start_date_picker"
+                app:layout_constraintTop_toTopOf="@id/start_date_picker" />
+
+            <ImageView
+                android:id="@+id/start_time_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/background_button_red_color"
+                android:padding="10dp"
+                android:src="@drawable/ic_access_time_black_24dp"
+                app:layout_constraintStart_toEndOf="@id/start_date_text"
+                app:layout_constraintTop_toTopOf="@id/start_date_picker" />
+
+            <TextView
+                android:id="@+id/start_time_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_date"
+                android:fontFamily="@font/font_normal"
+                android:hint="Time"
+                android:padding="8dp"
+                android:textColor="@color/blackColor"
+                android:textColorHint="@color/blackColor"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="@id/start_date_picker"
+                app:layout_constraintStart_toEndOf="@id/start_time_picker"
+                app:layout_constraintTop_toTopOf="@id/start_time_picker" />
+
+            <TextView
+                android:id="@+id/end_date_time_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/font_normal"
+                android:text=" Ending Date and Time : "
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/start_time_picker" />
+
+            <ImageView
+                android:id="@+id/end_date_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/background_button_red_color"
+                android:padding="10dp"
+                android:src="@drawable/ic_date_range_black_24dp"
+                app:layout_constraintStart_toStartOf="@id/end_date_time_textview"
+                app:layout_constraintTop_toBottomOf="@id/end_date_time_textview" />
+
+            <TextView
+                android:id="@+id/end_date_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_date"
+                android:fontFamily="@font/font_normal"
+                android:hint="Day"
+                android:padding="8dp"
+                android:textColor="@color/blackColor"
+                android:textColorHint="@color/blackColor"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="@id/end_date_picker"
+                app:layout_constraintStart_toEndOf="@id/end_date_picker"
+                app:layout_constraintTop_toTopOf="@id/end_date_picker" />
+
+            <ImageView
+                android:id="@+id/end_time_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/background_button_red_color"
+                android:padding="10dp"
+                android:src="@drawable/ic_access_time_black_24dp"
+                app:layout_constraintBottom_toBottomOf="@id/end_date_picker"
+                app:layout_constraintStart_toEndOf="@id/end_date_text"
+                app:layout_constraintTop_toTopOf="@id/end_date_picker" />
+
+            <TextView
+                android:id="@+id/end_time_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_date"
+                android:fontFamily="@font/font_normal"
+                android:hint="Time"
+                android:padding="8dp"
+                android:textColor="@color/blackColor"
+                android:textColorHint="@color/blackColor"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="@id/end_date_picker"
+                app:layout_constraintStart_toEndOf="@id/end_time_picker"
+                app:layout_constraintTop_toTopOf="@id/end_time_picker" />
+
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bg_user_card"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintTop_toBottomOf="@id/card1">
+
+    </android.support.v7.widget.CardView>
+</android.support.constraint.ConstraintLayout>
