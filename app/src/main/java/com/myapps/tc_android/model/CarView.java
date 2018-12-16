@@ -2,12 +2,8 @@ package com.myapps.tc_android.model;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.constraint.Placeholder;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.SnapHelper;
-import android.util.Log;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
@@ -19,15 +15,10 @@ import com.mindorks.placeholderview.annotations.NonReusable;
 import com.mindorks.placeholderview.annotations.Resolve;
 import com.mindorks.placeholderview.annotations.View;
 import com.myapps.tc_android.R;
-import com.myapps.tc_android.controller.network.ApiService;
-import com.myapps.tc_android.controller.network.RetrofitClientInstance;
+import com.myapps.tc_android.service.repository.ApiService;
+import com.myapps.tc_android.service.repository.RetrofitClientInstance;
 import com.myapps.tc_android.view.activities.CarProfileActivity;
 import com.squareup.picasso.Picasso;
-
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.OnClick;
 
 @NonReusable
 @Layout(R.layout.item_layout_car)

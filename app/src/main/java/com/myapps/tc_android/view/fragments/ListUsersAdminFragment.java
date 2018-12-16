@@ -1,9 +1,7 @@
 package com.myapps.tc_android.view.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,14 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.myapps.tc_android.R;
-import com.myapps.tc_android.controller.adapter.CarsRecyclerView;
 import com.myapps.tc_android.controller.adapter.UserRecyclerView;
-import com.myapps.tc_android.controller.network.ApiService;
-import com.myapps.tc_android.controller.network.RetrofitClientInstance;
+import com.myapps.tc_android.service.repository.ApiService;
+import com.myapps.tc_android.service.repository.RetrofitClientInstance;
 import com.myapps.tc_android.model.ApiResponse;
-import com.myapps.tc_android.model.Car;
 import com.myapps.tc_android.model.User;
-import com.myapps.tc_android.view.activities.CarProfileActivity;
 
 import java.util.List;
 

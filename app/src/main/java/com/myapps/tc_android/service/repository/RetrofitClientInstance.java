@@ -1,4 +1,4 @@
-package com.myapps.tc_android.controller.network;
+package com.myapps.tc_android.service.repository;
 
 
 import java.net.CookieHandler;

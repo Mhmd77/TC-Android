@@ -7,14 +7,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mindorks.placeholderview.PlaceHolderView;
 import com.myapps.tc_android.R;
-import com.myapps.tc_android.controller.network.ApiService;
-import com.myapps.tc_android.controller.network.RetrofitClientInstance;
+import com.myapps.tc_android.service.repository.ApiService;
+import com.myapps.tc_android.service.repository.RetrofitClientInstance;
 import com.myapps.tc_android.model.ApiResponse;
 import com.myapps.tc_android.model.Car;
 import com.myapps.tc_android.model.CarView;

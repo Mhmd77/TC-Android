@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,8 +20,8 @@ import android.widget.Toast;
 
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.controller.CarBuilder;
-import com.myapps.tc_android.controller.network.ApiService;
-import com.myapps.tc_android.controller.network.RetrofitClientInstance;
+import com.myapps.tc_android.service.repository.ApiService;
+import com.myapps.tc_android.service.repository.RetrofitClientInstance;
 import com.myapps.tc_android.model.ApiResponse;
 import com.myapps.tc_android.model.Car;
 

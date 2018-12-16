@@ -1,4 +1,4 @@
-package com.myapps.tc_android.controller.network;
+package com.myapps.tc_android.service.repository;
 
 import com.myapps.tc_android.model.Car;
 import com.myapps.tc_android.model.LoginInfo;

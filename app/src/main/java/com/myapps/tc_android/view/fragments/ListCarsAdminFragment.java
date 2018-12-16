@@ -15,8 +15,8 @@ import android.widget.Toast;
 import com.myapps.tc_android.R;
 
 import com.myapps.tc_android.controller.adapter.CarsRecyclerView;
-import com.myapps.tc_android.controller.network.ApiService;
-import com.myapps.tc_android.controller.network.RetrofitClientInstance;
+import com.myapps.tc_android.service.repository.ApiService;
+import com.myapps.tc_android.service.repository.RetrofitClientInstance;
 import com.myapps.tc_android.model.ApiResponse;
 import com.myapps.tc_android.model.Car;
 import com.myapps.tc_android.view.activities.CarProfileActivity;
