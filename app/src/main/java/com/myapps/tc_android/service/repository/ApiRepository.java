@@ -1,6 +1,14 @@
 package com.myapps.tc_android.service.repository;
 
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
+import android.util.Log;
+
+import com.myapps.tc_android.model.ApiResponse;
+import com.myapps.tc_android.model.LoginInfo;
+import com.myapps.tc_android.model.User;
+
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.util.concurrent.TimeUnit;
@@ -8,14 +16,16 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.JavaNetCookieJar;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiRepository {
-
     private static ApiRepository apiRepository;
     private ApiService apiService;
-    
+
     public static String getBaseUrl() {
         return ApiService.BASE_URL;
     }
@@ -47,6 +57,26 @@ public class ApiRepository {
             }
         }
         return apiRepository;
+    }
+
+    public LiveData<User> loginUser(String username, String password) {
+        final MutableLiveData<User> data = new MutableLiveData<>();
+        apiService.loginUser(new LoginInfo(username, password)).enqueue(new Callback<ApiResponse<User>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<User>> call, Response<ApiResponse<User>> response) {
+                if (response.isSuccessful()) {
+                    data.setValue(response.body().getObject());
+                } else {
+                    Log.e("Login User Error", "Login failed with code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<User>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return data;
     }
 
     private void simulateDelay() {
