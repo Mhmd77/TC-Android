@@ -1,4 +1,4 @@
-package com.myapps.tc_android.controller.adapter;
+package com.myapps.tc_android.view.adapter;
 
 import android.app.Activity;
 import android.content.Context;

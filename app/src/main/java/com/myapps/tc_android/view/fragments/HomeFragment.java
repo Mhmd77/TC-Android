@@ -19,7 +19,7 @@ import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.mindorks.placeholderview.PlaceHolderView;
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.controller.Utils;
-import com.myapps.tc_android.controller.adapter.CarsRecyclerView;
+import com.myapps.tc_android.view.adapter.CarsRecyclerView;
 import com.myapps.tc_android.service.repository.ApiService;
 import com.myapps.tc_android.service.repository.ApiRepository;
 import com.myapps.tc_android.service.model.ApiResponse;
