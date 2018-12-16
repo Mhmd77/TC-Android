@@ -1,28 +1,23 @@
 package com.myapps.tc_android.view.activities;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.myapps.tc_android.R;
-import com.myapps.tc_android.service.repository.ApiService;
-import com.myapps.tc_android.service.repository.ApiRepository;
-import com.myapps.tc_android.model.ApiResponse;
-import com.myapps.tc_android.model.LoginInfo;
-import com.myapps.tc_android.model.UserHolder;
 import com.myapps.tc_android.model.User;
+import com.myapps.tc_android.viewmodel.UserViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.edittext_signin_username)
@@ -37,38 +32,27 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
+    private void observeViewModel(UserViewModel userViewModel) {
+        userViewModel.getObservableUser().observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(@Nullable User user) {
+                if (user.getRole().equals("admin")) {
+
+                } else {
+                    Toast.makeText(LoginActivity.this, "Welcome " + user.getUsername(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
     @OnClick({R.id.button_signin, R.id.button_signup})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.button_signin:
                 if (validate()) {
-                    ApiService service = ApiRepository.getRetrofitInstance().create(ApiService.class);
-                    Call<ApiResponse<User>> call = service.loginUser(new LoginInfo(edittextsigninUsername.getText().toString(),
-                            edittextsigninPassword.getText().toString()));
-                    call.enqueue(new Callback<ApiResponse<User>>() {
-                        @Override
-                        public void onResponse(Call<ApiResponse<User>> call, Response<ApiResponse<User>> response) {
-                            if (response.isSuccessful()) {
-                                Toast.makeText(LoginActivity.this, response.body().getStatus(), Toast.LENGTH_SHORT).show();
-                                if (response.body().getStatus().equals("OK")) {
-                                    UserHolder.Instance().setUser((User) response.body().getObject());
-                                    if (response.body().getObject().getRole().equals("admin")) {
-                                        startActivity(new Intent(LoginActivity.this, HomePageAdminActivity.class));
-                                        Log.i("TAAAG", "" + response.body().getObject().getName());
-                                    } else {
-                                        startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
-                                    }
-                                }
-                            } else {
-                                Toast.makeText(LoginActivity.this, "Please Try Again", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ApiResponse<User>> call, Throwable t) {
-                            Toast.makeText(LoginActivity.this, "Failed", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    UserViewModel.Factory factory = new UserViewModel.Factory(edittextsigninUsername.getText().toString(), edittextsigninPassword.getText().toString());
+                    final UserViewModel userViewModel = ViewModelProviders.of(this, factory).get(UserViewModel.class);
+                    observeViewModel(userViewModel);
                 }
                 break;
             case R.id.button_signup:
