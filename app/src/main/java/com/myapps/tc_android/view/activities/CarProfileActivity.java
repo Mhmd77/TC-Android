@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.service.repository.ApiService;
-import com.myapps.tc_android.service.repository.RetrofitClientInstance;
+import com.myapps.tc_android.service.repository.ApiRepository;
 import com.myapps.tc_android.model.ApiResponse;
 import com.myapps.tc_android.model.Car;
 import com.myapps.tc_android.model.UserHolder;
@@ -67,7 +67,7 @@ public class CarProfileActivity extends AppCompatActivity implements Callback<Ap
     }
 
     private void getCar() {
-        service = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
+        service = ApiRepository.getRetrofitInstance().create(ApiService.class);
         Call call = service.getCar(carId);
         call.enqueue(new Callback<ApiResponse<Car>>() {
             @Override
@@ -104,9 +104,9 @@ public class CarProfileActivity extends AppCompatActivity implements Callback<Ap
             textviewCarprofileDescription.setText("MANUAL");
         }
         //setting image
-        Log.i(CarProfileActivity.class.getSimpleName(), RetrofitClientInstance.getBaseUrl() + ApiService.imageApi + car.getImageUrl());
+        Log.i(CarProfileActivity.class.getSimpleName(), ApiRepository.getBaseUrl() + ApiService.imageApi + car.getImageUrl());
         Picasso.get()
-                .load(RetrofitClientInstance.getBaseUrl() + ApiService.imageApi + car.getImageUrl())
+                .load(ApiRepository.getBaseUrl() + ApiService.imageApi + car.getImageUrl())
                 .into(imageviewCarLogo);
     }
 
@@ -121,7 +121,7 @@ public class CarProfileActivity extends AppCompatActivity implements Callback<Ap
                 finish();
                 break;
             case R.id.button_delete_car_profile:
-                service = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
+                service = ApiRepository.getRetrofitInstance().create(ApiService.class);
                 Call<ApiResponse<Object>> call = service.deleteCar(car.getId());
                 call.enqueue(this);
                 break;

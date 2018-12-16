@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.service.repository.ApiService;
-import com.myapps.tc_android.service.repository.RetrofitClientInstance;
+import com.myapps.tc_android.service.repository.ApiRepository;
 import com.myapps.tc_android.model.ApiResponse;
 import com.myapps.tc_android.model.LoginInfo;
 import com.myapps.tc_android.model.UserHolder;
@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.button_signin:
                 if (validate()) {
-                    ApiService service = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
+                    ApiService service = ApiRepository.getRetrofitInstance().create(ApiService.class);
                     Call<ApiResponse<User>> call = service.loginUser(new LoginInfo(edittextsigninUsername.getText().toString(),
                             edittextsigninPassword.getText().toString()));
                     call.enqueue(new Callback<ApiResponse<User>>() {

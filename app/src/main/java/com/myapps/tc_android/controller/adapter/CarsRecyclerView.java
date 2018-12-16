@@ -11,7 +11,7 @@ import android.widget.ViewFlipper;
 
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.service.repository.ApiService;
-import com.myapps.tc_android.service.repository.RetrofitClientInstance;
+import com.myapps.tc_android.service.repository.ApiRepository;
 import com.myapps.tc_android.model.Car;
 import com.squareup.picasso.Picasso;
 
@@ -110,7 +110,7 @@ public class CarsRecyclerView extends RecyclerView.Adapter<CarsRecyclerView.View
         holder.textviewCarKilometer.setText(String.valueOf(item.getKilometer()));
         holder.textviewCarPrice.setText(String.valueOf(item.getPrice()));
         Picasso.get()
-                .load(RetrofitClientInstance.getBaseUrl() + ApiService.imageApi + item.getImageUrl())
+                .load(ApiRepository.getBaseUrl() + ApiService.imageApi + item.getImageUrl())
                 .error(R.drawable.sample)
                 .into(holder.imageViewCarLogo);
         holder.textviewCarPrice.setText('$' + String.valueOf(item.getPrice()));

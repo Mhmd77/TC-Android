@@ -21,7 +21,7 @@ import android.widget.Toast;
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.controller.CarBuilder;
 import com.myapps.tc_android.service.repository.ApiService;
-import com.myapps.tc_android.service.repository.RetrofitClientInstance;
+import com.myapps.tc_android.service.repository.ApiRepository;
 import com.myapps.tc_android.model.ApiResponse;
 import com.myapps.tc_android.model.Car;
 
@@ -160,7 +160,7 @@ public class AddCarUserActivity extends AppCompatActivity implements Callback<Ap
     }
 
     private void addCar(Car car) {
-        ApiService service = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
+        ApiService service = ApiRepository.getRetrofitInstance().create(ApiService.class);
         Call<ApiResponse<Car>> call = service.addCar(car);
         call.enqueue(this);
     }
@@ -255,7 +255,7 @@ public class AddCarUserActivity extends AppCompatActivity implements Callback<Ap
     }
 
     private void sendPhoto() {
-        ApiService service = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
+        ApiService service = ApiRepository.getRetrofitInstance().create(ApiService.class);
         RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), image);
         MultipartBody.Part body = MultipartBody.Part.createFormData("file", image.getName(), reqFile);
         Call req = service.uploadImage(body, car.getId());

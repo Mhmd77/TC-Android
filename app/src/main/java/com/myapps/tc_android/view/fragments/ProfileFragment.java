@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.mindorks.placeholderview.PlaceHolderView;
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.service.repository.ApiService;
-import com.myapps.tc_android.service.repository.RetrofitClientInstance;
+import com.myapps.tc_android.service.repository.ApiRepository;
 import com.myapps.tc_android.model.ApiResponse;
 import com.myapps.tc_android.model.Car;
 import com.myapps.tc_android.model.CarView;
@@ -76,7 +76,7 @@ public class ProfileFragment extends Fragment implements Callback<ApiResponse<Li
         unbinder = ButterKnife.bind(this, view);
         recyclerViewProfileCars.getBuilder()
                 .setItemViewCacheSize(2);
-        Call<ApiResponse<List<Car>>> call = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class).getUserCar();
+        Call<ApiResponse<List<Car>>> call = ApiRepository.getRetrofitInstance().create(ApiService.class).getUserCar();
         call.enqueue(this);
         fillUserInfo();
         return view;

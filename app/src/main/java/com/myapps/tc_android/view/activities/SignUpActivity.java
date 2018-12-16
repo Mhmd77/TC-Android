@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.service.repository.ApiService;
-import com.myapps.tc_android.service.repository.RetrofitClientInstance;
+import com.myapps.tc_android.service.repository.ApiRepository;
 import com.myapps.tc_android.model.ApiResponse;
 import com.myapps.tc_android.model.SignUpInfo;
 import com.myapps.tc_android.model.User;
@@ -52,7 +52,7 @@ public class SignUpActivity extends AppCompatActivity implements Callback<ApiRes
                 if (validate()) {
                     SignUpInfo info = new SignUpInfo(edittextSignupUsername.getText().toString(), edittextSignupPassword.getText().toString(),
                             edittextSignupId.getText().toString(), edittextSignupEmail.getText().toString());
-                    Call<ApiResponse<User>> call = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class).signUpUser(info);
+                    Call<ApiResponse<User>> call = ApiRepository.getRetrofitInstance().create(ApiService.class).signUpUser(info);
                     call.enqueue(this);
                 }
                 break;

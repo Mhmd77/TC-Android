@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.controller.CarBuilder;
 import com.myapps.tc_android.service.repository.ApiService;
-import com.myapps.tc_android.service.repository.RetrofitClientInstance;
+import com.myapps.tc_android.service.repository.ApiRepository;
 import com.myapps.tc_android.model.ApiResponse;
 import com.myapps.tc_android.model.Car;
 
@@ -144,7 +144,7 @@ public class UpdateCarAdminActivity extends AppCompatActivity implements Callbac
     }
 
     private void updateCar(Car car) {
-        ApiService service = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
+        ApiService service = ApiRepository.getRetrofitInstance().create(ApiService.class);
         Call<ApiResponse<Car>> call = service.updateCar(car, this.carOld.getId());
         call.enqueue(this);
     }

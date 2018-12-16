@@ -11,16 +11,16 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class RetrofitClientInstance {
+public class ApiRepository {
 
-    private static RetrofitClientInstance retrofitClientInstance;
+    private static ApiRepository apiRepository;
     private ApiService apiService;
     
     public static String getBaseUrl() {
         return ApiService.BASE_URL;
     }
 
-    private RetrofitClientInstance() {
+    private ApiRepository() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
@@ -40,13 +40,13 @@ public class RetrofitClientInstance {
 
     }
 
-    public synchronized static RetrofitClientInstance getInstance() {
-        if (retrofitClientInstance == null) {
-            if (retrofitClientInstance == null) {
-                retrofitClientInstance = new RetrofitClientInstance();
+    public synchronized static ApiRepository getInstance() {
+        if (apiRepository == null) {
+            if (apiRepository == null) {
+                apiRepository = new ApiRepository();
             }
         }
-        return retrofitClientInstance;
+        return apiRepository;
     }
 
     private void simulateDelay() {

@@ -16,7 +16,7 @@ import com.myapps.tc_android.R;
 
 import com.myapps.tc_android.controller.adapter.CarsRecyclerView;
 import com.myapps.tc_android.service.repository.ApiService;
-import com.myapps.tc_android.service.repository.RetrofitClientInstance;
+import com.myapps.tc_android.service.repository.ApiRepository;
 import com.myapps.tc_android.model.ApiResponse;
 import com.myapps.tc_android.model.Car;
 import com.myapps.tc_android.view.activities.CarProfileActivity;
@@ -63,7 +63,7 @@ public class ListCarsAdminFragment extends Fragment implements Callback<ApiRespo
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_cars_admin, container, false);
         unbinder = ButterKnife.bind(this, view);
-        service = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
+        service = ApiRepository.getRetrofitInstance().create(ApiService.class);
         updateList();
 
         return view;

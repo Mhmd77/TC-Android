@@ -16,7 +16,7 @@ import com.mindorks.placeholderview.annotations.Resolve;
 import com.mindorks.placeholderview.annotations.View;
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.service.repository.ApiService;
-import com.myapps.tc_android.service.repository.RetrofitClientInstance;
+import com.myapps.tc_android.service.repository.ApiRepository;
 import com.myapps.tc_android.view.activities.CarProfileActivity;
 import com.squareup.picasso.Picasso;
 
@@ -53,7 +53,7 @@ public class CarView {
         txtPrice.setText(String.valueOf(car.getPrice()));
         if (car.getImageUrl() != null) {
             Picasso.get()
-                    .load(RetrofitClientInstance.getBaseUrl() + ApiService.imageApi + car.getImageUrl())
+                    .load(ApiRepository.getBaseUrl() + ApiService.imageApi + car.getImageUrl())
                     .error(R.drawable.sample)
                     .into(imageViewCarLogo);
         }
