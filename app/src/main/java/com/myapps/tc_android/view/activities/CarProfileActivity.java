@@ -12,9 +12,9 @@ import android.widget.Toast;
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.service.repository.ApiService;
 import com.myapps.tc_android.service.repository.ApiRepository;
-import com.myapps.tc_android.model.ApiResponse;
-import com.myapps.tc_android.model.Car;
-import com.myapps.tc_android.model.UserHolder;
+import com.myapps.tc_android.service.model.ApiResponse;
+import com.myapps.tc_android.service.model.Car;
+import com.myapps.tc_android.service.model.UserHolder;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;

@@ -11,9 +11,9 @@ import android.widget.Toast;
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.service.repository.ApiService;
 import com.myapps.tc_android.service.repository.ApiRepository;
-import com.myapps.tc_android.model.ApiResponse;
-import com.myapps.tc_android.model.SignUpInfo;
-import com.myapps.tc_android.model.User;
+import com.myapps.tc_android.service.model.ApiResponse;
+import com.myapps.tc_android.service.model.SignUpInfo;
+import com.myapps.tc_android.service.model.User;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

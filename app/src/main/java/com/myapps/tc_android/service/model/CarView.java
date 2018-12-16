@@ -1,4 +1,4 @@
-package com.myapps.tc_android.model;
+package com.myapps.tc_android.service.model;
 
 import android.content.Context;
 import android.content.Intent;

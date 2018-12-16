@@ -20,10 +20,9 @@ import android.widget.ListView;
 
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.controller.adapter.DrawerItemCustomAdapter;
-import com.myapps.tc_android.model.FragmentAdminData;
+import com.myapps.tc_android.service.model.FragmentAdminData;
 import com.myapps.tc_android.view.fragments.ListCarsAdminFragment;
 import com.myapps.tc_android.view.fragments.ListUsersAdminFragment;
-import com.myapps.tc_android.view.fragments.RentFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

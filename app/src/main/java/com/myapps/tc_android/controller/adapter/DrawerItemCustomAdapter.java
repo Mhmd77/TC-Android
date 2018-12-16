@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.myapps.tc_android.R;
-import com.myapps.tc_android.model.FragmentAdminData;
+import com.myapps.tc_android.service.model.FragmentAdminData;
 
 public class DrawerItemCustomAdapter extends ArrayAdapter<FragmentAdminData> {
 

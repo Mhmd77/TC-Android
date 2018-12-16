@@ -11,8 +11,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.myapps.tc_android.R;
-import com.myapps.tc_android.model.User;
-import com.myapps.tc_android.model.UserHolder;
+import com.myapps.tc_android.service.model.User;
+import com.myapps.tc_android.service.model.UserHolder;
 
 import java.util.List;
 

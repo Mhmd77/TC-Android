@@ -4,7 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 
-import com.myapps.tc_android.model.User;
+import com.myapps.tc_android.service.model.User;
 import com.myapps.tc_android.service.repository.ApiRepository;
 
 public class UserViewModel extends ViewModel {

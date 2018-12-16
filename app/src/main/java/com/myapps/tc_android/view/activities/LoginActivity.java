@@ -12,7 +12,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.myapps.tc_android.R;
-import com.myapps.tc_android.model.User;
+import com.myapps.tc_android.service.model.User;
 import com.myapps.tc_android.viewmodel.UserViewModel;
 
 import butterknife.BindView;

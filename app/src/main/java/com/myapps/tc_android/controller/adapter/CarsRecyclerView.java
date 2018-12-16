@@ -12,7 +12,7 @@ import android.widget.ViewFlipper;
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.service.repository.ApiService;
 import com.myapps.tc_android.service.repository.ApiRepository;
-import com.myapps.tc_android.model.Car;
+import com.myapps.tc_android.service.model.Car;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

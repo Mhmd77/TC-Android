@@ -22,9 +22,9 @@ import com.myapps.tc_android.controller.Utils;
 import com.myapps.tc_android.controller.adapter.CarsRecyclerView;
 import com.myapps.tc_android.service.repository.ApiService;
 import com.myapps.tc_android.service.repository.ApiRepository;
-import com.myapps.tc_android.model.ApiResponse;
-import com.myapps.tc_android.model.Car;
-import com.myapps.tc_android.model.CarView;
+import com.myapps.tc_android.service.model.ApiResponse;
+import com.myapps.tc_android.service.model.Car;
+import com.myapps.tc_android.service.model.CarView;
 import com.myapps.tc_android.view.activities.CarProfileActivity;
 import com.myapps.tc_android.view.activities.HomePageActivity;
 

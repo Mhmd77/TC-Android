@@ -5,9 +5,9 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
 
-import com.myapps.tc_android.model.ApiResponse;
-import com.myapps.tc_android.model.LoginInfo;
-import com.myapps.tc_android.model.User;
+import com.myapps.tc_android.service.model.ApiResponse;
+import com.myapps.tc_android.service.model.LoginInfo;
+import com.myapps.tc_android.service.model.User;
 
 import java.net.CookieHandler;
 import java.net.CookieManager;

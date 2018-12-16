@@ -1,10 +1,10 @@
 package com.myapps.tc_android.service.repository;
 
-import com.myapps.tc_android.model.ApiResponse;
-import com.myapps.tc_android.model.Car;
-import com.myapps.tc_android.model.LoginInfo;
-import com.myapps.tc_android.model.SignUpInfo;
-import com.myapps.tc_android.model.User;
+import com.myapps.tc_android.service.model.ApiResponse;
+import com.myapps.tc_android.service.model.Car;
+import com.myapps.tc_android.service.model.LoginInfo;
+import com.myapps.tc_android.service.model.SignUpInfo;
+import com.myapps.tc_android.service.model.User;
 
 import java.util.List;
 

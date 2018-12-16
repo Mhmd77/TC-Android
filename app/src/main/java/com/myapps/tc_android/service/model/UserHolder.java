@@ -1,4 +1,4 @@
-package com.myapps.tc_android.model;
+package com.myapps.tc_android.service.model;
 
 public class UserHolder {
     private static UserHolder instance;
