@@ -5,8 +5,10 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
+import com.myapps.tc_android.controller.Utils;
 import com.myapps.tc_android.service.model.ApiResponse;
 import com.myapps.tc_android.service.model.Car;
 import com.myapps.tc_android.service.model.LoginInfo;
@@ -112,7 +114,7 @@ public class ApiRepository {
         return data;
     }
 
-    public LiveData<List<Car>> getListCars() {
+    public MutableLiveData<List<Car>> getListCars() {
         final MutableLiveData<List<Car>> data = new MutableLiveData<>();
         apiService.getAllCars().enqueue(new Callback<ApiResponse<List<Car>>>() {
             @Override
@@ -133,6 +135,27 @@ public class ApiRepository {
             }
         });
         return data;
+    }
+
+    public void sortListCars(final MutableLiveData<List<Car>> data, String field, int ascending) {
+        apiService.sortCars(field, ascending).enqueue(new Callback<ApiResponse<List<Car>>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<List<Car>>> call, Response<ApiResponse<List<Car>>> response) {
+                if (response.isSuccessful()) {
+                    data.setValue(response.body().getObject());
+                } else {
+                    Log.e("Sort List Of Cars Error", "Sort List Of Cars failed with code: " + response.code());
+                    data.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<List<Car>>> call, Throwable t) {
+                data.setValue(null);
+                t.printStackTrace();
+            }
+        });
+
     }
 
     private void simulateDelay() {
