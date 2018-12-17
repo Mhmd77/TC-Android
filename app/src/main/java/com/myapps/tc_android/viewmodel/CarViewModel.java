@@ -18,6 +18,10 @@ public class CarViewModel extends ViewModel {
         carObservableData = ApiRepository.getInstance().getCar(carId);
     }
 
+    public CarViewModel(Car car) {
+        carObservableData = ApiRepository.getInstance().addCar(car);
+    }
+
     public LiveData<Car> getCarObservableData() {
         return carObservableData;
     }
@@ -28,15 +32,24 @@ public class CarViewModel extends ViewModel {
 
     public static class Factory extends ViewModelProvider.NewInstanceFactory {
         private int carId;
+        private Car car;
 
         public Factory(int carId) {
             this.carId = carId;
         }
 
+        public Factory(Car car) {
+            this.car = car;
+        }
+
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new CarViewModel(carId);
+            if (car == null) {
+                return (T) new CarViewModel(carId);
+            } else {
+                return (T) new CarViewModel(car);
+            }
         }
     }
 }
