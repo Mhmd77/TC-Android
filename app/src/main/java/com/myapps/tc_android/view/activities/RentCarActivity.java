@@ -3,6 +3,8 @@ package com.myapps.tc_android.view.activities;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatCheckBox;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,7 +20,12 @@ import com.myapps.tc_android.R;
 import com.sleepbot.datetimepicker.time.RadialPickerLayout;
 import com.sleepbot.datetimepicker.time.TimePickerDialog;
 
+import org.angmarch.views.NiceSpinner;
+
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,10 +58,27 @@ public class RentCarActivity extends AppCompatActivity implements OnDateSetListe
     @BindView(R.id.end_time_text)
     TextView endTimeText;
     final Calendar startCalendar = Calendar.getInstance();
+    @BindView(R.id.card1)
+    CardView card1;
+    @BindView(R.id.src_loc_text)
+    TextView srcLocText;
+    @BindView(R.id.src_chooser)
+    ImageView srcChooser;
+    @BindView(R.id.src_spin)
+    NiceSpinner srcSpin;
+    @BindView(R.id.src_des_is_diff)
+    AppCompatCheckBox srcDesIsDiff;
+    @BindView(R.id.des_loc_text)
+    TextView desLocText;
+    @BindView(R.id.des_chooser)
+    ImageView desChooser;
+    @BindView(R.id.des_spin)
+    NiceSpinner desSpin;
     private long today = startCalendar.getTime().getTime();
     final Calendar endCalendar = Calendar.getInstance();
     @BindView(R.id.next_page)
     Button nextPage;
+    List<String> locations;
 
 
     @Override
@@ -62,8 +86,11 @@ public class RentCarActivity extends AppCompatActivity implements OnDateSetListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rent_car);
         ButterKnife.bind(this);
+        setupDate(savedInstanceState);
+        setupLocation();
+    }
 
-
+    private void setupDate(Bundle savedInstanceState) {
         final DatePickerDialog startDatePicker = DatePickerDialog.newInstance(this, startCalendar.get(Calendar.YEAR), startCalendar.get(Calendar.MONTH), startCalendar.get(Calendar.DAY_OF_MONTH), false);
         final TimePickerDialog startTimePicker = TimePickerDialog.newInstance(this, startCalendar.get(Calendar.HOUR_OF_DAY), startCalendar.get(Calendar.MINUTE), false, false);
         final DatePickerDialog endDatePicker = DatePickerDialog.newInstance(new OnDateSetListener() {
@@ -138,6 +165,19 @@ public class RentCarActivity extends AppCompatActivity implements OnDateSetListe
         }
     }
 
+    private void setupLocation() {
+        if (!srcDesIsDiff.isChecked()) {
+            desChooser.setVisibility(View.INVISIBLE);
+            desSpin.setVisibility(View.INVISIBLE);
+            desLocText.setVisibility(View.INVISIBLE);
+        }
+        srcSpin = findViewById(R.id.src_spin);
+        desSpin = findViewById(R.id.des_spin);
+        locations = new LinkedList<>(Arrays.asList("One", "Two", "Three", "Four", "Five"));
+        srcSpin.attachDataSource(locations);
+        desSpin.attachDataSource(locations);
+    }
+
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -156,15 +196,6 @@ public class RentCarActivity extends AppCompatActivity implements OnDateSetListe
         Log.e("TAG", "onDateSet: " + startCalendar.getTime());
     }
 
-    @OnClick(R.id.next_page)
-    public void onViewClicked() {
-        if (invalidate()) {
-            if (isDifferenceOk()) {
-                //TODO
-                Log.e("HI", "onViewClicked: " + ((int) (endCalendar.getTime().getTime() / (24 * 60 * 60 * 1000)) - (int) (startCalendar.getTime().getTime() / (24 * 60 * 60 * 1000))));
-            }
-        }
-    }
 
     private boolean isDifferenceOk() {
         if ((int) (endCalendar.getTime().getTime() / (24 * 60 * 60 * 1000)) - (int) (today / (24 * 60 * 60 * 1000)) <= 0) {
@@ -226,6 +257,31 @@ public class RentCarActivity extends AppCompatActivity implements OnDateSetListe
     private void requestFocus(View view) {
         if (view.requestFocus()) {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+    }
+
+    @OnClick({R.id.src_des_is_diff, R.id.next_page})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.src_des_is_diff:
+                if (srcDesIsDiff.isChecked()) {
+                    desChooser.setVisibility(View.VISIBLE);
+                    desSpin.setVisibility(View.VISIBLE);
+                    desLocText.setVisibility(View.VISIBLE);
+                } else {
+                    desChooser.setVisibility(View.INVISIBLE);
+                    desSpin.setVisibility(View.INVISIBLE);
+                    desLocText.setVisibility(View.INVISIBLE);
+                }
+                break;
+            case R.id.next_page:
+                if (invalidate()) {
+                    if (isDifferenceOk()) {
+                        //TODO
+                        Log.e("HI", "onViewClicked: " + ((int) (endCalendar.getTime().getTime() / (24 * 60 * 60 * 1000)) - (int) (startCalendar.getTime().getTime() / (24 * 60 * 60 * 1000))));
+                    }
+                }
+                break;
         }
     }
 }
