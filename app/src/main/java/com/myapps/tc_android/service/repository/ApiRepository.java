@@ -158,6 +158,28 @@ public class ApiRepository {
 
     }
 
+    public LiveData<Car> getCar(int id) {
+        final MutableLiveData<Car> data = new MutableLiveData<>();
+        apiService.getCar(id).enqueue(new Callback<ApiResponse<Car>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<Car>> call, Response<ApiResponse<Car>> response) {
+                if (response.isSuccessful()) {
+                    data.setValue(response.body().getObject());
+                } else {
+                    Log.e("Sort List Of Cars Error", "Sort List Of Cars failed with code: " + response.code());
+                    data.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Car>> call, Throwable t) {
+                data.setValue(null);
+                t.printStackTrace();
+            }
+        });
+        return data;
+    }
+
     private void simulateDelay() {
         try {
             Thread.sleep(10);
