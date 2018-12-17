@@ -3,18 +3,12 @@ package com.myapps.tc_android.service.repository;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.support.annotation.NonNull;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
-import com.myapps.tc_android.controller.Utils;
 import com.myapps.tc_android.service.model.ApiResponse;
 import com.myapps.tc_android.service.model.Car;
-import com.myapps.tc_android.service.model.LoginInfo;
-import com.myapps.tc_android.service.model.SignUpInfo;
 import com.myapps.tc_android.service.model.User;
-import com.myapps.tc_android.view.activities.SignUpActivity;
+import com.myapps.tc_android.utils.SingleLiveEvent;
 
 import java.net.CookieHandler;
 import java.net.CookieManager;
@@ -22,7 +16,9 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.JavaNetCookieJar;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -135,5 +131,31 @@ public class ApiRepository {
             }
         });
         return liveData;
+    }
+
+    public MutableLiveData<Car> addCar(Car car) {
+        AddCarInterceptor interceptor = new AddCarInterceptor(car);
+        return interceptor.doRequest();
+    }
+
+    public SingleLiveEvent<Boolean> uploadImage(MultipartBody.Part image, int carID) {
+        final SingleLiveEvent liveEvent = new SingleLiveEvent();
+        apiService.uploadImage(image, carID).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.body() != null) {
+                    liveEvent.setValue(true);
+                } else {
+                    liveEvent.setValue(false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                t.printStackTrace();
+                liveEvent.setValue(false);
+            }
+        });
+        return null;
     }
 }
