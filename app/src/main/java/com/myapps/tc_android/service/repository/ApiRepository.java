@@ -71,12 +71,14 @@ public class ApiRepository {
                     data.setValue(response.body().getObject());
                 } else {
                     Log.e("Login User Error", "Login failed with code: " + response.code());
+                    data.setValue(null);
                 }
             }
 
             @Override
             public void onFailure(Call<ApiResponse<User>> call, Throwable t) {
                 t.printStackTrace();
+                data.setValue(null);
             }
         });
         return data;
@@ -94,11 +96,13 @@ public class ApiRepository {
                     data.setValue(response.body().getObject());
                 } else {
                     Log.e("Sign Up User Error", "Sign Up failed with code: " + response.code());
+                    data.setValue(null);
                 }
             }
 
             @Override
             public void onFailure(Call<ApiResponse<User>> call, Throwable t) {
+                data.setValue(null);
                 t.printStackTrace();
             }
         });
