@@ -14,6 +14,10 @@ public class UserViewModel extends ViewModel {
         userObservableData = ApiRepository.getInstance().loginUser(username, password);
     }
 
+    public UserViewModel(String username, String password, String identificationId, String email) {
+        userObservableData = ApiRepository.getInstance().signUpUser(username, password, identificationId, email);
+    }
+
     public LiveData<User> getObservableUser() {
         return userObservableData;
     }
@@ -22,10 +26,21 @@ public class UserViewModel extends ViewModel {
 
         private final String username;
         private final String password;
+        private final String identificationId;
+        private final String email;
 
         public Factory(String username, String password) {
             this.username = username;
             this.password = password;
+            this.identificationId = "";
+            this.email = "";
+        }
+
+        public Factory(String username, String password, String identificationId, String email) {
+            this.username = username;
+            this.password = password;
+            this.identificationId = identificationId;
+            this.email = email;
         }
 
         @Override
