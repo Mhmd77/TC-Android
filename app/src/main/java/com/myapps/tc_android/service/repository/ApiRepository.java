@@ -4,10 +4,13 @@ package com.myapps.tc_android.service.repository;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.myapps.tc_android.service.model.ApiResponse;
 import com.myapps.tc_android.service.model.LoginInfo;
+import com.myapps.tc_android.service.model.SignUpInfo;
 import com.myapps.tc_android.service.model.User;
+import com.myapps.tc_android.view.activities.SignUpActivity;
 
 import java.net.CookieHandler;
 import java.net.CookieManager;
@@ -68,6 +71,29 @@ public class ApiRepository {
                     data.setValue(response.body().getObject());
                 } else {
                     Log.e("Login User Error", "Login failed with code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<User>> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+        return data;
+    }
+
+    public LiveData<User> signUpUser(String username, String password, String identificationId, String email) {
+        final MutableLiveData<User> data = new MutableLiveData<>();
+        SignUpInfo info = new SignUpInfo(username, password,
+                identificationId, email);
+
+        apiService.signUpUser(info).enqueue(new Callback<ApiResponse<User>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<User>> call, Response<ApiResponse<User>> response) {
+                if (response.isSuccessful()) {
+                    data.setValue(response.body().getObject());
+                } else {
+                    Log.e("Sign Up User Error", "Sign Up failed with code: " + response.code());
                 }
             }
 
