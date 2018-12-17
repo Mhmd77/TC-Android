@@ -7,13 +7,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.github.ybq.android.spinkit.sprite.Sprite;
@@ -21,7 +19,6 @@ import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.mindorks.placeholderview.PlaceHolderView;
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.controller.Utils;
-import com.myapps.tc_android.service.model.ApiResponse;
 import com.myapps.tc_android.service.model.Car;
 import com.myapps.tc_android.service.model.CarView;
 import com.myapps.tc_android.view.activities.CarProfileActivity;
@@ -35,9 +32,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnItemClickListener, View.OnClickListener {
     @BindView(R.id.placeHolder_main_cars)
@@ -53,6 +47,7 @@ public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnIte
     private String field;
     private int ascending = 1;
     private Unbinder unbinder;
+    private ListCarsViewModel viewModel;
 
     public HomeFragment() {
     }
@@ -65,7 +60,7 @@ public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnIte
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        final ListCarsViewModel viewModel = ViewModelProviders.of(this).get(ListCarsViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(ListCarsViewModel.class);
         observeViewModel(viewModel);
     }
 
@@ -74,6 +69,7 @@ public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnIte
             @Override
             public void onChanged(@Nullable List<Car> cars) {
                 generateDataList(cars);
+                spinnerLoading.setVisibility(View.GONE);
             }
         });
     }
@@ -144,30 +140,7 @@ public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnIte
                 break;
             case R.id.buttonSortCars:
                 spinnerLoading.setVisibility(View.VISIBLE);
-                Call<ApiResponse<List<Car>>> call = service.sortCars(field, ascending);
-                call.enqueue(new Callback<ApiResponse<List<Car>>>() {
-                    @Override
-                    public void onResponse(Call<ApiResponse<List<Car>>> call, Response<ApiResponse<List<Car>>> response) {
-                        spinnerLoading.setVisibility(View.GONE);
-                        if (response.isSuccessful()) {
-                            if (response.body().getStatus().equals("OK")) {
-                                placeHolderMainCars.removeAllViews();
-                                generateDataList(response.body().getObject());
-                                placeHolderMainCars.refresh();
-                                Utils.collapse(sortBar);
-                            } else {
-                                Log.e("Sort Error", " status : " + response.body().getStatus());
-                            }
-                        } else {
-                            Log.e("Sort Error", " error code: " + response.code());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ApiResponse<List<Car>>> call, Throwable t) {
-                        Toast.makeText(getActivity(), "Something went wrong. please try again!", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                viewModel.sortListOfCars(field, ascending);
                 break;
         }
     }
