@@ -1,8 +1,10 @@
 package com.myapps.tc_android.view.fragments;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -19,14 +21,13 @@ import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.mindorks.placeholderview.PlaceHolderView;
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.controller.Utils;
-import com.myapps.tc_android.view.adapter.CarsRecyclerView;
-import com.myapps.tc_android.service.repository.ApiService;
-import com.myapps.tc_android.service.repository.ApiRepository;
 import com.myapps.tc_android.service.model.ApiResponse;
 import com.myapps.tc_android.service.model.Car;
 import com.myapps.tc_android.service.model.CarView;
 import com.myapps.tc_android.view.activities.CarProfileActivity;
 import com.myapps.tc_android.view.activities.HomePageActivity;
+import com.myapps.tc_android.view.adapter.CarsRecyclerView;
+import com.myapps.tc_android.viewmodel.ListCarsViewModel;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeFragment extends Fragment implements Callback<ApiResponse<List<Car>>>, CarsRecyclerView.UserOnItemClickListener, View.OnClickListener {
+public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnItemClickListener, View.OnClickListener {
     @BindView(R.id.placeHolder_main_cars)
     PlaceHolderView placeHolderMainCars;
     @BindView(R.id.radioButtonSortAscending)
@@ -47,7 +48,6 @@ public class HomeFragment extends Fragment implements Callback<ApiResponse<List<
     RadioButton radioButtonSortDescending;
     @BindView(R.id.spinnerLoading)
     SpinKitView spinnerLoading;
-    private ApiService service;
     @BindView(R.id.sortbar)
     View sortBar;
     private String field;
@@ -63,10 +63,19 @@ public class HomeFragment extends Fragment implements Callback<ApiResponse<List<
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        final ListCarsViewModel viewModel = ViewModelProviders.of(this).get(ListCarsViewModel.class);
+        observeViewModel(viewModel);
+    }
+
+    private void observeViewModel(ListCarsViewModel viewModel) {
+        viewModel.getListCarsObservableData().observe(this, new Observer<List<Car>>() {
+            @Override
+            public void onChanged(@Nullable List<Car> cars) {
+                generateDataList(cars);
+            }
+        });
     }
 
     @Override
@@ -74,9 +83,7 @@ public class HomeFragment extends Fragment implements Callback<ApiResponse<List<
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         unbinder = ButterKnife.bind(this, view);
-        service = ApiRepository.getRetrofitInstance().create(ApiService.class);
         placeHolderMainCars.getBuilder().setLayoutManager(new LinearLayoutManager(getActivity()));
-        updateList();
         initSortBar();
         initSpinner();
         return view;
@@ -106,30 +113,13 @@ public class HomeFragment extends Fragment implements Callback<ApiResponse<List<
         });
     }
 
-    private void updateList() {
-        Call<ApiResponse<List<Car>>> call = service.getAllCars();
-        call.enqueue(this);
-    }
-
     private void generateDataList(final List<Car> cars) {
+        placeHolderMainCars.removeAllViews();
         for (Car c :
                 cars) {
             placeHolderMainCars.addView(new CarView(placeHolderMainCars, getActivity(), c));
         }
-    }
-
-    @Override
-    public void onResponse(@NonNull Call<ApiResponse<List<Car>>> call, @NonNull Response<ApiResponse<List<Car>>> response) {
-        if (response.body() != null) {
-            generateDataList(response.body().getObject());
-        } else {
-            Log.e("CarList", "response body is null");
-        }
-    }
-
-    @Override
-    public void onFailure(@NonNull Call<ApiResponse<List<Car>>> call, @NonNull Throwable t) {
-        Toast.makeText(getActivity(), "Something went wrong...Please try later!", Toast.LENGTH_SHORT).show();
+        placeHolderMainCars.refresh();
     }
 
     @Override
