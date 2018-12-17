@@ -1,12 +1,16 @@
 package com.myapps.tc_android.view.activities;
 
 import android.Manifest;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +28,8 @@ import com.myapps.tc_android.service.repository.ApiService;
 import com.myapps.tc_android.service.repository.ApiRepository;
 import com.myapps.tc_android.service.model.ApiResponse;
 import com.myapps.tc_android.service.model.Car;
+import com.myapps.tc_android.viewmodel.CarViewModel;
+import com.myapps.tc_android.viewmodel.PostImageViewModel;
 
 import java.io.File;
 
@@ -85,8 +91,20 @@ public class AddCarAdminActivity extends AppCompatActivity implements Callback<A
                     .setPrice(Integer.parseInt(editTextAddCarPrice.getText().toString()))
                     .setYear(Integer.parseInt(editTextAddCarYear.getText().toString()))
                     .setAutomate(editTextAddCarAutomate.isChecked());
-            addCar(builder.createCar());
+            CarViewModel.Factory factory = new CarViewModel.Factory(builder.createCar());
+            final CarViewModel viewModel = ViewModelProviders.of(this, factory).get(CarViewModel.class);
+            observeAddCar(viewModel);
         }
+    }
+
+    private void observeAddCar(CarViewModel viewModel) {
+        viewModel.getCarObservableData().observe(this, new Observer<Car>() {
+            @Override
+            public void onChanged(@Nullable Car recievedCar) {
+                car = recievedCar;
+                sendPhoto();
+            }
+        });
     }
 
     private boolean validate() {
@@ -157,12 +175,6 @@ public class AddCarAdminActivity extends AppCompatActivity implements Callback<A
         if (view.requestFocus()) {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
-    }
-
-    private void addCar(Car car) {
-        ApiService service = ApiRepository.getRetrofitInstance().create(ApiService.class);
-        Call<ApiResponse<Car>> call = service.addCar(car);
-        call.enqueue(this);
     }
 
     @Override
@@ -254,25 +266,28 @@ public class AddCarAdminActivity extends AppCompatActivity implements Callback<A
     }
 
     private void sendPhoto() {
-        ApiService service = ApiRepository.getRetrofitInstance().create(ApiService.class);
         RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), image);
         MultipartBody.Part body = MultipartBody.Part.createFormData("file", image.getName(), reqFile);
-        Call<ResponseBody> req = service.uploadImage(body, car.getId());
-        req.enqueue(new Callback<ResponseBody>() {
+        PostImageViewModel.Factory factory = new PostImageViewModel.Factory(body, car.getId());
+        PostImageViewModel postImageViewModel = ViewModelProviders.of(this, factory).get(PostImageViewModel.class);
+        observePostImage(postImageViewModel);
+    }
+
+    private void observePostImage(PostImageViewModel postImageViewModel) {
+        postImageViewModel.getLiveEvent().observe(this, new Observer<Boolean>() {
             @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    Log.i(TAG, "image " + image.getName() + " uploaded successfully");
+            public void onChanged(@Nullable Boolean aBoolean) {
+                if (true) {
                     finish();
                     startActivity(new Intent(AddCarAdminActivity.this, HomePageAdminActivity.class));
                 } else {
-                    Log.e(TAG, "uploading image failed with code " + response.code());
+                    Snackbar.make(buttonAddCar, "Upload Image Failed", Toast.LENGTH_SHORT).setAction("Retry", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            sendPhoto();
+                        }
+                    }).show();
                 }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                t.printStackTrace();
             }
         });
     }
