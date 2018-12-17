@@ -1,24 +1,26 @@
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical"
+    android:weightSum="1">
 
     <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_weight="0.3"
         android:background="@color/white"
         app:cardCornerRadius="8dp">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
             android:background="@drawable/bg_rent"
             android:paddingBottom="15dp">
 
@@ -26,12 +28,12 @@
                 android:id="@+id/date_time_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
+                android:layout_marginStart="3dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/font_normal"
                 android:text=" Starting Date and Time : "
                 android:textColor="@color/white"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -58,7 +60,7 @@
                 android:padding="8dp"
                 android:textColor="@color/blackColor"
                 android:textColorHint="@color/blackColor"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/start_date_picker"
                 app:layout_constraintStart_toEndOf="@id/start_date_picker"
                 app:layout_constraintTop_toTopOf="@id/start_date_picker" />
@@ -67,7 +69,7 @@
                 android:id="@+id/start_time_picker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"
                 android:background="@drawable/background_button_red_color"
                 android:padding="10dp"
                 android:src="@drawable/ic_access_time_black_24dp"
@@ -93,12 +95,12 @@
                 android:id="@+id/end_date_time_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
+                android:layout_marginStart="3dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/font_normal"
                 android:text=" Ending Date and Time : "
                 android:textColor="@color/white"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/start_time_picker" />
@@ -126,7 +128,7 @@
                 android:padding="8dp"
                 android:textColor="@color/blackColor"
                 android:textColorHint="@color/blackColor"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/end_date_picker"
                 app:layout_constraintStart_toEndOf="@id/end_date_picker"
                 app:layout_constraintTop_toTopOf="@id/end_date_picker" />
@@ -135,7 +137,7 @@
                 android:id="@+id/end_time_picker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"
                 android:background="@drawable/background_button_red_color"
                 android:padding="10dp"
                 android:src="@drawable/ic_access_time_black_24dp"
@@ -153,7 +155,7 @@
                 android:padding="8dp"
                 android:textColor="@color/blackColor"
                 android:textColorHint="@color/blackColor"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/end_date_picker"
                 app:layout_constraintStart_toEndOf="@id/end_time_picker"
                 app:layout_constraintTop_toTopOf="@id/end_time_picker" />
@@ -163,30 +165,140 @@
 
     </android.support.v7.widget.CardView>
 
-    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <android.support.v7.widget.CardView
+        android:id="@+id/card2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/bg_user_card"
+        android:layout_marginBottom="5dp"
+        android:layout_weight="0.5"
         app:cardCornerRadius="8dp"
+        app:layout_constraintBottom_toTopOf="@id/next_page"
         app:layout_constraintTop_toBottomOf="@id/card1">
 
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/cons1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_user_card"
+            android:paddingBottom="20dp"
+            app:layout_constraintBottom_toTopOf="@id/next_page">
+
+            <TextView
+                android:id="@+id/src_loc_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/font_normal"
+                android:text=" Source Location : "
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageView
+                android:id="@+id/src_chooser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/background_button_red_color"
+                android:padding="15dp"
+                android:src="@drawable/ic_location_on_black_24dp"
+                app:layout_constraintStart_toStartOf="@id/src_loc_text"
+                app:layout_constraintTop_toBottomOf="@id/src_loc_text" />
+
+            <org.angmarch.views.NiceSpinner
+                android:id="@+id/src_spin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_normal"
+                android:hint="Choose a location "
+                android:padding="5dp"
+                android:textColorHint="@color/blackColor"
+                app:layout_constraintBottom_toBottomOf="@id/src_chooser"
+                app:layout_constraintStart_toEndOf="@id/src_chooser"
+                app:layout_constraintTop_toTopOf="@id/src_chooser" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/src_des_is_diff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:buttonTint="@color/white"
+                android:outlineSpotShadowColor="@color/white"
+                android:paddingTop="30dp"
+                app:layout_constraintStart_toStartOf="@id/src_chooser"
+                app:layout_constraintTop_toBottomOf="@id/src_chooser" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/font_normal"
+                android:padding="10dp"
+                android:text="Source Location is diffrent from Destination"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@id/src_des_is_diff"
+                app:layout_constraintTop_toTopOf="@id/src_des_is_diff" />
+
+            <TextView
+                android:id="@+id/des_loc_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_normal"
+                android:text=" Destination Location : "
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/src_loc_text"
+                app:layout_constraintTop_toBottomOf="@id/src_des_is_diff" />
+
+            <ImageView
+                android:id="@+id/des_chooser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/background_button_red_color"
+                android:padding="15dp"
+                android:src="@drawable/ic_location_on_black_24dp"
+                app:layout_constraintStart_toStartOf="@id/des_loc_text"
+                app:layout_constraintTop_toBottomOf="@id/des_loc_text" />
+
+            <org.angmarch.views.NiceSpinner
+                android:id="@+id/des_spin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_normal"
+                android:hint="Choose a location "
+                android:padding="5dp"
+                android:textColorHint="@color/blackColor"
+                app:layout_constraintBottom_toBottomOf="@id/des_chooser"
+                app:layout_constraintStart_toEndOf="@id/des_chooser"
+                app:layout_constraintTop_toTopOf="@id/des_chooser" />
+
+
+        </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
+
     <Button
+        android:id="@+id/next_page"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="3dp"
+        android:layout_weight="0.1"
         android:background="@drawable/background_button_red_color"
-        android:id="@+id/next_page"
-        android:text="Next"
         android:fontFamily="@font/font_normal"
-        android:layout_marginRight="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginBottom="4dp"
-        android:textSize="22sp"/>
+        android:text="Next"
+        android:textSize="22sp"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
