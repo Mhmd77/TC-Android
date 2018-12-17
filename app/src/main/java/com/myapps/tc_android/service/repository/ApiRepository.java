@@ -3,10 +3,12 @@ package com.myapps.tc_android.service.repository;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.myapps.tc_android.service.model.ApiResponse;
+import com.myapps.tc_android.service.model.Car;
 import com.myapps.tc_android.service.model.LoginInfo;
 import com.myapps.tc_android.service.model.SignUpInfo;
 import com.myapps.tc_android.service.model.User;
@@ -14,6 +16,7 @@ import com.myapps.tc_android.view.activities.SignUpActivity;
 
 import java.net.CookieHandler;
 import java.net.CookieManager;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.JavaNetCookieJar;
@@ -102,6 +105,29 @@ public class ApiRepository {
 
             @Override
             public void onFailure(Call<ApiResponse<User>> call, Throwable t) {
+                data.setValue(null);
+                t.printStackTrace();
+            }
+        });
+        return data;
+    }
+
+    public LiveData<List<Car>> getListCars() {
+        final MutableLiveData<List<Car>> data = new MutableLiveData<>();
+        apiService.getAllCars().enqueue(new Callback<ApiResponse<List<Car>>>() {
+            @Override
+            public void onResponse(@NonNull Call<ApiResponse<List<Car>>> call, @NonNull Response<ApiResponse<List<Car>>> response) {
+                simulateDelay();
+                if (response.isSuccessful()) {
+                    data.setValue(response.body().getObject());
+                } else {
+                    Log.e("Get List Of Cars Error", "Get List Of Cars failed with code: " + response.code());
+                    data.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ApiResponse<List<Car>>> call, @NonNull Throwable t) {
                 data.setValue(null);
                 t.printStackTrace();
             }
