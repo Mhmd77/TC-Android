@@ -32,7 +32,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiRepository {
     private static ApiRepository apiRepository;
-    private ApiService apiService;
+    protected static ApiService apiService;
 
     public static String getBaseUrl() {
         return ApiService.BASE_URL;
@@ -68,73 +68,18 @@ public class ApiRepository {
     }
 
     public LiveData<User> loginUser(String username, String password) {
-        final MutableLiveData<User> data = new MutableLiveData<>();
-        apiService.loginUser(new LoginInfo(username, password)).enqueue(new Callback<ApiResponse<User>>() {
-            @Override
-            public void onResponse(Call<ApiResponse<User>> call, Response<ApiResponse<User>> response) {
-                if (response.isSuccessful()) {
-                    data.setValue(response.body().getObject());
-                } else {
-                    Log.e("Login User Error", "Login failed with code: " + response.code());
-                    data.setValue(null);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse<User>> call, Throwable t) {
-                t.printStackTrace();
-                data.setValue(null);
-            }
-        });
-        return data;
+        SignInInteractor signIn = new SignInInteractor(username, password);
+        return signIn.doRequest();
     }
 
     public LiveData<User> signUpUser(String username, String password, String identificationId, String email) {
-        final MutableLiveData<User> data = new MutableLiveData<>();
-        SignUpInfo info = new SignUpInfo(username, password,
-                identificationId, email);
-
-        apiService.signUpUser(info).enqueue(new Callback<ApiResponse<User>>() {
-            @Override
-            public void onResponse(Call<ApiResponse<User>> call, Response<ApiResponse<User>> response) {
-                if (response.isSuccessful()) {
-                    data.setValue(response.body().getObject());
-                } else {
-                    Log.e("Sign Up User Error", "Sign Up failed with code: " + response.code());
-                    data.setValue(null);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse<User>> call, Throwable t) {
-                data.setValue(null);
-                t.printStackTrace();
-            }
-        });
-        return data;
+        SignUpInteractor signUp = new SignUpInteractor(username, password, identificationId, email);
+        return signUp.doRequest();
     }
 
     public MutableLiveData<List<Car>> getListCars() {
-        final MutableLiveData<List<Car>> data = new MutableLiveData<>();
-        apiService.getAllCars().enqueue(new Callback<ApiResponse<List<Car>>>() {
-            @Override
-            public void onResponse(@NonNull Call<ApiResponse<List<Car>>> call, @NonNull Response<ApiResponse<List<Car>>> response) {
-                simulateDelay();
-                if (response.isSuccessful()) {
-                    data.setValue(response.body().getObject());
-                } else {
-                    Log.e("Get List Of Cars Error", "Get List Of Cars failed with code: " + response.code());
-                    data.setValue(null);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ApiResponse<List<Car>>> call, @NonNull Throwable t) {
-                data.setValue(null);
-                t.printStackTrace();
-            }
-        });
-        return data;
+        GetListCarInteractor getAllCars = new GetListCarInteractor();
+        return getAllCars.doRequest();
     }
 
     public void sortListCars(final MutableLiveData<List<Car>> data, String field, int ascending) {
@@ -158,33 +103,13 @@ public class ApiRepository {
 
     }
 
-    public LiveData<Car> getCar(int id) {
-        final MutableLiveData<Car> data = new MutableLiveData<>();
-        apiService.getCar(id).enqueue(new Callback<ApiResponse<Car>>() {
-            @Override
-            public void onResponse(Call<ApiResponse<Car>> call, Response<ApiResponse<Car>> response) {
-                if (response.isSuccessful()) {
-                    data.setValue(response.body().getObject());
-                } else {
-                    Log.e("Get Car Error", "Get Car failed with code: " + response.code());
-                    data.setValue(null);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse<Car>> call, Throwable t) {
-                data.setValue(null);
-                t.printStackTrace();
-            }
-        });
-        return data;
+    public MutableLiveData<Car> getCar(int id) {
+        GetCarInteractor getCarInteractor = new GetCarInteractor(id);
+        return getCarInteractor.doRequest();
     }
 
-    private void simulateDelay() {
-        try {
-            Thread.sleep(10);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public void getCar(MutableLiveData<Car> data, int id) {
+        GetCarInteractor getCarInteractor = new GetCarInteractor(id);
+        getCarInteractor.doRequest(data);
     }
 }
