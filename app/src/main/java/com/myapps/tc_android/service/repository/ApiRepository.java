@@ -112,4 +112,28 @@ public class ApiRepository {
         GetCarInteractor getCarInteractor = new GetCarInteractor(id);
         getCarInteractor.doRequest(data);
     }
+
+    public MutableLiveData<Boolean> deleteCar(int carId) {
+        final MutableLiveData<Boolean> liveData = new MutableLiveData<>();
+        apiService.deleteCar(carId).enqueue(new ApiCallback<Object>() {
+            @Override
+            protected void handleResponseData(Object data) {
+                Log.i("Delete Car", "Succussfully");
+                liveData.setValue(true);
+            }
+
+            @Override
+            protected void handleError(Response<ApiResponse<Object>> response) {
+                Log.e("Request Error", "Error failed with code: " + response.code() + " and message : " + response.message());
+                liveData.setValue(false);
+            }
+
+            @Override
+            protected void handleException(Exception t) {
+                liveData.setValue(false);
+                t.printStackTrace();
+            }
+        });
+        return liveData;
+    }
 }
