@@ -166,7 +166,7 @@ public class ApiRepository {
                 if (response.isSuccessful()) {
                     data.setValue(response.body().getObject());
                 } else {
-                    Log.e("Sort List Of Cars Error", "Sort List Of Cars failed with code: " + response.code());
+                    Log.e("Get Car Error", "Get Car failed with code: " + response.code());
                     data.setValue(null);
                 }
             }
