@@ -60,7 +60,8 @@ public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnIte
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModel = ViewModelProviders.of(this).get(ListCarsViewModel.class);
+        ListCarsViewModel.Factory factory = new ListCarsViewModel.Factory(false);
+        viewModel = ViewModelProviders.of(this, factory).get(ListCarsViewModel.class);
         observeViewModel(viewModel);
     }
 
