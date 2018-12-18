@@ -186,4 +186,9 @@ public class ApiRepository {
         GetListCarInteractor getAllCars = new GetListCarInteractor(true);
         return getAllCars.doRequest();
     }
+
+    public MutableLiveData<List<User>> getListUsers() {
+        GetListUserInteractor interactor = new GetListUserInteractor();
+        return interactor.doRequest();
+    }
 }
