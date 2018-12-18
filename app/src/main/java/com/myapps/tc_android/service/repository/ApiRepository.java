@@ -74,7 +74,7 @@ public class ApiRepository {
     }
 
     public MutableLiveData<List<Car>> getListCars() {
-        GetListCarInteractor getAllCars = new GetListCarInteractor();
+        GetListCarInteractor getAllCars = new GetListCarInteractor(false);
         return getAllCars.doRequest();
     }
 
@@ -180,5 +180,10 @@ public class ApiRepository {
             }
         });
         return liveEvent;
+    }
+
+    public MutableLiveData<List<Car>> getListCarUser() {
+        GetListCarInteractor getAllCars = new GetListCarInteractor(true);
+        return getAllCars.doRequest();
     }
 }
