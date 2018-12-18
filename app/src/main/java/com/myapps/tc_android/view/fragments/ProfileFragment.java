@@ -1,7 +1,10 @@
 package com.myapps.tc_android.view.fragments;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +23,7 @@ import com.myapps.tc_android.service.model.User;
 import com.myapps.tc_android.service.model.UserHolder;
 import com.myapps.tc_android.view.activities.AddCarUserActivity;
 import com.myapps.tc_android.view.activities.UsersCarActivity;
+import com.myapps.tc_android.viewmodel.ListCarsViewModel;
 
 import java.io.Serializable;
 import java.util.List;
@@ -32,7 +36,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProfileFragment extends Fragment implements Callback<ApiResponse<List<Car>>> {
+public class ProfileFragment extends Fragment {
 
     @BindView(R.id.textview_name)
     TextView textviewName;
@@ -70,16 +74,36 @@ public class ProfileFragment extends Fragment implements Callback<ApiResponse<Li
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         unbinder = ButterKnife.bind(this, view);
         recyclerViewProfileCars.getBuilder()
                 .setItemViewCacheSize(2);
-        Call<ApiResponse<List<Car>>> call = ApiRepository.getRetrofitInstance().create(ApiService.class).getUserCar();
-        call.enqueue(this);
+        ListCarsViewModel.Factory factory = new ListCarsViewModel.Factory(true);
+        final ListCarsViewModel viewModel = ViewModelProviders.of(this, factory).get(ListCarsViewModel.class);
+        observeViewModel(viewModel);
         fillUserInfo();
         return view;
+    }
+
+    private void observeViewModel(ListCarsViewModel viewModel) {
+        viewModel.getListCarsObservableData().observe(this, new Observer<List<Car>>() {
+            @Override
+            public void onChanged(@Nullable List<Car> result) {
+                cars = result;
+                for (int i = 0; i < 2 && i < result.size(); i++) {
+                    Car c = result.get(i);
+                    recyclerViewProfileCars.addView(new CarView(recyclerViewProfileCars, getActivity(), c));
+                }
+            }
+        });
     }
 
     private void fillUserInfo() {
@@ -96,29 +120,6 @@ public class ProfileFragment extends Fragment implements Callback<ApiResponse<Li
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-    }
-
-    @Override
-    public void onResponse(Call<ApiResponse<List<Car>>> call, Response<ApiResponse<List<Car>>> response) {
-        if (response.isSuccessful()) {
-            if (response.body().getStatus().equals("OK")) {
-                cars = response.body().getObject();
-                for (int i = 0; i < 2 && i < cars.size(); i++) {
-                    Car c = response.body().getObject().get(i);
-                    recyclerViewProfileCars.addView(new CarView(recyclerViewProfileCars, getActivity(), c));
-                }
-            } else {
-                Log.e("Error", response.body().getStatus());
-            }
-        } else {
-            Log.e("Error", response.code() + "");
-
-        }
-    }
-
-    @Override
-    public void onFailure(Call<ApiResponse<List<Car>>> call, Throwable t) {
-        Log.e("Error", "something went wrong!...");
     }
 
     @OnClick({R.id.button_profile_add_car, R.id.button_all_user_cars})
