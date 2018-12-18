@@ -18,7 +18,7 @@ import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.mindorks.placeholderview.PlaceHolderView;
 import com.myapps.tc_android.R;
-import com.myapps.tc_android.controller.Utils;
+import com.myapps.tc_android.utils.AnimationUtils;
 import com.myapps.tc_android.service.model.Car;
 import com.myapps.tc_android.service.model.CarView;
 import com.myapps.tc_android.view.activities.CarProfileActivity;
@@ -94,7 +94,7 @@ public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnIte
     private void initSortBar() {
         ((HomePageActivity) getActivity()).buttonSortCost.setOnClickListener(this);
         ((HomePageActivity) getActivity()).buttonSortYear.setOnClickListener(this);
-        Utils.collapse(sortBar);
+        AnimationUtils.collapse(sortBar);
         ((RadioGroup) sortBar).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -132,11 +132,11 @@ public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnIte
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.buttonSortYear:
-                Utils.expand(sortBar);
+                AnimationUtils.expand(sortBar);
                 field = "year";
                 break;
             case R.id.buttonSortCost:
-                Utils.expand(sortBar);
+                AnimationUtils.expand(sortBar);
                 field = "price";
                 break;
             case R.id.buttonSortCars:

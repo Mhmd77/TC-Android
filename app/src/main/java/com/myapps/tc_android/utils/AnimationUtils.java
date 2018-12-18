@@ -1,11 +1,11 @@
-package com.myapps.tc_android.controller;
+package com.myapps.tc_android.utils;
 
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.RelativeLayout;
 
-public class Utils {
+public class AnimationUtils {
     public static void expand(final View v) {
         v.measure(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         final int targetHeight = v.getMeasuredHeight();
