@@ -158,4 +158,27 @@ public class ApiRepository {
         });
         return null;
     }
+
+    public SingleLiveEvent<Boolean> updateCar(Car car, int carId) {
+        final SingleLiveEvent<Boolean> liveEvent = new SingleLiveEvent();
+        apiService.updateCar(car, carId).enqueue(new ApiCallback<Car>() {
+            @Override
+            protected void handleResponseData(Car data) {
+                liveEvent.setValue(true);
+            }
+
+            @Override
+            protected void handleError(Response<ApiResponse<Car>> response) {
+                liveEvent.setValue(false);
+                Log.e("Request Error", "Error failed with code: " + response.code() + " and message : " + response.message());
+            }
+
+            @Override
+            protected void handleException(Exception t) {
+                liveEvent.setValue(false);
+                t.printStackTrace();
+            }
+        });
+        return liveEvent;
+    }
 }
