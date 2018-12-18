@@ -1,7 +1,5 @@
-package com.myapps.tc_android.controller;
+package com.myapps.tc_android.service.model;
 
-
-import com.myapps.tc_android.service.model.Car;
 
 public class CarBuilder {
     private int id;

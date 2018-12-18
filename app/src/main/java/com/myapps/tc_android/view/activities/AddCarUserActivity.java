@@ -23,17 +23,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.myapps.tc_android.R;
-import com.myapps.tc_android.controller.CarBuilder;
-import com.myapps.tc_android.service.repository.ApiService;
-import com.myapps.tc_android.service.repository.ApiRepository;
+import com.myapps.tc_android.service.model.CarBuilder;
 import com.myapps.tc_android.service.model.ApiResponse;
 import com.myapps.tc_android.service.model.Car;
-import com.myapps.tc_android.utils.SingleLiveEvent;
 import com.myapps.tc_android.viewmodel.CarViewModel;
 import com.myapps.tc_android.viewmodel.PostImageViewModel;
 
 import java.io.File;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,7 +40,6 @@ import in.mayanknagwanshi.imagepicker.imagePicker.ImagePicker;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

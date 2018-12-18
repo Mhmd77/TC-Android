@@ -3,12 +3,10 @@ package com.myapps.tc_android.view.activities;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -17,19 +15,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.myapps.tc_android.R;
-import com.myapps.tc_android.controller.CarBuilder;
-import com.myapps.tc_android.service.repository.ApiService;
-import com.myapps.tc_android.service.repository.ApiRepository;
-import com.myapps.tc_android.service.model.ApiResponse;
+import com.myapps.tc_android.service.model.CarBuilder;
 import com.myapps.tc_android.service.model.Car;
 import com.myapps.tc_android.viewmodel.UpdateCarViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class UpdateCarAdminActivity extends AppCompatActivity {
 
