@@ -36,10 +36,16 @@ public class LoginActivity extends AppCompatActivity {
         userViewModel.getObservableUser().observe(this, new Observer<User>() {
             @Override
             public void onChanged(@Nullable User user) {
-                if (user.getRole().equals("admin")) {
-
+                if (user != null) {
+                    if (user.getRole().equals("admin")) {
+                        startActivity(new Intent(LoginActivity.this, HomePageAdminActivity.class));
+                        finish();
+                    } else {
+                        startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
+                        finish();
+                    }
                 } else {
-                    Toast.makeText(LoginActivity.this, "Welcome " + user.getUsername(), Toast.LENGTH_SHORT).show();
+                    //TODO Handle failures
                 }
             }
         });
