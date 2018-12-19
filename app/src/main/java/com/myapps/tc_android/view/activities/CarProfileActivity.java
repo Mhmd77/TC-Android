@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,6 +15,7 @@ import com.myapps.tc_android.controller.network.ApiService;
 import com.myapps.tc_android.controller.network.RetrofitClientInstance;
 import com.myapps.tc_android.model.ApiResponse;
 import com.myapps.tc_android.model.Car;
+import com.myapps.tc_android.model.RentCarObject;
 import com.myapps.tc_android.model.UserHolder;
 import com.squareup.picasso.Picasso;
 
@@ -50,6 +52,16 @@ public class CarProfileActivity extends AppCompatActivity implements Callback<Ap
     ImageButton buttonDeleteCarProfile;
     @BindView(R.id.imageview_car_logo)
     CircleImageView imageviewCarLogo;
+    @BindView(R.id.textview_carprofile_header_cost)
+    TextView textviewCarprofileHeaderCost;
+    @BindView(R.id.view_divider1)
+    View viewDivider1;
+    @BindView(R.id.textview_carprofile_header_color)
+    TextView textviewCarprofileHeaderColor;
+    @BindView(R.id.view_divider2)
+    View viewDivider2;
+    @BindView(R.id.button_reserve)
+    Button buttonReserve;
 
 
     @Override
@@ -58,11 +70,12 @@ public class CarProfileActivity extends AppCompatActivity implements Callback<Ap
         setContentView(R.layout.activity_car_profile);
         ButterKnife.bind(this);
         Intent i = getIntent();
-        carId = i.getIntExtra("carId",-1);
+        carId = i.getIntExtra("carId", -1);
         getCar();
-        if (UserHolder.Instance().getUser().getRole().equals("admin") == false) {
+        if (!UserHolder.Instance().getUser().getRole().equals("admin")) {
             buttonEditCarprofile.setVisibility(View.GONE);
             buttonDeleteCarProfile.setVisibility(View.GONE);
+            buttonReserve.setVisibility(View.VISIBLE);
         }
     }
 
@@ -75,9 +88,8 @@ public class CarProfileActivity extends AppCompatActivity implements Callback<Ap
                 if (response.isSuccessful()) {
                     car = response.body().getObject();
                     setVariables(car);
-//                    Toast.makeText(CarProfileActivity.this, "Car : " + car.getName(), Toast.LENGTH_SHORT).show();
                     Log.i("GET Car", "Car " + car.getId() + " get");
-                }else {
+                } else {
                     Log.e("GET car", "Failed : " + response.message());
                 }
             }
@@ -111,7 +123,7 @@ public class CarProfileActivity extends AppCompatActivity implements Callback<Ap
     }
 
 
-    @OnClick({R.id.button_edit_carprofile, R.id.button_delete_car_profile})
+    @OnClick({R.id.button_edit_carprofile, R.id.button_delete_car_profile, R.id.button_reserve})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.button_edit_carprofile:
@@ -124,6 +136,12 @@ public class CarProfileActivity extends AppCompatActivity implements Callback<Ap
                 service = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
                 Call<ApiResponse<Object>> call = service.deleteCar(car.getId());
                 call.enqueue(this);
+                break;
+            case R.id.button_reserve:
+                Intent intent2 = new Intent(CarProfileActivity.this, RentCarObject.class);
+                intent2.putExtra("Car", car);
+                startActivity(intent2);
+                finish();
                 break;
         }
     }
