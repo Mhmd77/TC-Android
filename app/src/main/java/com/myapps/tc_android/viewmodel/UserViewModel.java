@@ -46,9 +46,9 @@ public class UserViewModel extends ViewModel {
         @Override
         public <T extends ViewModel> T create(Class<T> modelClass) {
             if (identificationId.length() == 0 || email.length() == 0) {
-                return (T) new UserViewModel(username, password, identificationId, email);
-            } else {
                 return (T) new UserViewModel(username, password);
+            } else {
+                return (T) new UserViewModel(username, password, identificationId, email);
             }
         }
     }
