@@ -1,6 +1,7 @@
 package com.myapps.tc_android.view.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
@@ -17,11 +18,17 @@ import android.widget.Toast;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
 import com.fourmob.datetimepicker.date.DatePickerDialog.OnDateSetListener;
 import com.myapps.tc_android.R;
+import com.myapps.tc_android.controller.RentBuilder;
+import com.myapps.tc_android.model.Car;
+import com.myapps.tc_android.model.RentCarObject;
+import com.myapps.tc_android.model.User;
+import com.myapps.tc_android.model.UserHolder;
 import com.sleepbot.datetimepicker.time.RadialPickerLayout;
 import com.sleepbot.datetimepicker.time.TimePickerDialog;
 
 import org.angmarch.views.NiceSpinner;
 
+import java.sql.Date;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.LinkedList;
@@ -79,6 +86,7 @@ public class RentCarActivity extends AppCompatActivity implements OnDateSetListe
     @BindView(R.id.next_page)
     Button nextPage;
     List<String> locations;
+    Car car;
 
 
     @Override
@@ -86,6 +94,8 @@ public class RentCarActivity extends AppCompatActivity implements OnDateSetListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rent_car);
         ButterKnife.bind(this);
+        Intent i = getIntent();
+        car = (Car) i.getSerializableExtra("Car");
         setupDate(savedInstanceState);
         setupLocation();
     }
@@ -277,11 +287,30 @@ public class RentCarActivity extends AppCompatActivity implements OnDateSetListe
             case R.id.next_page:
                 if (invalidate()) {
                     if (isDifferenceOk()) {
-                        //TODO
-                        Log.e("HI", "onViewClicked: " + ((int) (endCalendar.getTime().getTime() / (24 * 60 * 60 * 1000)) - (int) (startCalendar.getTime().getTime() / (24 * 60 * 60 * 1000))));
+                      RentCarObject rentCarObject = createRent();
+                        Intent intent = new Intent(RentCarActivity.this, ModifyRentActivity.class);
+                        intent.putExtra("Car", car);
+                        intent.putExtra("Rent",rentCarObject);
+                        startActivity(intent);
+                        finish();
                     }
                 }
                 break;
         }
+    }
+
+    private RentCarObject createRent() {
+        int desloc;
+        if (!srcDesIsDiff.isChecked())
+            desloc = srcSpin.getSelectedIndex();
+        else desloc = desSpin.getSelectedIndex();
+        RentBuilder builder = new RentBuilder()
+                .setCarId(car.getId())
+                .setUserId(UserHolder.Instance().getUser().getId())
+                .setStartDate((Date) startCalendar.getTime())
+                .setEndDate((Date) endCalendar.getTime())
+                .setSrcLocation(srcSpin.getSelectedIndex())
+                .setDesLocation(desloc);
+        return builder.createRent();
     }
 }
