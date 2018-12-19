@@ -44,7 +44,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddCarUserActivity extends AppCompatActivity implements Callback<ApiResponse<Car>> {
+public class AddCarUserActivity extends AppCompatActivity {
 
     @BindView(R.id.editText_addCar_name)
     EditText editTextAddCarName;
@@ -173,33 +173,6 @@ public class AddCarUserActivity extends AppCompatActivity implements Callback<Ap
         if (view.requestFocus()) {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
-    }
-
-    @Override
-    public void onResponse(@NonNull Call<ApiResponse<Car>> call, @NonNull Response<ApiResponse<Car>> response) {
-        if (response.isSuccessful()) {
-            if (response.body().getStatus().equals("OK")) {
-                car = response.body().getObject();
-                if (image != null) {
-                    sendPhoto();
-                } else {
-                    finish();
-                    startActivity(new Intent(AddCarUserActivity.this, HomePageActivity.class));
-                }
-                Toast.makeText(AddCarUserActivity.this, car.getName() + " Added Successfully ", Toast.LENGTH_SHORT).show();
-            } else {
-                Log.e("Add Car Error", " status : " + response.body().getStatus());
-            }
-
-        } else {
-            Log.e("Connection", "Failed To Add Car : " + response.message());
-        }
-    }
-
-    @Override
-    public void onFailure(@NonNull Call<ApiResponse<Car>> call, @NonNull Throwable t) {
-        Log.e("Connection", "Failed To Connect : " + t.getMessage());
-
     }
 
     @Override
