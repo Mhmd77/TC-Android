@@ -31,7 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ListUsersAdminFragment extends Fragment implements Callback<ApiResponse<List<User>>>, UserRecyclerView.OnItemClickListener {
+public class ListUsersAdminFragment extends Fragment implements UserRecyclerView.OnItemClickListener {
     @BindView(R.id.recyclerView_main_users)
     RecyclerView recyclerViewMainUsers;
 
@@ -85,7 +85,7 @@ public class ListUsersAdminFragment extends Fragment implements Callback<ApiResp
 
     @Override
     public void deleteOnclick(final int layoutPosition) {
-        ApiService service = ApiRepository.getRetrofitInstance().create(ApiService.class);
+        /*ApiService service = ApiRepository.getRetrofitInstance().create(ApiService.class);
         Call<ApiResponse<Object>> call = service.deleteUser(adapter.getList().get(layoutPosition).getId());
         call.enqueue(new Callback<ApiResponse<Object>>() {
             @Override
@@ -103,6 +103,6 @@ public class ListUsersAdminFragment extends Fragment implements Callback<ApiResp
             public void onFailure(Call<ApiResponse<Object>> call, Throwable t) {
                 Log.e("Connection", "Deleting User Failed : " + t.getMessage());
             }
-        });
+        });*/
     }
 }
