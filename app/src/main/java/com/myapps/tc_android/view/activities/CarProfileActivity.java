@@ -30,11 +30,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CarProfileActivity extends AppCompatActivity implements Callback<ApiResponse<Object>> {
+public class CarProfileActivity extends AppCompatActivity {
 
     Car car;
     int carId;
-    ApiService service;
     @BindView(R.id.textview_carprofile_year)
     TextView textviewCarprofileYear;
     @BindView(R.id.textview_carprofile_name)
@@ -129,23 +128,6 @@ public class CarProfileActivity extends AppCompatActivity implements Callback<Ap
                 }
             }
         });
-    }
-
-
-    @Override
-    public void onResponse(Call<ApiResponse<Object>> call, Response<ApiResponse<Object>> response) {
-        if (response.isSuccessful()) {
-            Toast.makeText(CarProfileActivity.this, "Car : " + car.getName() + " deleted", Toast.LENGTH_SHORT).show();
-            Log.i("Connection", "Car " + car.getId() + " deleted");
-            finish();
-        } else {
-            Log.e("Connection", "Deleting Car Failed : " + response.message());
-        }
-    }
-
-    @Override
-    public void onFailure(Call<ApiResponse<Object>> call, Throwable t) {
-        Log.e("Connection", "Deleting Car Failed : " + t.getMessage());
     }
 
     @Override
