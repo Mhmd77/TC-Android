@@ -76,7 +76,9 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        ListCarsViewModel.Factory factory = new ListCarsViewModel.Factory(true);
+        final ListCarsViewModel viewModel = ViewModelProviders.of(this, factory).get(ListCarsViewModel.class);
+        observeViewModel(viewModel);
     }
 
     @Override
@@ -86,9 +88,6 @@ public class ProfileFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         recyclerViewProfileCars.getBuilder()
                 .setItemViewCacheSize(2);
-        ListCarsViewModel.Factory factory = new ListCarsViewModel.Factory(true);
-        final ListCarsViewModel viewModel = ViewModelProviders.of(this, factory).get(ListCarsViewModel.class);
-        observeViewModel(viewModel);
         fillUserInfo();
         return view;
     }
@@ -97,10 +96,12 @@ public class ProfileFragment extends Fragment {
         viewModel.getListCarsObservableData().observe(this, new Observer<List<Car>>() {
             @Override
             public void onChanged(@Nullable List<Car> result) {
-                cars = result;
-                for (int i = 0; i < 2 && i < result.size(); i++) {
-                    Car c = result.get(i);
-                    recyclerViewProfileCars.addView(new CarView(recyclerViewProfileCars, getActivity(), c));
+                if (result != null) {
+                    cars = result;
+                    for (int i = 0; i < 2 && i < result.size(); i++) {
+                        Car c = result.get(i);
+                        recyclerViewProfileCars.addView(new CarView(recyclerViewProfileCars, getActivity(), c));
+                    }
                 }
             }
         });
