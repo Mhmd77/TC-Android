@@ -37,15 +37,4 @@ public class ApiResponse<T> {
     public void setStatus(String status) {
         this.status = status;
     }
-
-    public void parseObject(JsonElement json) {
-        if (json == null) {
-            setObject(null);
-        }
-        GsonBuilder builder = new GsonBuilder();
-        Gson gson = builder.enableComplexMapKeySerialization().create();
-        T parsedObject = gson.fromJson(json, new TypeToken<T>() {
-        }.getType());
-        setObject(parsedObject);
-    }
 }
