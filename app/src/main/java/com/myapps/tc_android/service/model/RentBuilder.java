@@ -1,6 +1,6 @@
-package com.myapps.tc_android.controller;
+package com.myapps.tc_android.service.model;
 
-import com.myapps.tc_android.model.RentCarObject;
+
 
 import java.sql.Date;
 

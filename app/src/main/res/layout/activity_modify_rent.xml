@@ -105,7 +105,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/get_end_date"
             app:layout_constraintStart_toStartOf="@id/res_text"
-            app:layout_constraintTop_toBottomOf="@id/End_date_rent_text"
+            app:layout_constraintTop_toBottomOf="@id/end_date_rent_text"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"/>
 

@@ -18,15 +18,14 @@ import android.widget.Toast;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
 import com.fourmob.datetimepicker.date.DatePickerDialog.OnDateSetListener;
 import com.myapps.tc_android.R;
-import com.myapps.tc_android.controller.RentBuilder;
-import com.myapps.tc_android.model.Car;
-import com.myapps.tc_android.model.RentCarObject;
-import com.myapps.tc_android.model.User;
-import com.myapps.tc_android.model.UserHolder;
+import com.myapps.tc_android.service.model.Car;
+import com.myapps.tc_android.service.model.RentBuilder;
+import com.myapps.tc_android.service.model.UserHolder;
 import com.sleepbot.datetimepicker.time.RadialPickerLayout;
 import com.sleepbot.datetimepicker.time.TimePickerDialog;
 
 import org.angmarch.views.NiceSpinner;
+import com.myapps.tc_android.service.model.RentCarObject;
 
 import java.sql.Date;
 import java.util.ArrayList;

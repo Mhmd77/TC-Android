@@ -1,4 +1,4 @@
-package com.myapps.tc_android.model;
+package com.myapps.tc_android.service.model;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -45,7 +45,6 @@ public class RentCarObject implements Serializable {
         this.startDate = startDate;
         this.endDate = endDate;
         this.srcLocation = srcLocation;
-
         this.desLocation = desLocation;
     }
 
