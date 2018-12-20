@@ -29,6 +29,7 @@ import com.sleepbot.datetimepicker.time.TimePickerDialog;
 import org.angmarch.views.NiceSpinner;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.LinkedList;
@@ -291,6 +292,7 @@ public class RentCarActivity extends AppCompatActivity implements OnDateSetListe
                         Intent intent = new Intent(RentCarActivity.this, ModifyRentActivity.class);
                         intent.putExtra("Car", car);
                         intent.putExtra("Rent",rentCarObject);
+                        intent.putStringArrayListExtra("Locations", (ArrayList<String>) locations);
                         startActivity(intent);
                         finish();
                     }
