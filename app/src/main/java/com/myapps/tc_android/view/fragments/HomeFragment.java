@@ -6,12 +6,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.transition.ChangeBounds;
+import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnticipateInterpolator;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -79,6 +85,7 @@ public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnIte
             public void onChanged(@Nullable List<Car> cars) {
                 if (cars != null) {
                     generateDataList(cars);
+                    hideSortDetails();
                 }
                 spinnerLoading.setVisibility(View.GONE);
             }
@@ -103,10 +110,7 @@ public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnIte
     }
 
     private void initSortBar() {
-        ((HomePageActivity) getActivity()).buttonSortCost.setOnClickListener(this);
-        ((HomePageActivity) getActivity()).buttonSortYear.setOnClickListener(this);
-        AnimationUtils.collapse(sortBar);
-        ((RadioGroup) sortBar).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        ((RadioGroup) sortBar.findViewById(R.id.radioGroupSortBar)).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
@@ -139,16 +143,16 @@ public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnIte
         startActivity(intent);
     }
 
-    @OnClick(R.id.buttonSortCars)
+    @OnClick({R.id.buttonSortCars, R.id.buttonSortYear, R.id.buttonSortCost})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.buttonSortYear:
-                AnimationUtils.expand(sortBar);
+                showSortDetails();
                 field = "year";
                 break;
             case R.id.buttonSortCost:
-                AnimationUtils.expand(sortBar);
+                showSortDetails();
                 field = "price";
                 break;
             case R.id.buttonSortCars:
@@ -167,5 +171,25 @@ public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnIte
     @Override
     public void onRefresh() {
         createViewModel();
+    }
+
+    private void showSortDetails() {
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(getActivity(), R.layout.layout_sort_details);
+        ChangeBounds transition = new ChangeBounds();
+        transition.setInterpolator(new AnticipateInterpolator(1.0f));
+        transition.setDuration(600);
+        TransitionManager.beginDelayedTransition((ConstraintLayout) sortBar, transition);
+        constraintSet.applyTo((ConstraintLayout) sortBar);
+    }
+
+    private void hideSortDetails() {
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(getActivity(), R.layout.layout_sort);
+        ChangeBounds transition = new ChangeBounds();
+        transition.setInterpolator(new AnticipateInterpolator(1.0f));
+        transition.setDuration(600);
+        TransitionManager.beginDelayedTransition((ConstraintLayout) sortBar, transition);
+        constraintSet.applyTo((ConstraintLayout) sortBar);
     }
 }
