@@ -1,12 +1,16 @@
 package com.myapps.tc_android.view.activities;
 
 import android.Manifest;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,11 +23,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.myapps.tc_android.R;
-import com.myapps.tc_android.controller.CarBuilder;
-import com.myapps.tc_android.controller.network.ApiService;
-import com.myapps.tc_android.controller.network.RetrofitClientInstance;
-import com.myapps.tc_android.model.ApiResponse;
-import com.myapps.tc_android.model.Car;
+import com.myapps.tc_android.service.model.CarBuilder;
+import com.myapps.tc_android.service.model.ApiResponse;
+import com.myapps.tc_android.service.model.Car;
+import com.myapps.tc_android.viewmodel.CarViewModel;
+import com.myapps.tc_android.viewmodel.PostImageViewModel;
 
 import java.io.File;
 
@@ -36,12 +40,11 @@ import in.mayanknagwanshi.imagepicker.imagePicker.ImagePicker;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddCarAdminActivity extends AppCompatActivity implements Callback<ApiResponse<Car>> {
+public class AddCarAdminActivity extends AppCompatActivity {
 
     @BindView(R.id.editText_addCar_name)
     EditText editTextAddCarName;
@@ -85,8 +88,20 @@ public class AddCarAdminActivity extends AppCompatActivity implements Callback<A
                     .setPrice(Integer.parseInt(editTextAddCarPrice.getText().toString()))
                     .setYear(Integer.parseInt(editTextAddCarYear.getText().toString()))
                     .setAutomate(editTextAddCarAutomate.isChecked());
-            addCar(builder.createCar());
+            CarViewModel.Factory factory = new CarViewModel.Factory(builder.createCar());
+            final CarViewModel viewModel = ViewModelProviders.of(this, factory).get(CarViewModel.class);
+            observeAddCar(viewModel);
         }
+    }
+
+    private void observeAddCar(CarViewModel viewModel) {
+        viewModel.getCarObservableData().observe(this, new Observer<Car>() {
+            @Override
+            public void onChanged(@Nullable Car recievedCar) {
+                car = recievedCar;
+                sendPhoto();
+            }
+        });
     }
 
     private boolean validate() {
@@ -159,38 +174,6 @@ public class AddCarAdminActivity extends AppCompatActivity implements Callback<A
         }
     }
 
-    private void addCar(Car car) {
-        ApiService service = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
-        Call<ApiResponse<Car>> call = service.addCar(car);
-        call.enqueue(this);
-    }
-
-    @Override
-    public void onResponse(@NonNull Call<ApiResponse<Car>> call, @NonNull Response<ApiResponse<Car>> response) {
-        if (response.isSuccessful()) {
-            if (response.body().getStatus().equals("OK")) {
-                car = response.body().getObject();
-                if (image != null) {
-                    sendPhoto();
-                } else {
-                    finish();
-                    startActivity(new Intent(AddCarAdminActivity.this, HomePageAdminActivity.class));
-                }
-                Toast.makeText(AddCarAdminActivity.this, car.getName() + " Added Successfully ", Toast.LENGTH_SHORT).show();
-            } else {
-                Log.e("Add Car Error", " status : " + response.body().getStatus());
-            }
-        } else {
-            Log.e("Connection", "Failed To Add Car : " + response.message());
-        }
-    }
-
-    @Override
-    public void onFailure(@NonNull Call<ApiResponse<Car>> call, @NonNull Throwable t) {
-        Log.e("Connection", "Failed To Connect : " + t.getMessage());
-
-    }
-
     @Override
     protected void onActivityResult(int requestCode, final int resultCode, Intent data) {
         if (requestCode == ImagePicker.SELECT_IMAGE && resultCode == RESULT_OK) {
@@ -254,25 +237,28 @@ public class AddCarAdminActivity extends AppCompatActivity implements Callback<A
     }
 
     private void sendPhoto() {
-        ApiService service = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
         RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), image);
         MultipartBody.Part body = MultipartBody.Part.createFormData("file", image.getName(), reqFile);
-        Call<ResponseBody> req = service.uploadImage(body, car.getId());
-        req.enqueue(new Callback<ResponseBody>() {
+        PostImageViewModel.Factory factory = new PostImageViewModel.Factory(body, car.getId());
+        PostImageViewModel postImageViewModel = ViewModelProviders.of(this, factory).get(PostImageViewModel.class);
+        observePostImage(postImageViewModel);
+    }
+
+    private void observePostImage(PostImageViewModel postImageViewModel) {
+        postImageViewModel.getLiveEvent().observe(this, new Observer<Boolean>() {
             @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    Log.i(TAG, "image " + image.getName() + " uploaded successfully");
+            public void onChanged(@Nullable Boolean aBoolean) {
+                if (true) {
                     finish();
                     startActivity(new Intent(AddCarAdminActivity.this, HomePageAdminActivity.class));
                 } else {
-                    Log.e(TAG, "uploading image failed with code " + response.code());
+                    Snackbar.make(buttonAddCar, "Upload Image Failed", Toast.LENGTH_SHORT).setAction("Retry", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            sendPhoto();
+                        }
+                    }).show();
                 }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                t.printStackTrace();
             }
         });
     }

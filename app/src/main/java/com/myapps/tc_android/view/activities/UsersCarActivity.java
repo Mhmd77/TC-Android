@@ -5,11 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.mindorks.placeholderview.PlaceHolderView;
 import com.myapps.tc_android.R;
-import com.myapps.tc_android.controller.CarBuilder;
-import com.myapps.tc_android.model.Car;
-import com.myapps.tc_android.model.CarView;
+import com.myapps.tc_android.service.model.Car;
+import com.myapps.tc_android.service.model.CarView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;

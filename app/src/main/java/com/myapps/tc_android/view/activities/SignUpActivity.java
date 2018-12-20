@@ -1,6 +1,9 @@
 package com.myapps.tc_android.view.activities;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.view.View;
@@ -9,20 +12,14 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.myapps.tc_android.R;
-import com.myapps.tc_android.controller.network.ApiService;
-import com.myapps.tc_android.controller.network.RetrofitClientInstance;
-import com.myapps.tc_android.model.ApiResponse;
-import com.myapps.tc_android.model.SignUpInfo;
-import com.myapps.tc_android.model.User;
+import com.myapps.tc_android.service.model.User;
+import com.myapps.tc_android.viewmodel.UserViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-public class SignUpActivity extends AppCompatActivity implements Callback<ApiResponse<User>> {
+public class SignUpActivity extends AppCompatActivity {
 
     private static final int MAXIMUM_INPUT_LENGTH = 20;
     @BindView(R.id.edittext_signup_email)
@@ -50,16 +47,27 @@ public class SignUpActivity extends AppCompatActivity implements Callback<ApiRes
         switch (view.getId()) {
             case R.id.button_signup:
                 if (validate()) {
-                    SignUpInfo info = new SignUpInfo(edittextSignupUsername.getText().toString(), edittextSignupPassword.getText().toString(),
+                    UserViewModel.Factory factory = new UserViewModel.Factory(edittextSignupUsername.getText().toString(), edittextSignupPassword.getText().toString(),
                             edittextSignupId.getText().toString(), edittextSignupEmail.getText().toString());
-                    Call<ApiResponse<User>> call = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class).signUpUser(info);
-                    call.enqueue(this);
+                    final UserViewModel userViewModel = ViewModelProviders.of(this, factory).get(UserViewModel.class);
+                    observeViewModel(userViewModel);
                 }
                 break;
             case R.id.button_signin:
                 finish();
                 break;
         }
+    }
+
+    private void observeViewModel(UserViewModel userViewModel) {
+        userViewModel.getObservableUser().observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(@Nullable User user) {
+                if (user != null) {
+                    Toast.makeText(SignUpActivity.this, "User " + user.getUsername() + " Signed Up Successfully", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     public boolean validate() {
@@ -95,7 +103,7 @@ public class SignUpActivity extends AppCompatActivity implements Callback<ApiRes
             edittextSignupUsername.setError("Username is empty");
             requestFocus(edittextSignupUsername);
             valid = false;
-        }else if (username.length() > MAXIMUM_INPUT_LENGTH) {
+        } else if (username.length() > MAXIMUM_INPUT_LENGTH) {
             edittextSignupUsername.setError("Username is too long");
             requestFocus(edittextSignupPassword);
             valid = false;
@@ -106,7 +114,7 @@ public class SignUpActivity extends AppCompatActivity implements Callback<ApiRes
             edittextSignupId.setError("ID is less than 5 digit");
             requestFocus(edittextSignupId);
             valid = false;
-        }else if (id.length() > 10) {
+        } else if (id.length() > 10) {
             edittextSignupId.setError("ID is too long");
             requestFocus(edittextSignupPassword);
             valid = false;
@@ -121,22 +129,5 @@ public class SignUpActivity extends AppCompatActivity implements Callback<ApiRes
         if (view.requestFocus()) {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
-    }
-
-    @Override
-    public void onResponse(Call<ApiResponse<User>> call, Response<ApiResponse<User>> response) {
-        if (response.isSuccessful()) {
-            if (response.body().getStatus().equals("OK")) {
-                User user = response.body().getObject();
-            }
-            Toast.makeText(SignUpActivity.this, " " + response.body().getStatus(), Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(SignUpActivity.this, "Please Try Again", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    public void onFailure(Call<ApiResponse<User>> call, Throwable t) {
-        Toast.makeText(SignUpActivity.this, "Signup failed!", Toast.LENGTH_SHORT).show();
     }
 }

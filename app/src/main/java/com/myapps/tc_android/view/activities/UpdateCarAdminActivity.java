@@ -1,10 +1,12 @@
 package com.myapps.tc_android.view.activities;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -13,20 +15,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.myapps.tc_android.R;
-import com.myapps.tc_android.controller.CarBuilder;
-import com.myapps.tc_android.controller.network.ApiService;
-import com.myapps.tc_android.controller.network.RetrofitClientInstance;
-import com.myapps.tc_android.model.ApiResponse;
-import com.myapps.tc_android.model.Car;
+import com.myapps.tc_android.service.model.CarBuilder;
+import com.myapps.tc_android.service.model.Car;
+import com.myapps.tc_android.viewmodel.UpdateCarViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-public class UpdateCarAdminActivity extends AppCompatActivity implements Callback<ApiResponse<Car>> {
+public class UpdateCarAdminActivity extends AppCompatActivity {
 
     @BindView(R.id.editText_updateCar_name)
     EditText editTextUpdateCarName;
@@ -46,7 +43,7 @@ public class UpdateCarAdminActivity extends AppCompatActivity implements Callbac
     Button button_update_car;
 
 
-    Car carOld;
+    private Car carOld, newCar;
 
 
     @Override
@@ -80,8 +77,34 @@ public class UpdateCarAdminActivity extends AppCompatActivity implements Callbac
                     .setPrice(Integer.parseInt(editTextUpdateCarPrice.getText().toString()))
                     .setYear(Integer.parseInt(editTextUpdateCarYear.getText().toString()))
                     .setAutomate(checkboxUpdateCarAutomate.isChecked());
-            updateCar(builder.createCar());
+            newCar = builder.createCar();
+            updateCar();
         }
+    }
+
+    private void updateCar() {
+        UpdateCarViewModel.Factory factory = new UpdateCarViewModel.Factory(newCar, carOld.getId());
+        final UpdateCarViewModel viewModel = ViewModelProviders.of(this, factory).get(UpdateCarViewModel.class);
+        observeViewModel(viewModel);
+    }
+
+    private void observeViewModel(UpdateCarViewModel viewModel) {
+        viewModel.getLiveEvent().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                if (true) {
+                    finish();
+                    startActivity(new Intent(UpdateCarAdminActivity.this, HomePageAdminActivity.class));
+                } else {
+                    Snackbar.make(button_update_car, "Update Car Failed", Toast.LENGTH_SHORT).setAction("Retry", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            updateCar();
+                        }
+                    }).show();
+                }
+            }
+        });
     }
 
     private boolean validate() {
@@ -141,36 +164,5 @@ public class UpdateCarAdminActivity extends AppCompatActivity implements Callbac
         if (view.requestFocus()) {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
-    }
-
-    private void updateCar(Car car) {
-        ApiService service = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
-        Call<ApiResponse<Car>> call = service.updateCar(car, this.carOld.getId());
-        call.enqueue(this);
-    }
-
-
-    @Override
-    public void onResponse(@NonNull Call<ApiResponse<Car>> call, @NonNull Response<ApiResponse<Car>> response) {
-        if (response.isSuccessful()) {
-            if (response.body().getStatus().equals("OK")) {
-                Toast.makeText(UpdateCarAdminActivity.this, "Car Updated Successfully ", Toast.LENGTH_SHORT).show();
-                finish();
-                startActivity(new Intent(UpdateCarAdminActivity.this, HomePageAdminActivity.class));
-
-//                Intent intent = new Intent(UpdateCarAdminActivity.this, ListCarsAdminActivity.class);
-//                startActivity(intent);
-            } else {
-                Log.e("Update Car Error", " status : " + response.body().getStatus());
-            }
-        } else {
-            Log.e("Connection", "Failed To Add Car : " + response.message());
-        }
-    }
-
-    @Override
-    public void onFailure(@NonNull Call<ApiResponse<Car>> call, @NonNull Throwable t) {
-        Log.e("Connection", "Failed To Connect : " + t.getMessage());
-
     }
 }

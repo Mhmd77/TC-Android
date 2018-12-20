@@ -1,22 +1,25 @@
 package com.myapps.tc_android.view.activities;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.myapps.tc_android.R;
-import com.myapps.tc_android.controller.network.ApiService;
-import com.myapps.tc_android.controller.network.RetrofitClientInstance;
-import com.myapps.tc_android.model.ApiResponse;
-import com.myapps.tc_android.model.Car;
-import com.myapps.tc_android.model.RentCarObject;
-import com.myapps.tc_android.model.UserHolder;
+import com.myapps.tc_android.service.repository.ApiService;
+import com.myapps.tc_android.service.repository.ApiRepository;
+import com.myapps.tc_android.service.model.ApiResponse;
+import com.myapps.tc_android.service.model.Car;
+import com.myapps.tc_android.service.model.UserHolder;
+import com.myapps.tc_android.viewmodel.CarViewModel;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -27,11 +30,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CarProfileActivity extends AppCompatActivity implements Callback<ApiResponse<Object>> {
+public class CarProfileActivity extends AppCompatActivity {
 
     Car car;
     int carId;
-    ApiService service;
     @BindView(R.id.textview_carprofile_year)
     TextView textviewCarprofileYear;
     @BindView(R.id.textview_carprofile_name)
@@ -52,17 +54,7 @@ public class CarProfileActivity extends AppCompatActivity implements Callback<Ap
     ImageButton buttonDeleteCarProfile;
     @BindView(R.id.imageview_car_logo)
     CircleImageView imageviewCarLogo;
-    @BindView(R.id.textview_carprofile_header_cost)
-    TextView textviewCarprofileHeaderCost;
-    @BindView(R.id.view_divider1)
-    View viewDivider1;
-    @BindView(R.id.textview_carprofile_header_color)
-    TextView textviewCarprofileHeaderColor;
-    @BindView(R.id.view_divider2)
-    View viewDivider2;
-    @BindView(R.id.button_reserve)
-    Button buttonReserve;
-
+    private CarViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,36 +63,22 @@ public class CarProfileActivity extends AppCompatActivity implements Callback<Ap
         ButterKnife.bind(this);
         Intent i = getIntent();
         carId = i.getIntExtra("carId", -1);
-        getCar();
-        if (!UserHolder.Instance().getUser().getRole().equals("admin")) {
+        CarViewModel.Factory factory = new CarViewModel.Factory(carId);
+        viewModel = ViewModelProviders.of(this, factory).get(CarViewModel.class);
+        obserViewModel(viewModel);
+        if (UserHolder.Instance().getUser().getRole().equals("admin") == false) {
             buttonEditCarprofile.setVisibility(View.GONE);
             buttonDeleteCarProfile.setVisibility(View.GONE);
-            buttonReserve.setVisibility(View.VISIBLE);
         }
     }
 
-    private void getCar() {
-        service = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
-        Call call = service.getCar(carId);
-        call.enqueue(new Callback<ApiResponse<Car>>() {
+    private void obserViewModel(CarViewModel viewModel) {
+        viewModel.getCarObservableData().observe(this, new Observer<Car>() {
             @Override
-            public void onResponse(Call<ApiResponse<Car>> call, Response<ApiResponse<Car>> response) {
-                if (response.isSuccessful()) {
-                    car = response.body().getObject();
-                    setVariables(car);
-                    Log.i("GET Car", "Car " + car.getId() + " get");
-                } else {
-                    Log.e("GET car", "Failed : " + response.message());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse<Car>> call, Throwable t) {
-                Log.e("GET car", "Failed : " + t.getMessage());
+            public void onChanged(@Nullable Car car) {
+                setVariables(car);
             }
         });
-
-
     }
 
     private void setVariables(Car car) {
@@ -116,14 +94,14 @@ public class CarProfileActivity extends AppCompatActivity implements Callback<Ap
             textviewCarprofileDescription.setText("MANUAL");
         }
         //setting image
-        Log.i(CarProfileActivity.class.getSimpleName(), RetrofitClientInstance.getBaseUrl() + ApiService.imageApi + car.getImageUrl());
+        Log.i(CarProfileActivity.class.getSimpleName(), ApiRepository.getBaseUrl() + ApiService.imageApi + car.getImageUrl());
         Picasso.get()
-                .load(RetrofitClientInstance.getBaseUrl() + ApiService.imageApi + car.getImageUrl())
+                .load(ApiRepository.getBaseUrl() + ApiService.imageApi + car.getImageUrl())
                 .into(imageviewCarLogo);
     }
 
 
-    @OnClick({R.id.button_edit_carprofile, R.id.button_delete_car_profile, R.id.button_reserve})
+    @OnClick({R.id.button_edit_carprofile, R.id.button_delete_car_profile})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.button_edit_carprofile:
@@ -133,39 +111,28 @@ public class CarProfileActivity extends AppCompatActivity implements Callback<Ap
                 finish();
                 break;
             case R.id.button_delete_car_profile:
-                service = RetrofitClientInstance.getRetrofitInstance().create(ApiService.class);
-                Call<ApiResponse<Object>> call = service.deleteCar(car.getId());
-                call.enqueue(this);
-                break;
-            case R.id.button_reserve:
-                Intent intent2 = new Intent(CarProfileActivity.this, RentCarObject.class);
-                intent2.putExtra("Car", car);
-                startActivity(intent2);
-                finish();
+                LiveData<Boolean> liveData = ApiRepository.getInstance().deleteCar(carId);
+                obserDeleteRequest(liveData);
                 break;
         }
     }
 
-
-    @Override
-    public void onResponse(Call<ApiResponse<Object>> call, Response<ApiResponse<Object>> response) {
-        if (response.isSuccessful()) {
-            Toast.makeText(CarProfileActivity.this, "Car : " + car.getName() + " deleted", Toast.LENGTH_SHORT).show();
-            Log.i("Connection", "Car " + car.getId() + " deleted");
-            finish();
-        } else {
-            Log.e("Connection", "Deleting Car Failed : " + response.message());
-        }
-    }
-
-    @Override
-    public void onFailure(Call<ApiResponse<Object>> call, Throwable t) {
-        Log.e("Connection", "Deleting Car Failed : " + t.getMessage());
+    private void obserDeleteRequest(LiveData<Boolean> liveData) {
+        liveData.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean result) {
+                if (result) {
+                    Toast.makeText(CarProfileActivity.this, "Car Deleted Succussfullt", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(CarProfileActivity.this, "Something went wrong ... please try again", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        getCar();
+        viewModel.updateCar();
     }
 }
