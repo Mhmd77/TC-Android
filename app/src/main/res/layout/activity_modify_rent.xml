@@ -4,6 +4,174 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray"
     tools:context=".view.activities.ModifyRentActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:background="@drawable/bg_date"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:id="@+id/res_text"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/font_normal"
+            android:text="Reservation : "
+            android:textColor="@color/blackColor"
+            android:textSize="26sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/car_name_rent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/font_normal"
+            android:text="@string/car_name"
+            android:textColor="@color/blackColor"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@id/res_text"
+            app:layout_constraintTop_toBottomOf="@id/res_text" />
+
+        <TextView
+            android:id="@+id/username_rent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/font_normal"
+            android:text="@string/username"
+            android:textColor="@color/blackColor"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@id/res_text"
+            app:layout_constraintTop_toBottomOf="@id/car_name_rent" />
+
+        <TextView
+            android:id="@+id/first_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:text="- - - - - - - - - - - - - - - - - - - - - - - - - - "
+            android:textColor="@color/blackColor"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/res_text"
+            app:layout_constraintTop_toBottomOf="@id/username_rent" />
+
+        <TextView
+            android:id="@+id/starting_date_rent_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/font_normal"
+            android:text="Starting Date : "
+            android:textColor="@color/blackColor"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@id/res_text"
+            app:layout_constraintTop_toBottomOf="@id/first_line" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/get_starting_date"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="@id/res_text"
+            app:layout_constraintTop_toBottomOf="@id/starting_date_rent_text" />
+
+        <TextView
+            android:id="@+id/end_date_rent_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/font_normal"
+            android:text="End Date : "
+            android:textColor="@color/blackColor"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@id/res_text"
+            app:layout_constraintTop_toBottomOf="@id/get_starting_date" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/get_end_date"
+            app:layout_constraintStart_toStartOf="@id/res_text"
+            app:layout_constraintTop_toBottomOf="@id/End_date_rent_text"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/second_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="- - - - - - - - - - - - - - - - - - - - - - - - - - "
+            android:textColor="@color/blackColor"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/res_text"
+            app:layout_constraintTop_toBottomOf="@id/get_end_date" />
+        <TextView
+            android:id="@+id/src_location_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/font_normal"
+            android:text="Source Location : "
+            android:textColor="@color/blackColor"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@id/res_text"
+            app:layout_constraintTop_toBottomOf="@id/second_line" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/get_src_location"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="@id/res_text"
+            app:layout_constraintTop_toBottomOf="@id/src_location_text" />
+        <TextView
+            android:id="@+id/des_location_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/font_normal"
+            android:text="Destination Location : "
+            android:textColor="@color/blackColor"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@id/res_text"
+            app:layout_constraintTop_toBottomOf="@id/get_src_location" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/get_des_location"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="@id/res_text"
+            app:layout_constraintTop_toBottomOf="@id/des_location_text" />
+
+
+
+    </android.support.constraint.ConstraintLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:id="@+id/accept_reserve"
+        android:background="@drawable/background_button_red_color"
+        android:text="Accept"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
