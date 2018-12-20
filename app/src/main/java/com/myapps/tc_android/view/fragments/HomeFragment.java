@@ -69,7 +69,9 @@ public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnIte
         viewModel.getListCarsObservableData().observe(this, new Observer<List<Car>>() {
             @Override
             public void onChanged(@Nullable List<Car> cars) {
-                generateDataList(cars);
+                if (cars != null) {
+                    generateDataList(cars);
+                }
                 spinnerLoading.setVisibility(View.GONE);
             }
         });
