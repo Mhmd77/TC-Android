@@ -5,7 +5,9 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +35,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnItemClickListener, View.OnClickListener {
+public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnItemClickListener, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     @BindView(R.id.placeHolder_main_cars)
     PlaceHolderView placeHolderMainCars;
     @BindView(R.id.radioButtonSortAscending)
@@ -42,6 +44,8 @@ public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnIte
     RadioButton radioButtonSortDescending;
     @BindView(R.id.spinnerLoading)
     SpinKitView spinnerLoading;
+    @BindView(R.id.swipeLayout_main_cars)
+    SwipeRefreshLayout swipeLayoutMainCars;
     @BindView(R.id.sortbar)
     View sortBar;
     private String field;
@@ -60,6 +64,10 @@ public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnIte
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        createViewModel();
+    }
+
+    private void createViewModel() {
         ListCarsViewModel.Factory factory = new ListCarsViewModel.Factory(false);
         viewModel = ViewModelProviders.of(this, factory).get(ListCarsViewModel.class);
         observeViewModel(viewModel);
@@ -83,6 +91,7 @@ public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnIte
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         unbinder = ButterKnife.bind(this, view);
         placeHolderMainCars.getBuilder().setLayoutManager(new LinearLayoutManager(getActivity()));
+        swipeLayoutMainCars.setOnRefreshListener(this);
         initSortBar();
         initSpinner();
         return view;
@@ -119,6 +128,7 @@ public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnIte
             placeHolderMainCars.addView(new CarView(placeHolderMainCars, getActivity(), c));
         }
         placeHolderMainCars.refresh();
+        swipeLayoutMainCars.setRefreshing(false);
     }
 
     @Override
@@ -152,5 +162,10 @@ public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnIte
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onRefresh() {
+        createViewModel();
     }
 }
