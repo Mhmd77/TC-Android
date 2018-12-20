@@ -22,6 +22,22 @@ public class RentCarObject implements Serializable {
     private int desLocation;
 
 
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public int getSrcLocation() {
+        return srcLocation;
+    }
+
+    public int getDesLocation() {
+        return desLocation;
+    }
+
     public RentCarObject(int id, int carId, int userId, Date startDate, Date endDate, int srcLocation, int desLocation) {
         this.id = id;
         this.carId = carId;
@@ -29,6 +45,7 @@ public class RentCarObject implements Serializable {
         this.startDate = startDate;
         this.endDate = endDate;
         this.srcLocation = srcLocation;
+
         this.desLocation = desLocation;
     }
 
