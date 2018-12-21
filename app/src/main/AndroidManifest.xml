@@ -39,7 +39,7 @@
         <activity android:name=".view.activities.RentCarActivity">
 
         </activity>
-        <activity android:name=".view.activities.ModifyRentActivity"></activity>
+        <activity android:name=".view.activities.AcceptRentActivity"></activity>
     </application>
 
 </manifest>
