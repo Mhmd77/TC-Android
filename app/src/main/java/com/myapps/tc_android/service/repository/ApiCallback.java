@@ -1,6 +1,7 @@
 package com.myapps.tc_android.service.repository;
 
 import com.myapps.tc_android.service.model.ApiResponse;
+import com.myapps.tc_android.utils.TokenAccess;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -10,6 +11,9 @@ abstract public class ApiCallback<T> implements Callback<ApiResponse<T>> {
     @Override
     public void onResponse(Call<ApiResponse<T>> call, Response<ApiResponse<T>> response) {
         if (response.body() != null) {
+            if (response.body().getToken() != null && response.body().getToken().length() > 0) {
+                TokenAccess.getInstance().setToken(response.body().getToken());
+            }
             handleResponseData(response.body().getObject());
         } else {
             handleError(response);

@@ -40,6 +40,7 @@ public class ApiRepository {
 
         CookieHandler cookieHandler = new CookieManager();
         OkHttpClient client = new OkHttpClient.Builder().addNetworkInterceptor(interceptor)
+                .addInterceptor(new AuthorizationInterceptor())
                 .cookieJar(new JavaNetCookieJar(cookieHandler))
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .writeTimeout(10, TimeUnit.SECONDS)

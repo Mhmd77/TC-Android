@@ -5,11 +5,19 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.transition.ChangeBounds;
+import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnticipateInterpolator;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -33,7 +41,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnItemClickListener, View.OnClickListener {
+public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnItemClickListener, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     @BindView(R.id.placeHolder_main_cars)
     PlaceHolderView placeHolderMainCars;
     @BindView(R.id.radioButtonSortAscending)
@@ -42,6 +50,8 @@ public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnIte
     RadioButton radioButtonSortDescending;
     @BindView(R.id.spinnerLoading)
     SpinKitView spinnerLoading;
+    @BindView(R.id.swipeLayout_main_cars)
+    SwipeRefreshLayout swipeLayoutMainCars;
     @BindView(R.id.sortbar)
     View sortBar;
     private String field;
@@ -60,6 +70,10 @@ public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnIte
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        createViewModel();
+    }
+
+    private void createViewModel() {
         ListCarsViewModel.Factory factory = new ListCarsViewModel.Factory(false);
         viewModel = ViewModelProviders.of(this, factory).get(ListCarsViewModel.class);
         observeViewModel(viewModel);
@@ -69,7 +83,10 @@ public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnIte
         viewModel.getListCarsObservableData().observe(this, new Observer<List<Car>>() {
             @Override
             public void onChanged(@Nullable List<Car> cars) {
-                generateDataList(cars);
+                if (cars != null) {
+                    generateDataList(cars);
+                    hideSortDetails();
+                }
                 spinnerLoading.setVisibility(View.GONE);
             }
         });
@@ -81,6 +98,7 @@ public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnIte
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         unbinder = ButterKnife.bind(this, view);
         placeHolderMainCars.getBuilder().setLayoutManager(new LinearLayoutManager(getActivity()));
+        swipeLayoutMainCars.setOnRefreshListener(this);
         initSortBar();
         initSpinner();
         return view;
@@ -92,10 +110,7 @@ public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnIte
     }
 
     private void initSortBar() {
-        ((HomePageActivity) getActivity()).buttonSortCost.setOnClickListener(this);
-        ((HomePageActivity) getActivity()).buttonSortYear.setOnClickListener(this);
-        AnimationUtils.collapse(sortBar);
-        ((RadioGroup) sortBar).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        ((RadioGroup) sortBar.findViewById(R.id.radioGroupSortBar)).setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
@@ -117,6 +132,7 @@ public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnIte
             placeHolderMainCars.addView(new CarView(placeHolderMainCars, getActivity(), c));
         }
         placeHolderMainCars.refresh();
+        swipeLayoutMainCars.setRefreshing(false);
     }
 
     @Override
@@ -127,16 +143,16 @@ public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnIte
         startActivity(intent);
     }
 
-    @OnClick(R.id.buttonSortCars)
+    @OnClick({R.id.buttonSortCars, R.id.buttonSortYear, R.id.buttonSortCost})
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.buttonSortYear:
-                AnimationUtils.expand(sortBar);
+                showSortDetails();
                 field = "year";
                 break;
             case R.id.buttonSortCost:
-                AnimationUtils.expand(sortBar);
+                showSortDetails();
                 field = "price";
                 break;
             case R.id.buttonSortCars:
@@ -150,5 +166,30 @@ public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnIte
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onRefresh() {
+        createViewModel();
+    }
+
+    private void showSortDetails() {
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(getActivity(), R.layout.layout_sort_details);
+        ChangeBounds transition = new ChangeBounds();
+        transition.setInterpolator(new AnticipateInterpolator(1.0f));
+        transition.setDuration(600);
+        TransitionManager.beginDelayedTransition((ConstraintLayout) sortBar, transition);
+        constraintSet.applyTo((ConstraintLayout) sortBar);
+    }
+
+    private void hideSortDetails() {
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(getActivity(), R.layout.layout_sort);
+        ChangeBounds transition = new ChangeBounds();
+        transition.setInterpolator(new AnticipateInterpolator(1.0f));
+        transition.setDuration(600);
+        TransitionManager.beginDelayedTransition((ConstraintLayout) sortBar, transition);
+        constraintSet.applyTo((ConstraintLayout) sortBar);
     }
 }
