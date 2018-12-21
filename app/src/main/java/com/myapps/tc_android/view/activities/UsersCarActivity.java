@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.mindorks.placeholderview.PlaceHolderView;
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.service.model.Car;
-import com.myapps.tc_android.service.model.CarView;
+import com.myapps.tc_android.service.model.CarViewAdapter;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class UsersCarActivity extends AppCompatActivity {
         cars = (List<Car>) getIntent().getSerializableExtra(USERS_LIST_OF_CARS);
         for (Car c :
                 cars) {
-            recyclerViewUsersCars.addView(new CarView(recyclerViewUsersCars, this, c));
+            recyclerViewUsersCars.addView(new CarViewAdapter(recyclerViewUsersCars, this, c));
         }
     }
 }

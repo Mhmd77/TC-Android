@@ -22,7 +22,7 @@ import com.squareup.picasso.Picasso;
 
 @NonReusable
 @Layout(R.layout.item_layout_car)
-public class CarView {
+public class CarViewAdapter {
     @View(R.id.textview_car_name)
     private TextView txtName;
     @View(R.id.textview_car_factory)
@@ -39,7 +39,7 @@ public class CarView {
     private Context context;
     private PlaceHolderView placeholder;
 
-    public CarView(PlaceHolderView placeholder, Context context, Car car) {
+    public CarViewAdapter(PlaceHolderView placeholder, Context context, Car car) {
         this.car = car;
         this.context = context;
         this.placeholder = placeholder;
