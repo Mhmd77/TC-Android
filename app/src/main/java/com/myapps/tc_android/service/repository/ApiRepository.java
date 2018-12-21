@@ -197,4 +197,8 @@ public class ApiRepository {
         AcceptRentCarInterceptor interceptor = new AcceptRentCarInterceptor(rentCar);
         return interceptor.doRequest();
     }
+    public MutableLiveData<List<String>> getLocations(){
+        GetLocationsInterceptor getLocations = new GetLocationsInterceptor();
+        return getLocations.doRequest();
+    }
 }
