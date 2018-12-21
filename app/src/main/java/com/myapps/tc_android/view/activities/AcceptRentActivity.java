@@ -75,12 +75,12 @@ public class AcceptRentActivity extends AppCompatActivity {
     private void setVariables() {
         carNameRent.setText(car.getName());
         usernameRent.setText(UserHolder.Instance().getUser().getName());
-        startingDateRentText.setText(rentCar.getStartDate().toString());
-        endDateRentText.setText(rentCar.getEndDate().toString());
-        srcLocationText.setText(locations.get(rentCar.getSrcLocation()));
-        desLocationText.setText(locations.get(rentCar.getDesLocation()));
-        getCost.setText(rentCar.getCost());
-        getKilometer.setText(rentCar.getKilometer());
+        getStartingDate.setText(rentCar.getStartDate().toString());
+        getEndDate.setText(rentCar.getEndDate().toString());
+        getSrcLocation.setText(locations.get(rentCar.getSrcLocation()));
+        getDesLocation.setText(locations.get(rentCar.getDesLocation()));
+        getCost.setText(String.valueOf(rentCar.getCost()));
+        getKilometer.setText(String.valueOf(rentCar.getKilometer()));
     }
 
     @OnClick(R.id.accept_reserve)
