@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.myapps.tc_android.service.model.ApiResponse;
 import com.myapps.tc_android.service.model.Car;
+import com.myapps.tc_android.service.model.RentCar;
 import com.myapps.tc_android.service.model.User;
 import com.myapps.tc_android.utils.SingleLiveEvent;
 
@@ -191,5 +192,9 @@ public class ApiRepository {
     public MutableLiveData<List<User>> getListUsers() {
         GetListUserInteractor interactor = new GetListUserInteractor();
         return interactor.doRequest();
+    }
+    public MutableLiveData<RentCar> addRent(RentCar rentCar) {
+        AcceptRentCarInterceptor interceptor = new AcceptRentCarInterceptor(rentCar);
+        return interceptor.doRequest();
     }
 }
