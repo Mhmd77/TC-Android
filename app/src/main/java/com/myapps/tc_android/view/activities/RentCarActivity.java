@@ -20,12 +20,12 @@ import com.fourmob.datetimepicker.date.DatePickerDialog.OnDateSetListener;
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.service.model.Car;
 import com.myapps.tc_android.service.model.RentBuilder;
-import com.myapps.tc_android.service.model.UserHolder;
 import com.sleepbot.datetimepicker.time.RadialPickerLayout;
 import com.sleepbot.datetimepicker.time.TimePickerDialog;
 
 import org.angmarch.views.NiceSpinner;
-import com.myapps.tc_android.service.model.RentCarObject;
+
+import com.myapps.tc_android.service.model.RentCar;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -287,10 +287,10 @@ public class RentCarActivity extends AppCompatActivity implements OnDateSetListe
             case R.id.next_page:
                 if (invalidate()) {
                     if (isDifferenceOk()) {
-                      RentCarObject rentCarObject = createRent();
-                        Intent intent = new Intent(RentCarActivity.this, ModifyRentActivity.class);
+                        RentCar rentCar = createRent();
+                        Intent intent = new Intent(RentCarActivity.this, AcceptRentActivity.class);
                         intent.putExtra("Car", car);
-                        intent.putExtra("Rent",rentCarObject);
+                        intent.putExtra("Rent", rentCar);
                         intent.putStringArrayListExtra("Locations", (ArrayList<String>) locations);
                         startActivity(intent);
                         finish();
@@ -300,18 +300,23 @@ public class RentCarActivity extends AppCompatActivity implements OnDateSetListe
         }
     }
 
-    private RentCarObject createRent() {
+    private RentCar createRent() {
         int desloc;
+        int day = (int) (endCalendar.getTime().getTime() / (24 * 60 * 60 * 1000)) - (int) (startCalendar.getTime().getTime() / (24 * 60 * 60 * 1000));
+        int cost = day * car.getPrice();
+        int kilometer = day * car.getKilometer();
         if (!srcDesIsDiff.isChecked())
             desloc = srcSpin.getSelectedIndex();
         else desloc = desSpin.getSelectedIndex();
         RentBuilder builder = new RentBuilder()
                 .setCarId(car.getId())
-                .setUserId(UserHolder.Instance().getUser().getId())
                 .setStartDate((Date) startCalendar.getTime())
                 .setEndDate((Date) endCalendar.getTime())
                 .setSrcLocation(srcSpin.getSelectedIndex())
-                .setDesLocation(desloc);
+                .setDesLocation(desloc)
+                .setCost(cost)
+                .setKilometer(kilometer);
+
         return builder.createRent();
     }
 }
