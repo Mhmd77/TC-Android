@@ -3,6 +3,7 @@ package com.myapps.tc_android.service.repository;
 import com.myapps.tc_android.service.model.ApiResponse;
 import com.myapps.tc_android.service.model.Car;
 import com.myapps.tc_android.service.model.LoginInfo;
+import com.myapps.tc_android.service.model.RentCar;
 import com.myapps.tc_android.service.model.SignUpInfo;
 import com.myapps.tc_android.service.model.User;
 
@@ -60,4 +61,7 @@ public interface ApiService {
 
     @GET("/api/v1/cars/user")
     Call<ApiResponse<List<Car>>> getUserCar();
+
+    @POST("/api/v1/rent")
+    Call<ApiResponse<RentCar>> addRent(@Body RentCar rentCar);
 }
