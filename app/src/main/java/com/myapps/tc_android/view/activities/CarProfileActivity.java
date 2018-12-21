@@ -83,6 +83,7 @@ public class CarProfileActivity extends AppCompatActivity {
     }
 
     private void setVariables(Car car) {
+        this.car = car;
         textviewCarprofileName.setText(car.getName());
         textviewCarprofileFactory.setText(car.getFactory());
         textviewCarprofileYear.setText(String.valueOf(car.getYear()));
