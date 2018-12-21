@@ -14,6 +14,8 @@ public class Car implements Serializable {
     private String factory;
     @SerializedName("year")
     private int year;
+    @SerializedName("user_id")
+    private int user_id;
     @SerializedName("kilometer")
     private int kilometer;
     @SerializedName("color")
@@ -26,9 +28,8 @@ public class Car implements Serializable {
     private int price;
     @SerializedName("image_url")
     private String imageUrl;
-    private int user_id;
 
-    public Car(int id, String name, String factory, int year, int kilometer, String color, String description, boolean automate, int price, String imageUrl) {
+    public Car(int id,int user_id, String name, String factory, int year, int kilometer, String color, String description, boolean automate, int price, String imageUrl) {
         this.id = id;
         this.name = name;
         this.factory = factory;
@@ -38,12 +39,16 @@ public class Car implements Serializable {
         this.description = description;
         this.automate = automate;
         this.price = price;
-        this.user_id = 1;
+        this.user_id = user_id;
         this.imageUrl = imageUrl;
     }
 
     public String getName() {
         return name;
+    }
+
+    public int getUser_id() {
+        return user_id;
     }
 
     public String getFactory() {

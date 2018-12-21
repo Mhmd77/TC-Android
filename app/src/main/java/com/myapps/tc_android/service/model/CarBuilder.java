@@ -64,6 +64,6 @@ public class CarBuilder {
     }
 
     public Car createCar() {
-        return new Car(id, name, factory, year, kilometer, color, description, automate, price,imageUrl);
+        return new Car(id,0, name, factory, year, kilometer, color, description, automate, price,imageUrl);
     }
 }
