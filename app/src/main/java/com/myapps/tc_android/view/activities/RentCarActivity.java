@@ -1,8 +1,11 @@
 package com.myapps.tc_android.view.activities;
 
 import android.annotation.SuppressLint;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.CardView;
@@ -20,6 +23,7 @@ import com.fourmob.datetimepicker.date.DatePickerDialog.OnDateSetListener;
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.service.model.Car;
 import com.myapps.tc_android.service.model.RentBuilder;
+import com.myapps.tc_android.viewmodel.RentViewModel;
 import com.sleepbot.datetimepicker.time.RadialPickerLayout;
 import com.sleepbot.datetimepicker.time.TimePickerDialog;
 
@@ -183,9 +187,22 @@ public class RentCarActivity extends AppCompatActivity implements OnDateSetListe
         }
         srcSpin = findViewById(R.id.src_spin);
         desSpin = findViewById(R.id.des_spin);
-        locations = new ArrayList<>(Arrays.asList("One", "Two", "Three", "Four", "Five"));
-        srcSpin.attachDataSource(locations);
-        desSpin.attachDataSource(locations);
+//        locations = new ArrayList<>(Arrays.asList("One", "Two", "Three", "Four", "Five"));
+        RentViewModel.Factory factory = new RentViewModel.Factory();
+        final RentViewModel viewModel = ViewModelProviders.of(this,factory).get(RentViewModel.class);
+        observelocationResponse(viewModel);
+
+    }
+
+    private void observelocationResponse(RentViewModel viewModel) {
+        viewModel.getLocations().observe(this, new Observer<List<String>>() {
+            @Override
+            public void onChanged(@Nullable List<String> location) {
+                locations = location;
+                srcSpin.attachDataSource(locations);
+                desSpin.attachDataSource(locations);
+            }
+        });
     }
 
 
