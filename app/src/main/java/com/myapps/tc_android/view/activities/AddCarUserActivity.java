@@ -100,7 +100,9 @@ public class AddCarUserActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable Car recievedCar) {
                 car = recievedCar;
+                if (image != null)
                 sendPhoto();
+                finish();
             }
         });
     }
