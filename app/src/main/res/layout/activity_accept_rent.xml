@@ -33,12 +33,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/font_normal"
-            android:text="@string/car_name"
+            android:text="Car Name : "
             android:textColor="@color/blackColor"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@id/res_text"
+            app:layout_constraintTop_toBottomOf="@id/res_text" />
+        <TextView
+            android:id="@+id/get_car_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/font_normal"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@id/car_name_rent"
             app:layout_constraintTop_toBottomOf="@id/res_text" />
 
         <TextView
@@ -48,10 +58,20 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/font_normal"
-            android:text="@string/username"
+            android:text="UserName : "
             android:textColor="@color/blackColor"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@id/res_text"
+            app:layout_constraintTop_toBottomOf="@id/car_name_rent" />
+        <TextView
+            android:id="@+id/get_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/font_normal"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@id/username_rent"
             app:layout_constraintTop_toBottomOf="@id/car_name_rent" />
 
         <TextView
@@ -143,7 +163,6 @@
             android:layout_marginTop="5dp"
             android:textSize="16sp"
             android:fontFamily="@font/font_normal"
-            android:textColor="@color/blackColor"
             app:layout_constraintStart_toStartOf="@id/res_text"
             app:layout_constraintTop_toBottomOf="@id/src_location_text" />
         <TextView
@@ -164,7 +183,6 @@
             android:id="@+id/get_des_location"
             android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
-            android:textColor="@color/blackColor"
             android:textSize="16sp"
             android:fontFamily="@font/font_normal"
             app:layout_constraintStart_toStartOf="@id/res_text"

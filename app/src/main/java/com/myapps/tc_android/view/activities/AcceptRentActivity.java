@@ -29,9 +29,9 @@ public class AcceptRentActivity extends AppCompatActivity {
     List<String> locations;
     @BindView(R.id.res_text)
     TextView resText;
-    @BindView(R.id.car_name_rent)
+    @BindView(R.id.get_car_name)
     TextView carNameRent;
-    @BindView(R.id.username_rent)
+    @BindView(R.id.get_user_name)
     TextView usernameRent;
     @BindView(R.id.first_line)
     TextView firstLine;
