@@ -2,10 +2,8 @@ package com.myapps.tc_android.view.fragments;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v4.app.Fragment;
@@ -13,7 +11,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.transition.ChangeBounds;
 import android.transition.TransitionManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,12 +23,8 @@ import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.mindorks.placeholderview.PlaceHolderView;
 import com.myapps.tc_android.R;
-import com.myapps.tc_android.utils.AnimationUtils;
 import com.myapps.tc_android.service.model.Car;
-import com.myapps.tc_android.service.model.CarView;
-import com.myapps.tc_android.view.activities.CarProfileActivity;
-import com.myapps.tc_android.view.activities.HomePageActivity;
-import com.myapps.tc_android.view.adapter.CarsRecyclerView;
+import com.myapps.tc_android.view.adapter.CarViewAdapter;
 import com.myapps.tc_android.viewmodel.ListCarsViewModel;
 
 import java.util.List;
@@ -41,7 +34,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnItemClickListener, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class HomeFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
     @BindView(R.id.placeHolder_main_cars)
     PlaceHolderView placeHolderMainCars;
     @BindView(R.id.radioButtonSortAscending)
@@ -129,18 +122,10 @@ public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnIte
         placeHolderMainCars.removeAllViews();
         for (Car c :
                 cars) {
-            placeHolderMainCars.addView(new CarView(placeHolderMainCars, getActivity(), c));
+            placeHolderMainCars.addView(new CarViewAdapter(placeHolderMainCars, getActivity(), c));
         }
         placeHolderMainCars.refresh();
         swipeLayoutMainCars.setRefreshing(false);
-    }
-
-    @Override
-    public void cardOnClick(View view, int position) {
-        Car car = (Car) placeHolderMainCars.getViewResolverAtPosition(position);
-        Intent intent = new Intent(getActivity(), CarProfileActivity.class);
-        intent.putExtra("Car", car);
-        startActivity(intent);
     }
 
     @OnClick({R.id.buttonSortCars, R.id.buttonSortYear, R.id.buttonSortCost})

@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.service.model.User;
+import com.myapps.tc_android.service.model.UserHolder;
 import com.myapps.tc_android.viewmodel.UserViewModel;
 
 import butterknife.BindView;
@@ -37,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable User user) {
                 if (user != null) {
+                    UserHolder.Instance().setUser(user);
                     if (user.getRole().equals("admin")) {
                         startActivity(new Intent(LoginActivity.this, HomePageAdminActivity.class));
                         finish();

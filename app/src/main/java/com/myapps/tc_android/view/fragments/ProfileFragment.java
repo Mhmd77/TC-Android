@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +13,8 @@ import android.widget.TextView;
 
 import com.mindorks.placeholderview.PlaceHolderView;
 import com.myapps.tc_android.R;
-import com.myapps.tc_android.service.repository.ApiService;
-import com.myapps.tc_android.service.repository.ApiRepository;
-import com.myapps.tc_android.service.model.ApiResponse;
+import com.myapps.tc_android.view.adapter.CarViewAdapter;
 import com.myapps.tc_android.service.model.Car;
-import com.myapps.tc_android.service.model.CarView;
 import com.myapps.tc_android.service.model.User;
 import com.myapps.tc_android.service.model.UserHolder;
 import com.myapps.tc_android.view.activities.AddCarUserActivity;
@@ -32,9 +28,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ProfileFragment extends Fragment {
 
@@ -100,7 +93,7 @@ public class ProfileFragment extends Fragment {
                     cars = result;
                     for (int i = 0; i < 2 && i < result.size(); i++) {
                         Car c = result.get(i);
-                        recyclerViewProfileCars.addView(new CarView(recyclerViewProfileCars, getActivity(), c));
+                        recyclerViewProfileCars.addView(new CarViewAdapter(recyclerViewProfileCars, getActivity(), c));
                     }
                 }
             }

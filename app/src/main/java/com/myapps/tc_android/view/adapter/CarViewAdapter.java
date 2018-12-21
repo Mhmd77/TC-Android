@@ -1,4 +1,4 @@
-package com.myapps.tc_android.service.model;
+package com.myapps.tc_android.view.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +15,7 @@ import com.mindorks.placeholderview.annotations.NonReusable;
 import com.mindorks.placeholderview.annotations.Resolve;
 import com.mindorks.placeholderview.annotations.View;
 import com.myapps.tc_android.R;
+import com.myapps.tc_android.service.model.Car;
 import com.myapps.tc_android.service.repository.ApiService;
 import com.myapps.tc_android.service.repository.ApiRepository;
 import com.myapps.tc_android.view.activities.CarProfileActivity;
@@ -22,7 +23,7 @@ import com.squareup.picasso.Picasso;
 
 @NonReusable
 @Layout(R.layout.item_layout_car)
-public class CarView {
+public class CarViewAdapter {
     @View(R.id.textview_car_name)
     private TextView txtName;
     @View(R.id.textview_car_factory)
@@ -39,7 +40,7 @@ public class CarView {
     private Context context;
     private PlaceHolderView placeholder;
 
-    public CarView(PlaceHolderView placeholder, Context context, Car car) {
+    public CarViewAdapter(PlaceHolderView placeholder, Context context, Car car) {
         this.car = car;
         this.context = context;
         this.placeholder = placeholder;
@@ -76,7 +77,7 @@ public class CarView {
     @Click(R.id.viewFlipper_car)
     public void cardOnClick() {
         Intent intent = new Intent(context, CarProfileActivity.class);
-        intent.putExtra("Car", car);
+        intent.putExtra("carId", car.getId());
         context.startActivity(intent);
     }
 }
