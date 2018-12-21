@@ -69,8 +69,8 @@ public class CarProfileActivity extends AppCompatActivity {
             buttonEditCarprofile.setVisibility(View.GONE);
             buttonDeleteCarProfile.setVisibility(View.GONE);
             buttonReserve.setVisibility(View.VISIBLE);
-
         }
+
     }
 
     private void obserViewModel(CarViewModel viewModel) {
@@ -94,6 +94,9 @@ public class CarProfileActivity extends AppCompatActivity {
             textviewCarprofileDescription.setText("AUTOMATE");
         } else {
             textviewCarprofileDescription.setText("MANUAL");
+        }
+        if(this.car.getUser_id() == UserHolder.Instance().getUser().getId()) {
+            buttonReserve.setVisibility(View.GONE);
         }
         //setting image
         Log.i(CarProfileActivity.class.getSimpleName(), ApiRepository.getBaseUrl() + ApiService.imageApi + car.getImageUrl());
