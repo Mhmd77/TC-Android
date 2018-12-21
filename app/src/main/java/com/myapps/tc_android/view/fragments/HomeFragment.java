@@ -18,7 +18,7 @@ import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.mindorks.placeholderview.PlaceHolderView;
 import com.myapps.tc_android.R;
-import com.myapps.tc_android.service.model.CarViewAdapter;
+import com.myapps.tc_android.view.adapter.CarViewAdapter;
 import com.myapps.tc_android.utils.AnimationUtils;
 import com.myapps.tc_android.service.model.Car;
 import com.myapps.tc_android.view.activities.CarProfileActivity;

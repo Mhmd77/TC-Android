@@ -1,4 +1,4 @@
-package com.myapps.tc_android.service.model;
+package com.myapps.tc_android.view.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +15,7 @@ import com.mindorks.placeholderview.annotations.NonReusable;
 import com.mindorks.placeholderview.annotations.Resolve;
 import com.mindorks.placeholderview.annotations.View;
 import com.myapps.tc_android.R;
+import com.myapps.tc_android.service.model.Car;
 import com.myapps.tc_android.service.repository.ApiService;
 import com.myapps.tc_android.service.repository.ApiRepository;
 import com.myapps.tc_android.view.activities.CarProfileActivity;

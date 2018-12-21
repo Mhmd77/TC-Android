@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.mindorks.placeholderview.PlaceHolderView;
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.service.model.Car;
-import com.myapps.tc_android.service.model.CarViewAdapter;
+import com.myapps.tc_android.view.adapter.CarViewAdapter;
 
 import java.util.List;
 

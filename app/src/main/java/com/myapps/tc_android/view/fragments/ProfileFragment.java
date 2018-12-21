@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.mindorks.placeholderview.PlaceHolderView;
 import com.myapps.tc_android.R;
-import com.myapps.tc_android.service.model.CarViewAdapter;
+import com.myapps.tc_android.view.adapter.CarViewAdapter;
 import com.myapps.tc_android.service.model.Car;
 import com.myapps.tc_android.service.model.User;
 import com.myapps.tc_android.service.model.UserHolder;
