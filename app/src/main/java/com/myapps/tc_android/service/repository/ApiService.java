@@ -64,4 +64,7 @@ public interface ApiService {
 
     @POST("/api/v1/rent")
     Call<ApiResponse<RentCar>> addRent(@Body RentCar rentCar);
+
+    @GET("/api/v1/rent/locations")
+    Call<ApiResponse<List<String>>> getLocations();
 }
