@@ -3,7 +3,8 @@ package com.myapps.tc_android.service.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
+
 
 public class RentCar implements Serializable {
     @SerializedName("id")
