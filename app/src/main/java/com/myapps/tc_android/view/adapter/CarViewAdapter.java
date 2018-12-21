@@ -77,7 +77,7 @@ public class CarViewAdapter {
     @Click(R.id.viewFlipper_car)
     public void cardOnClick() {
         Intent intent = new Intent(context, CarProfileActivity.class);
-        intent.putExtra("Car", car);
+        intent.putExtra("carId", car.getId());
         context.startActivity(intent);
     }
 }
