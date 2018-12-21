@@ -26,9 +26,9 @@ import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.mindorks.placeholderview.PlaceHolderView;
 import com.myapps.tc_android.R;
+import com.myapps.tc_android.view.adapter.CarViewAdapter;
 import com.myapps.tc_android.utils.AnimationUtils;
 import com.myapps.tc_android.service.model.Car;
-import com.myapps.tc_android.service.model.CarView;
 import com.myapps.tc_android.view.activities.CarProfileActivity;
 import com.myapps.tc_android.view.activities.HomePageActivity;
 import com.myapps.tc_android.view.adapter.CarsRecyclerView;
@@ -129,7 +129,7 @@ public class HomeFragment extends Fragment implements CarsRecyclerView.UserOnIte
         placeHolderMainCars.removeAllViews();
         for (Car c :
                 cars) {
-            placeHolderMainCars.addView(new CarView(placeHolderMainCars, getActivity(), c));
+            placeHolderMainCars.addView(new CarViewAdapter(placeHolderMainCars, getActivity(), c));
         }
         placeHolderMainCars.refresh();
         swipeLayoutMainCars.setRefreshing(false);
