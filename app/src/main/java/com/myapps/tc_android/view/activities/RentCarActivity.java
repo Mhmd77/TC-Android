@@ -27,10 +27,10 @@ import org.angmarch.views.NiceSpinner;
 
 import com.myapps.tc_android.service.model.RentCar;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -183,7 +183,7 @@ public class RentCarActivity extends AppCompatActivity implements OnDateSetListe
         }
         srcSpin = findViewById(R.id.src_spin);
         desSpin = findViewById(R.id.des_spin);
-        locations = new LinkedList<>(Arrays.asList("One", "Two", "Three", "Four", "Five"));
+        locations = new ArrayList<>(Arrays.asList("One", "Two", "Three", "Four", "Five"));
         srcSpin.attachDataSource(locations);
         desSpin.attachDataSource(locations);
     }
@@ -310,8 +310,8 @@ public class RentCarActivity extends AppCompatActivity implements OnDateSetListe
         else desloc = desSpin.getSelectedIndex();
         RentBuilder builder = new RentBuilder()
                 .setCarId(car.getId())
-                .setStartDate((Date) startCalendar.getTime())
-                .setEndDate((Date) endCalendar.getTime())
+                .setStartDate(startCalendar.getTime())
+                .setEndDate( endCalendar.getTime())
                 .setSrcLocation(srcSpin.getSelectedIndex())
                 .setDesLocation(desloc)
                 .setCost(cost)
