@@ -1,7 +1,7 @@
 package com.myapps.tc_android.service.model;
 
 
-import java.sql.Date;
+import java.util.Date;
 
 public class RentBuilder {
     private int id;
