@@ -45,14 +45,16 @@ public class ListCarsAdminFragment extends Fragment implements CarsRecyclerView.
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         viewModel = ViewModelProviders.of(this).get(ListCarsViewModel.class);
-        observeViewModel(viewModel);
+        observeViewModel();
+        viewModel.getCars();
     }
 
-    private void observeViewModel(ListCarsViewModel viewModel) {
+    private void observeViewModel() {
         viewModel.getListCarsObservableData().observe(this, new Observer<List<Car>>() {
             @Override
             public void onChanged(@Nullable List<Car> cars) {
-                generateDataList(cars);
+                if (cars != null)
+                    generateDataList(cars);
             }
         });
     }

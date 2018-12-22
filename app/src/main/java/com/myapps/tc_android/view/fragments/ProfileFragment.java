@@ -49,6 +49,7 @@ public class ProfileFragment extends Fragment {
     PlaceHolderView recyclerViewProfileCars;
     Unbinder unbinder;
     private List<Car> cars;
+    private ListCarsViewModel viewModel;
 
     public ProfileFragment() {
     }
@@ -69,9 +70,9 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ListCarsViewModel.Factory factory = new ListCarsViewModel.Factory(true);
-        final ListCarsViewModel viewModel = ViewModelProviders.of(this, factory).get(ListCarsViewModel.class);
-        observeViewModel(viewModel);
+        viewModel = ViewModelProviders.of(this).get(ListCarsViewModel.class);
+        observeViewModel();
+        viewModel.getCarsUser();
     }
 
     @Override
@@ -85,7 +86,7 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
-    private void observeViewModel(ListCarsViewModel viewModel) {
+    private void observeViewModel() {
         viewModel.getListCarsObservableData().observe(this, new Observer<List<Car>>() {
             @Override
             public void onChanged(@Nullable List<Car> result) {

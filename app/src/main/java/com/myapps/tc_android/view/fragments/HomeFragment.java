@@ -63,13 +63,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        createViewModel();
-    }
-
-    private void createViewModel() {
-        ListCarsViewModel.Factory factory = new ListCarsViewModel.Factory(false);
-        viewModel = ViewModelProviders.of(this, factory).get(ListCarsViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(ListCarsViewModel.class);
         observeViewModel(viewModel);
+        viewModel.getCars();
     }
 
     private void observeViewModel(ListCarsViewModel viewModel) {
@@ -155,7 +151,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
 
     @Override
     public void onRefresh() {
-        createViewModel();
+        viewModel.getCars();
     }
 
     private void showSortDetails() {
