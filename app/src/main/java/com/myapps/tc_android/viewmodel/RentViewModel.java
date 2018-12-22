@@ -14,17 +14,14 @@ public class RentViewModel extends ViewModel {
     private MutableLiveData<List<String>> locations;
 
     public RentViewModel() {
-        this.locations = ApiRepository.getInstance().getLocations();
+        this.locations = new MutableLiveData<>();
     }
-    public MutableLiveData<List<String>> getLocations(){
-        return this.locations;
+
+    public MutableLiveData<List<String>> getLocationsObservableData() {
+        return locations;
     }
-    public static class Factory extends ViewModelProvider.NewInstanceFactory {
-       public Factory(){}
-        @NonNull
-        @Override
-        public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new RentViewModel();
-        }
+
+    public void getLocations() {
+        ApiRepository.getInstance().getLocations(locations);
     }
 }
