@@ -3,22 +3,16 @@ package com.myapps.tc_android.view.fragments;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.view.adapter.UserRecyclerView;
-import com.myapps.tc_android.service.repository.ApiService;
-import com.myapps.tc_android.service.repository.ApiRepository;
-import com.myapps.tc_android.service.model.ApiResponse;
 import com.myapps.tc_android.service.model.User;
 import com.myapps.tc_android.viewmodel.ListUserViewModel;
 
@@ -27,9 +21,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ListUsersAdminFragment extends Fragment implements UserRecyclerView.OnItemClickListener {
     @BindView(R.id.recyclerView_main_users)
@@ -38,6 +29,7 @@ public class ListUsersAdminFragment extends Fragment implements UserRecyclerView
 
     private UserRecyclerView adapter;
     private Unbinder unbinder;
+    private ListUserViewModel viewModel;
 
     public ListUsersAdminFragment() {
     }
@@ -50,15 +42,17 @@ public class ListUsersAdminFragment extends Fragment implements UserRecyclerView
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        final ListUserViewModel viewModel = ViewModelProviders.of(this).get(ListUserViewModel.class);
-        observeListUserViewModel(viewModel);
+        viewModel = ViewModelProviders.of(this).get(ListUserViewModel.class);
+        observeListUserViewModel();
+        viewModel.getListUser();
     }
 
-    private void observeListUserViewModel(ListUserViewModel viewModel) {
-        viewModel.getListCarsObservableData().observe(this, new Observer<List<User>>() {
+    private void observeListUserViewModel() {
+        viewModel.getListUsersObservableData().observe(this, new Observer<List<User>>() {
             @Override
             public void onChanged(@Nullable List<User> users) {
-                generateDataList(users);
+                if (users != null)
+                    generateDataList(users);
             }
         });
     }
