@@ -25,16 +25,19 @@ public class LoginActivity extends AppCompatActivity {
     AppCompatEditText edittextsigninUsername;
     @BindView(R.id.edittext_signin_password)
     AppCompatEditText edittextsigninPassword;
+    private UserViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        viewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        observeViewModel();
     }
 
-    private void observeViewModel(UserViewModel userViewModel) {
-        userViewModel.getObservableUser().observe(this, new Observer<User>() {
+    private void observeViewModel() {
+        viewModel.getObservableUser().observe(this, new Observer<User>() {
             @Override
             public void onChanged(@Nullable User user) {
                 if (user != null) {
@@ -58,9 +61,8 @@ public class LoginActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.button_signin:
                 if (validate()) {
-                    UserViewModel.Factory factory = new UserViewModel.Factory(edittextsigninUsername.getText().toString(), edittextsigninPassword.getText().toString());
-                    final UserViewModel userViewModel = ViewModelProviders.of(this, factory).get(UserViewModel.class);
-                    observeViewModel(userViewModel);
+                    viewModel.loginUser(edittextsigninUsername.getText().toString(),
+                            edittextsigninPassword.getText().toString());
                 }
                 break;
             case R.id.button_signup:
