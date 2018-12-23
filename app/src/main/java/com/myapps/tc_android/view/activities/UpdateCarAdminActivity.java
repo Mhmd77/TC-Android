@@ -82,6 +82,7 @@ public class UpdateCarAdminActivity extends AppCompatActivity {
                     .setAutomate(checkboxUpdateCarAutomate.isChecked());
             newCar = builder.createCar();
             viewModel.updateCar(newCar, carOld.getId());
+            finish();
         }
     }
 
@@ -90,16 +91,8 @@ public class UpdateCarAdminActivity extends AppCompatActivity {
         viewModel.getLiveEvent().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
-                if (true) {
-                    finish();
-                } else {
-                    Snackbar.make(button_update_car, "Update Car Failed", Toast.LENGTH_SHORT).setAction("Retry", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            viewModel.updateCar(newCar, carOld.getId());
-                        }
-                    }).show();
-                }
+                finish();
+
             }
         });
     }
