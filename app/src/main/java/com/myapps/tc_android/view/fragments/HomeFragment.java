@@ -3,12 +3,15 @@ package com.myapps.tc_android.view.fragments;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.transition.ChangeBounds;
 import android.transition.TransitionManager;
 import android.view.LayoutInflater;
@@ -47,6 +50,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
     SwipeRefreshLayout swipeLayoutMainCars;
     @BindView(R.id.sortbar)
     View sortBar;
+    @BindView(R.id.floatingActionButton_returnTop)
+    FloatingActionButton floatingActionButtonReturnTop;
     private String field;
     private int ascending = 1;
     private Unbinder unbinder;
@@ -90,11 +95,28 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         unbinder = ButterKnife.bind(this, view);
-        placeHolderMainCars.getBuilder().setLayoutManager(new LinearLayoutManager(getActivity()));
-        swipeLayoutMainCars.setOnRefreshListener(this);
+        initRecyclerView();
         initSortBar();
         initSpinner();
         return view;
+    }
+
+    private void initRecyclerView() {
+        final LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        placeHolderMainCars.getBuilder().setLayoutManager(manager);
+        swipeLayoutMainCars.setOnRefreshListener(this);
+        placeHolderMainCars.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int lastItemPosition = manager.findLastCompletelyVisibleItemPosition();
+                if (lastItemPosition > 1) {
+                    floatingActionButtonReturnTop.show();
+                } else {
+                    floatingActionButtonReturnTop.hide();
+                }
+            }
+        });
     }
 
     private void initSpinner() {
@@ -176,5 +198,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
         transition.setDuration(600);
         TransitionManager.beginDelayedTransition((ConstraintLayout) sortBar, transition);
         constraintSet.applyTo((ConstraintLayout) sortBar);
+    }
+
+    @OnClick(R.id.floatingActionButton_returnTop)
+    public void onViewClicked() {
+        placeHolderMainCars.smoothScrollToPosition(0);
     }
 }
