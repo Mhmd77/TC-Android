@@ -130,6 +130,31 @@ public class ApiRepository {
         return liveData;
     }
 
+    public MutableLiveData<Boolean> deleteUser(int userId) {
+        final MutableLiveData<Boolean> liveData = new MutableLiveData<>();
+        apiService.deleteUser(userId).enqueue(new ApiCallback<Object>() {
+            @Override
+            protected void handleResponseData(Object data) {
+                Log.i("Delete User", "Succussfully");
+                liveData.setValue(true);
+            }
+
+            @Override
+            protected void handleError(Response<ApiResponse<Object>> response) {
+                Log.e("Request Error", "Error failed with code: " + response.code() + " and message : " + response.message());
+                liveData.setValue(false);
+            }
+
+            @Override
+            protected void handleException(Exception t) {
+                liveData.setValue(false);
+                t.printStackTrace();
+            }
+        });
+        return liveData;
+
+    }
+
     public void addCar(MutableLiveData<Car> data, Car car) {
         AddCarInterceptor interceptor = new AddCarInterceptor(car);
         interceptor.doRequest(data);
