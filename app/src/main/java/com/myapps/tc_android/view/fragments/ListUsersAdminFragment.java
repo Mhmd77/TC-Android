@@ -1,19 +1,23 @@
 package com.myapps.tc_android.view.fragments;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.myapps.tc_android.R;
-import com.myapps.tc_android.view.adapter.UserRecyclerView;
 import com.myapps.tc_android.service.model.User;
+import com.myapps.tc_android.service.repository.ApiRepository;
+import com.myapps.tc_android.view.adapter.UserRecyclerView;
 import com.myapps.tc_android.viewmodel.ListUserViewModel;
 
 import java.util.List;
@@ -22,9 +26,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class ListUsersAdminFragment extends Fragment implements UserRecyclerView.OnItemClickListener {
+public class ListUsersAdminFragment extends Fragment implements UserRecyclerView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
     @BindView(R.id.recyclerView_main_users)
     RecyclerView recyclerViewMainUsers;
+    @BindView(R.id.swipeLayout_main_users)
+    SwipeRefreshLayout swipeLayoutMainUsers;
 
 
     private UserRecyclerView adapter;
@@ -42,12 +48,13 @@ public class ListUsersAdminFragment extends Fragment implements UserRecyclerView
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        swipeLayoutMainUsers.setOnRefreshListener(this);
         viewModel = ViewModelProviders.of(this).get(ListUserViewModel.class);
-        observeListUserViewModel();
+        observeListUserViewModel(viewModel);
         viewModel.getListUser();
     }
 
-    private void observeListUserViewModel() {
+    private void observeListUserViewModel(ListUserViewModel viewModel) {
         viewModel.getListUsersObservableData().observe(this, new Observer<List<User>>() {
             @Override
             public void onChanged(@Nullable List<User> users) {
@@ -69,6 +76,8 @@ public class ListUsersAdminFragment extends Fragment implements UserRecyclerView
         adapter = new UserRecyclerView(getActivity(), users, this);
         recyclerViewMainUsers.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerViewMainUsers.setAdapter(adapter);
+        swipeLayoutMainUsers.setRefreshing(false);
+
     }
 
     @Override
@@ -79,24 +88,26 @@ public class ListUsersAdminFragment extends Fragment implements UserRecyclerView
 
     @Override
     public void deleteOnclick(final int layoutPosition) {
-        /*ApiService service = ApiRepository.getRetrofitInstance().create(ApiService.class);
-        Call<ApiResponse<Object>> call = service.deleteUser(adapter.getList().get(layoutPosition).getId());
-        call.enqueue(new Callback<ApiResponse<Object>>() {
+        LiveData<Boolean> liveData = ApiRepository.getInstance().deleteUser(adapter.getList().get(layoutPosition).getId());
+        obserDeleteRequest(liveData);
+    }
+
+    private void obserDeleteRequest(LiveData<Boolean> liveData) {
+        liveData.observe(this, new Observer<Boolean>() {
             @Override
-            public void onResponse(Call<ApiResponse<Object>> call, Response<ApiResponse<Object>> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(getActivity(), "User : " + adapter.getList().get(layoutPosition).getName() + " deleted", Toast.LENGTH_SHORT).show();
-                    Log.i("Connection", "User " + adapter.getList().get(layoutPosition).getId() + " deleted");
-                    updateList();
+            public void onChanged(@Nullable Boolean result) {
+                if (result) {
+                    Toast.makeText(getActivity(), "User Deleted Successfully", Toast.LENGTH_SHORT).show();
+                    observeListUserViewModel(viewModel);
                 } else {
-                    Log.e("Connection", "Deleting User Failed : " + response.message());
+                    Toast.makeText(getActivity(), "Something went wrong ... please try again", Toast.LENGTH_SHORT).show();
                 }
             }
+        });
+    }
 
-            @Override
-            public void onFailure(Call<ApiResponse<Object>> call, Throwable t) {
-                Log.e("Connection", "Deleting User Failed : " + t.getMessage());
-            }
-        });*/
+    @Override
+    public void onRefresh() {
+        viewModel.getListUser();
     }
 }
