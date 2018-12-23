@@ -106,6 +106,7 @@ public class AddCarAdminActivity extends AppCompatActivity {
                     car = recievedCar;
                     if (image != null)
                         sendPhoto();
+                    else finish();
                 }
             }
         });
