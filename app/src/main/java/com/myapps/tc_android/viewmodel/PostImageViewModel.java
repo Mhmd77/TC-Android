@@ -12,28 +12,15 @@ import okhttp3.MultipartBody;
 public class PostImageViewModel extends ViewModel {
     private SingleLiveEvent<Boolean> liveEvent;
 
-    public PostImageViewModel(MultipartBody.Part image, int carId) {
-        this.liveEvent = ApiRepository.getInstance().uploadImage(image, carId);
+    public PostImageViewModel() {
+        this.liveEvent = new SingleLiveEvent<>();
     }
 
     public SingleLiveEvent<Boolean> getLiveEvent() {
         return liveEvent;
     }
 
-    public static class Factory extends ViewModelProvider.NewInstanceFactory {
-        private int carId;
-        private MultipartBody.Part image;
-
-        public Factory(MultipartBody.Part image, int carId) {
-            this.carId = carId;
-            this.image = image;
-        }
-
-        @NonNull
-        @Override
-
-        public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new PostImageViewModel(image, carId);
-        }
+    public void postImage(MultipartBody.Part image, int carId) {
+        ApiRepository.getInstance().uploadImage(liveEvent, image, carId);
     }
 }
