@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,11 +28,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class ListCarsAdminFragment extends Fragment implements CarsRecyclerView.UserOnItemClickListener {
+public class ListCarsAdminFragment extends Fragment implements CarsRecyclerView.UserOnItemClickListener, SwipeRefreshLayout.OnRefreshListener {
     @BindView(R.id.recyclerView_main_cars)
     RecyclerView recyclerViewMainCars;
     @BindView(R.id.floatingActionButton_returnTop)
     FloatingActionButton floatingActionButtonReturnTop;
+    @BindView(R.id.swipeLayout_main_cars)
+    SwipeRefreshLayout swipeLayoutMainCars;
 
     private CarsRecyclerView adapter;
 
@@ -77,6 +80,7 @@ public class ListCarsAdminFragment extends Fragment implements CarsRecyclerView.
     private void initRecyclerView() {
         final LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         recyclerViewMainCars.setLayoutManager(manager);
+        swipeLayoutMainCars.setOnRefreshListener(this);
         recyclerViewMainCars.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
@@ -94,6 +98,7 @@ public class ListCarsAdminFragment extends Fragment implements CarsRecyclerView.
     private void generateDataList(final List<Car> cars) {
         adapter = new CarsRecyclerView(getActivity(), cars, this);
         recyclerViewMainCars.setAdapter(adapter);
+        swipeLayoutMainCars.setRefreshing(false);
     }
 
     @Override
@@ -113,5 +118,10 @@ public class ListCarsAdminFragment extends Fragment implements CarsRecyclerView.
     @OnClick(R.id.floatingActionButton_returnTop)
     public void onViewClicked() {
         recyclerViewMainCars.smoothScrollToPosition(0);
+    }
+
+    @Override
+    public void onRefresh() {
+        viewModel.getCars();
     }
 }
