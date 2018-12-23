@@ -4,7 +4,9 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,11 +24,14 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class ListCarsAdminFragment extends Fragment implements CarsRecyclerView.UserOnItemClickListener {
     @BindView(R.id.recyclerView_main_cars)
     RecyclerView recyclerViewMainCars;
+    @BindView(R.id.floatingActionButton_returnTop)
+    FloatingActionButton floatingActionButtonReturnTop;
 
     private CarsRecyclerView adapter;
 
@@ -64,13 +69,30 @@ public class ListCarsAdminFragment extends Fragment implements CarsRecyclerView.
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_cars_admin, container, false);
         unbinder = ButterKnife.bind(this, view);
+        initRecyclerView();
 
         return view;
     }
 
+    private void initRecyclerView() {
+        final LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        recyclerViewMainCars.setLayoutManager(manager);
+        recyclerViewMainCars.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int lastItemPosition = manager.findLastCompletelyVisibleItemPosition();
+                if (lastItemPosition > 1) {
+                    floatingActionButtonReturnTop.show();
+                } else {
+                    floatingActionButtonReturnTop.hide();
+                }
+            }
+        });
+    }
+
     private void generateDataList(final List<Car> cars) {
         adapter = new CarsRecyclerView(getActivity(), cars, this);
-        recyclerViewMainCars.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerViewMainCars.setAdapter(adapter);
     }
 
@@ -86,5 +108,10 @@ public class ListCarsAdminFragment extends Fragment implements CarsRecyclerView.
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @OnClick(R.id.floatingActionButton_returnTop)
+    public void onViewClicked() {
+        recyclerViewMainCars.smoothScrollToPosition(0);
     }
 }
