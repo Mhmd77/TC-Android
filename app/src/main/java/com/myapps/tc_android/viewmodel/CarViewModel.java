@@ -16,7 +16,7 @@ public class CarViewModel extends ViewModel {
         carObservableData = new MutableLiveData<>();
     }
 
-    public LiveData<Car> getCarObservableData() {
+    public MutableLiveData<Car> getCarObservableData() {
         return carObservableData;
     }
 
