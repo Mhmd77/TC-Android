@@ -62,9 +62,9 @@ public class CarProfileActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         Intent i = getIntent();
         carId = i.getIntExtra("carId", -1);
-        CarViewModel.Factory factory = new CarViewModel.Factory(carId);
-        viewModel = ViewModelProviders.of(this, factory).get(CarViewModel.class);
-        obserViewModel(viewModel);
+        viewModel = ViewModelProviders.of(this).get(CarViewModel.class);
+        obserViewModel();
+        viewModel.getCar(carId);
         if (UserHolder.Instance().getUser().getRole().equals("admin") == false) {
             buttonEditCarprofile.setVisibility(View.GONE);
             buttonDeleteCarProfile.setVisibility(View.GONE);
@@ -73,11 +73,13 @@ public class CarProfileActivity extends AppCompatActivity {
 
     }
 
-    private void obserViewModel(CarViewModel viewModel) {
+    private void obserViewModel() {
         viewModel.getCarObservableData().observe(this, new Observer<Car>() {
             @Override
             public void onChanged(@Nullable Car car) {
-                setVariables(car);
+                if (car != null) {
+                    setVariables(car);
+                }
             }
         });
     }
@@ -95,7 +97,7 @@ public class CarProfileActivity extends AppCompatActivity {
         } else {
             textviewCarprofileDescription.setText("MANUAL");
         }
-        if(this.car.getUser_id() == UserHolder.Instance().getUser().getId()) {
+        if (this.car.getUser_id() == UserHolder.Instance().getUser().getId()) {
             buttonReserve.setVisibility(View.GONE);
         }
         //setting image
@@ -144,6 +146,6 @@ public class CarProfileActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        viewModel.updateCar();
+        viewModel.getCar(carId);
     }
 }
