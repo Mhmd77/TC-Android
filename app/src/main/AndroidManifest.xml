@@ -22,17 +22,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activities.UpdateCarAdminActivity" />
+        <activity
+            android:name=".view.activities.UpdateCarAdminActivity"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
             android:name=".view.activities.AddCarAdminActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize" />
+            android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
             android:name=".view.activities.SignUpActivity"
             android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity android:name=".view.activities.CarProfileActivity" />
         <activity
             android:name=".view.activities.AddCarUserActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize" />
+            android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity android:name=".view.activities.HomePageActivity" />
         <activity android:name=".view.activities.HomePageAdminActivity" />
         <activity android:name=".view.activities.UsersCarActivity" />
