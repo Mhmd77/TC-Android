@@ -102,9 +102,11 @@ public class AddCarUserActivity extends AppCompatActivity {
         viewModel.getCarObservableData().observe(this, new Observer<Car>() {
             @Override
             public void onChanged(@Nullable Car recievedCar) {
-                car = recievedCar;
-                if (image != null)
-                    sendPhoto();
+                if (recievedCar != null) {
+                    car = recievedCar;
+                    if (image != null)
+                        sendPhoto();
+                }
             }
         });
     }

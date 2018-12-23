@@ -94,7 +94,7 @@ public class AddCarAdminActivity extends AppCompatActivity {
                     .setPrice(Integer.parseInt(editTextAddCarPrice.getText().toString()))
                     .setYear(Integer.parseInt(editTextAddCarYear.getText().toString()))
                     .setAutomate(editTextAddCarAutomate.isChecked());
-            viewModel.addCar(car);
+            viewModel.addCar(builder.createCar());
         }
     }
 
@@ -102,8 +102,11 @@ public class AddCarAdminActivity extends AppCompatActivity {
         viewModel.getCarObservableData().observe(this, new Observer<Car>() {
             @Override
             public void onChanged(@Nullable Car recievedCar) {
-                car = recievedCar;
-                sendPhoto();
+                if (recievedCar != null) {
+                    car = recievedCar;
+                    if (image != null)
+                        sendPhoto();
+                }
             }
         });
     }
