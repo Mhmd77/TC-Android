@@ -22,7 +22,7 @@ public class CarViewModel extends ViewModel {
         carObservableData = ApiRepository.getInstance().addCar(car);
     }
 
-    public LiveData<Car> getCarObservableData() {
+    public MutableLiveData<Car> getCarObservableData() {
         return carObservableData;
     }
 
