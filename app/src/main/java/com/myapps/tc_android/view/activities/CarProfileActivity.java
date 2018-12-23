@@ -73,7 +73,7 @@ public class CarProfileActivity extends AppCompatActivity {
 
     }
 
-    private void obserViewModel(CarViewModel viewModel) {
+    private void obserViewModel(final CarViewModel viewModel) {
         viewModel.getCarObservableData().observe(this, new Observer<Car>() {
             @Override
             public void onChanged(@Nullable Car car) {
@@ -97,6 +97,8 @@ public class CarProfileActivity extends AppCompatActivity {
         }
         if(this.car.getUser_id() == UserHolder.Instance().getUser().getId()) {
             buttonReserve.setVisibility(View.GONE);
+            buttonDeleteCarProfile.setVisibility(View.VISIBLE);
+            buttonEditCarprofile.setVisibility(View.VISIBLE);
         }
         //setting image
         Log.i(CarProfileActivity.class.getSimpleName(), ApiRepository.getBaseUrl() + ApiService.imageApi + car.getImageUrl());
@@ -118,6 +120,7 @@ public class CarProfileActivity extends AppCompatActivity {
             case R.id.button_delete_car_profile:
                 LiveData<Boolean> liveData = ApiRepository.getInstance().deleteCar(carId);
                 obserDeleteRequest(liveData);
+                finish();
                 break;
             case R.id.button_reserve:
                 Intent i = new Intent(CarProfileActivity.this, RentCarActivity.class);
