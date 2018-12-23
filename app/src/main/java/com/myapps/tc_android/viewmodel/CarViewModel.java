@@ -23,4 +23,8 @@ public class CarViewModel extends ViewModel {
     public void addCar(Car car) {
         ApiRepository.getInstance().addCar(carObservableData, car);
     }
+
+    public void getCar(int carId) {
+        ApiRepository.getInstance().getCar(carObservableData, carId);
+    }
 }
