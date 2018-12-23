@@ -94,7 +94,6 @@ public class UpdateCarAdminActivity extends AppCompatActivity {
             public void onChanged(@Nullable Boolean aBoolean) {
                 if (true) {
                     finish();
-                    startActivity(new Intent(UpdateCarAdminActivity.this, HomePageAdminActivity.class));
                 } else {
                     Snackbar.make(button_update_car, "Update Car Failed", Toast.LENGTH_SHORT).setAction("Retry", new View.OnClickListener() {
                         @Override
