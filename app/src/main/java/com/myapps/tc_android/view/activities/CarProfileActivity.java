@@ -85,29 +85,31 @@ public class CarProfileActivity extends AppCompatActivity {
     }
 
     private void setVariables(Car car) {
-        this.car = car;
-        textviewCarprofileName.setText(car.getName());
-        textviewCarprofileFactory.setText(car.getFactory());
-        textviewCarprofileYear.setText(String.valueOf(car.getYear()));
-        textviewCarprofileKilometer.setText(String.valueOf(car.getKilometer()));
-        textviewCarprofileColor.setText(car.getColor());
-        textviewCarprofileCost.setText(String.valueOf(car.getPrice()));
-        textviewCarprofileDescription.setText(car.getDescription());
-        if (car.isAutomate()) {
-            textviewCarprofileAutomated.setText(R.string.automate);
-        } else {
-            textviewCarprofileAutomated.setText(R.string.manual);
+        if(car != null) {
+            this.car = car;
+            textviewCarprofileName.setText(car.getName());
+            textviewCarprofileFactory.setText(car.getFactory());
+            textviewCarprofileYear.setText(String.valueOf(car.getYear()));
+            textviewCarprofileKilometer.setText(String.valueOf(car.getKilometer()));
+            textviewCarprofileColor.setText(car.getColor());
+            textviewCarprofileCost.setText(String.valueOf(car.getPrice()));
+            textviewCarprofileDescription.setText(car.getDescription());
+            if (car.isAutomate()) {
+                textviewCarprofileAutomated.setText(R.string.automate);
+            } else {
+                textviewCarprofileAutomated.setText(R.string.manual);
+            }
+            if (this.car.getUser_id() == UserHolder.Instance().getUser().getId()) {
+                buttonReserve.setVisibility(View.GONE);
+                buttonDeleteCarProfile.setVisibility(View.VISIBLE);
+                buttonEditCarprofile.setVisibility(View.VISIBLE);
+            }
+            //setting image
+            Log.i(CarProfileActivity.class.getSimpleName(), ApiRepository.getBaseUrl() + ApiService.imageApi + car.getImageUrl());
+            Picasso.get()
+                    .load(ApiRepository.getBaseUrl() + ApiService.imageApi + car.getImageUrl())
+                    .into(imageviewCarLogo);
         }
-        if (this.car.getUser_id() == UserHolder.Instance().getUser().getId()) {
-            buttonReserve.setVisibility(View.GONE);
-            buttonDeleteCarProfile.setVisibility(View.VISIBLE);
-            buttonEditCarprofile.setVisibility(View.VISIBLE);
-        }
-        //setting image
-        Log.i(CarProfileActivity.class.getSimpleName(), ApiRepository.getBaseUrl() + ApiService.imageApi + car.getImageUrl());
-        Picasso.get()
-                .load(ApiRepository.getBaseUrl() + ApiService.imageApi + car.getImageUrl())
-                .into(imageviewCarLogo);
     }
 
 
