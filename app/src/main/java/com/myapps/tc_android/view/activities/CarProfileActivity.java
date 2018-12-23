@@ -125,6 +125,7 @@ public class CarProfileActivity extends AppCompatActivity {
             case R.id.button_delete_car_profile:
                 LiveData<Boolean> liveData = ApiRepository.getInstance().deleteCar(carId);
                 obserDeleteRequest(liveData);
+                finish();
                 break;
             case R.id.button_reserve:
                 Intent i = new Intent(CarProfileActivity.this, RentCarActivity.class);
