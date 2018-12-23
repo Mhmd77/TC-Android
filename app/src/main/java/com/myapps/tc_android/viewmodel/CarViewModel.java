@@ -11,45 +11,20 @@ import com.myapps.tc_android.service.repository.ApiRepository;
 
 public class CarViewModel extends ViewModel {
     private final MutableLiveData<Car> carObservableData;
-    private int carId;
 
-    public CarViewModel(int carId) {
-        this.carId = carId;
-        carObservableData = ApiRepository.getInstance().getCar(carId);
+    public CarViewModel() {
+        carObservableData = new MutableLiveData<>();
     }
 
-    public CarViewModel(Car car) {
-        carObservableData = ApiRepository.getInstance().addCar(car);
-    }
-
-    public LiveData<Car> getCarObservableData() {
+    public MutableLiveData<Car> getCarObservableData() {
         return carObservableData;
     }
 
-    public void updateCar() {
-        ApiRepository.getInstance().getCar(carObservableData, carId);
+    public void addCar(Car car) {
+        ApiRepository.getInstance().addCar(carObservableData, car);
     }
 
-    public static class Factory extends ViewModelProvider.NewInstanceFactory {
-        private int carId;
-        private Car car;
-
-        public Factory(int carId) {
-            this.carId = carId;
-        }
-
-        public Factory(Car car) {
-            this.car = car;
-        }
-
-        @NonNull
-        @Override
-        public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            if (car == null) {
-                return (T) new CarViewModel(carId);
-            } else {
-                return (T) new CarViewModel(car);
-            }
-        }
+    public void getCar(int carId) {
+        ApiRepository.getInstance().getCar(carObservableData, carId);
     }
 }

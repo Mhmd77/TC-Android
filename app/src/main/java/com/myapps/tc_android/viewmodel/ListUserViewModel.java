@@ -10,13 +10,17 @@ import com.myapps.tc_android.service.repository.ApiRepository;
 import java.util.List;
 
 public class ListUserViewModel extends ViewModel {
-    private MutableLiveData<List<User>> listCarsObservableData;
+    private MutableLiveData<List<User>> listUsersObservableData;
 
     public ListUserViewModel() {
-        listCarsObservableData = ApiRepository.getInstance().getListUsers();
+        listUsersObservableData = new MutableLiveData<>();
     }
 
-    public LiveData<List<User>> getListCarsObservableData() {
-        return listCarsObservableData;
+    public LiveData<List<User>> getListUsersObservableData() {
+        return listUsersObservableData;
+    }
+
+    public void getListUser() {
+        ApiRepository.getInstance().getListUsers(listUsersObservableData);
     }
 }

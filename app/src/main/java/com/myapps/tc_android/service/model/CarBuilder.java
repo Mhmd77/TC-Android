@@ -12,6 +12,8 @@ public class CarBuilder {
     private boolean automate;
     private int price;
     private String imageUrl;
+    private int user_id = 0;
+
 
     public CarBuilder setId(int id) {
         this.id = id;
@@ -63,7 +65,11 @@ public class CarBuilder {
         return this;
     }
 
+    public CarBuilder setUserId(int user_id) {
+        this.user_id = user_id;
+        return this;
+    }
     public Car createCar() {
-        return new Car(id,0, name, factory, year, kilometer, color, description, automate, price,imageUrl);
+        return new Car(id, user_id, name, factory, year, kilometer, color, description, automate, price, imageUrl);
     }
 }

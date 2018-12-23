@@ -65,19 +65,19 @@ public class ApiRepository {
         return apiRepository;
     }
 
-    public LiveData<User> loginUser(String username, String password) {
+    public void loginUser(MutableLiveData<User> data, String username, String password) {
         SignInInteractor signIn = new SignInInteractor(username, password);
-        return signIn.doRequest();
+        signIn.doRequest(data);
     }
 
-    public LiveData<User> signUpUser(String username, String password, String identificationId, String email) {
+    public void signUpUser(MutableLiveData<User> data, String username, String password, String identificationId, String email) {
         SignUpInteractor signUp = new SignUpInteractor(username, password, identificationId, email);
-        return signUp.doRequest();
+        signUp.doRequest(data);
     }
 
-    public MutableLiveData<List<Car>> getListCars() {
+    public void getListCars(MutableLiveData<List<Car>> data) {
         GetListCarInteractor getAllCars = new GetListCarInteractor(false);
-        return getAllCars.doRequest();
+        getAllCars.doRequest(data);
     }
 
     public void sortListCars(final MutableLiveData<List<Car>> data, String field, int ascending) {
@@ -99,11 +99,6 @@ public class ApiRepository {
             }
         });
 
-    }
-
-    public MutableLiveData<Car> getCar(int id) {
-        GetCarInteractor getCarInteractor = new GetCarInteractor(id);
-        return getCarInteractor.doRequest();
     }
 
     public void getCar(MutableLiveData<Car> data, int id) {
@@ -135,13 +130,12 @@ public class ApiRepository {
         return liveData;
     }
 
-    public MutableLiveData<Car> addCar(Car car) {
+    public void addCar(MutableLiveData<Car> data, Car car) {
         AddCarInterceptor interceptor = new AddCarInterceptor(car);
-        return interceptor.doRequest();
+        interceptor.doRequest(data);
     }
 
-    public SingleLiveEvent<Boolean> uploadImage(MultipartBody.Part image, int carID) {
-        final SingleLiveEvent liveEvent = new SingleLiveEvent();
+    public void uploadImage(final SingleLiveEvent<Boolean> liveEvent, MultipartBody.Part image, int carID) {
         apiService.uploadImage(image, carID).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -158,7 +152,6 @@ public class ApiRepository {
                 liveEvent.setValue(false);
             }
         });
-        return null;
     }
 
     public SingleLiveEvent<Boolean> updateCar(Car car, int carId) {
@@ -184,21 +177,23 @@ public class ApiRepository {
         return liveEvent;
     }
 
-    public MutableLiveData<List<Car>> getListCarUser() {
+    public void getListCarUser(MutableLiveData<List<Car>> data) {
         GetListCarInteractor getAllCars = new GetListCarInteractor(true);
-        return getAllCars.doRequest();
+        getAllCars.doRequest(data);
     }
 
-    public MutableLiveData<List<User>> getListUsers() {
+    public void getListUsers(MutableLiveData<List<User>> data) {
         GetListUserInteractor interactor = new GetListUserInteractor();
-        return interactor.doRequest();
+        interactor.doRequest(data);
     }
-    public MutableLiveData<RentCar> addRent(RentCar rentCar) {
+
+    public void addRent(MutableLiveData<RentCar> data, RentCar rentCar) {
         AcceptRentCarInterceptor interceptor = new AcceptRentCarInterceptor(rentCar);
-        return interceptor.doRequest();
+        interceptor.doRequest(data);
     }
-    public MutableLiveData<List<String>> getLocations(){
+
+    public void getLocations(MutableLiveData<List<String>> data) {
         GetLocationsInterceptor getLocations = new GetLocationsInterceptor();
-        return getLocations.doRequest();
+        getLocations.doRequest(data);
     }
 }

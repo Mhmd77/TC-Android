@@ -34,12 +34,15 @@ public class SignUpActivity extends AppCompatActivity {
     Button buttonSignup;
     @BindView(R.id.button_signin)
     Button buttonSignin;
+    private UserViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         ButterKnife.bind(this);
+        viewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        observeViewModel();
     }
 
     @OnClick({R.id.button_signup, R.id.button_signin})
@@ -47,10 +50,8 @@ public class SignUpActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.button_signup:
                 if (validate()) {
-                    UserViewModel.Factory factory = new UserViewModel.Factory(edittextSignupUsername.getText().toString(), edittextSignupPassword.getText().toString(),
+                    viewModel.signUpUser(edittextSignupUsername.getText().toString(), edittextSignupPassword.getText().toString(),
                             edittextSignupId.getText().toString(), edittextSignupEmail.getText().toString());
-                    final UserViewModel userViewModel = ViewModelProviders.of(this, factory).get(UserViewModel.class);
-                    observeViewModel(userViewModel);
                 }
                 break;
             case R.id.button_signin:
@@ -59,8 +60,8 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    private void observeViewModel(UserViewModel userViewModel) {
-        userViewModel.getObservableUser().observe(this, new Observer<User>() {
+    private void observeViewModel() {
+        viewModel.getObservableUser().observe(this, new Observer<User>() {
             @Override
             public void onChanged(@Nullable User user) {
                 if (user != null) {

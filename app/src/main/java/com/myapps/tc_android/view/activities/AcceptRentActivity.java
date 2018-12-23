@@ -59,6 +59,7 @@ public class AcceptRentActivity extends AppCompatActivity {
     TextView getCost;
     @BindView(R.id.get_kilometer)
     TextView getKilometer;
+    private AcceptRentViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,8 @@ public class AcceptRentActivity extends AppCompatActivity {
         rentCar = (RentCar) i.getSerializableExtra("Rent");
         locations = i.getStringArrayListExtra("Locations");
         setVariables();
+        viewModel = ViewModelProviders.of(this).get(AcceptRentViewModel.class);
+        observeRentResponse();
     }
 
     private void setVariables() {
@@ -85,19 +88,19 @@ public class AcceptRentActivity extends AppCompatActivity {
 
     @OnClick(R.id.accept_reserve)
     public void onViewClicked() {
-        AcceptRentViewModel.Factory factory = new AcceptRentViewModel.Factory(rentCar);
-        final AcceptRentViewModel viewModel = ViewModelProviders.of(this, factory).get(AcceptRentViewModel.class);
-        observeRentResponse(viewModel);
-        Toast.makeText(this, "You Rent " + car.getName(), Toast.LENGTH_LONG).show();
-        finish();
+        viewModel.rentCar(rentCar);
     }
 
-    private void observeRentResponse(AcceptRentViewModel viewModel) {
+    private void observeRentResponse() {
         viewModel.getRentObservableData().observe(this, new Observer<RentCar>() {
             @Override
             public void onChanged(@Nullable RentCar rentCar) {
-                if (rentCar == null)
+                if (rentCar == null) {
                     Log.e("Rent", "Rent did not add successfully");
+                } else {
+                    Toast.makeText(AcceptRentActivity.this, "You Rent " + car.getName(), Toast.LENGTH_LONG).show();
+                    finish();
+                }
             }
         });
     }

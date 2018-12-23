@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
@@ -51,7 +50,6 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/font_normal"
-                android:text="2014"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:textColor="#FFF"
                 app:layout_constraintStart_toEndOf="@+id/imageview_car_logo"
@@ -63,7 +61,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/font_normal"
-                android:text="KIA"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 android:textColor="#FFF"
                 app:layout_constraintStart_toStartOf="@+id/textview_carprofile_year"
@@ -75,7 +72,6 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/font_normal"
-                android:text="SORENTO LE"
                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                 android:textColor="#FFF"
                 app:layout_constraintStart_toStartOf="@+id/textview_carprofile_year"
@@ -91,7 +87,6 @@
                 android:drawableStart="@drawable/ic_ev_station_white_18dp"
                 android:fontFamily="@font/font_normal"
                 android:gravity="center"
-                android:text="100000 kilometer"
                 android:textColor="#FFF"
                 app:layout_constraintStart_toStartOf="@+id/textview_carprofile_year"
                 app:layout_constraintTop_toBottomOf="@+id/textview_carprofile_factory" />
@@ -132,7 +127,6 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="$ 1,000,000"
                 app:layout_constraintStart_toStartOf="@+id/view_divider1"
                 app:layout_constraintTop_toBottomOf="@+id/view_divider1" />
 
@@ -172,7 +166,6 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="Sefide Yakhchali"
                 app:layout_constraintStart_toStartOf="@+id/view_divider2"
                 app:layout_constraintTop_toBottomOf="@+id/view_divider2" />
 
@@ -205,6 +198,16 @@
 
 
             <TextView
+                android:id="@+id/textview_carprofile_automated"
+                style="@style/ValueText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="@+id/view_divider3"
+                app:layout_constraintTop_toBottomOf="@+id/view_divider3" />
+            <TextView
                 android:id="@+id/textview_carprofile_description"
                 style="@style/ValueText"
                 android:layout_width="wrap_content"
@@ -212,9 +215,8 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="Atutomated"
                 app:layout_constraintStart_toStartOf="@+id/view_divider3"
-                app:layout_constraintTop_toBottomOf="@+id/view_divider3" />
+                app:layout_constraintTop_toBottomOf="@+id/textview_carprofile_automated" />
 
             <ImageButton
                 android:id="@+id/button_edit_carprofile"

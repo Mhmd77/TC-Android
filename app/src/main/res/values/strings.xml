@@ -26,6 +26,8 @@
     <string name="title_home">Home</string>
     <string name="title_rent">Rent</string>
     <string name="title_profile">Profile</string>
+    <string name="automate">Automate</string>
+    <string name="manual">Manual</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string-array name="navigation_drawer_items_array">

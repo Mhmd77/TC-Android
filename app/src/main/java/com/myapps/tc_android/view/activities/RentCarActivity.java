@@ -91,6 +91,7 @@ public class RentCarActivity extends AppCompatActivity implements OnDateSetListe
     Button nextPage;
     List<String> locations;
     Car car;
+    private RentViewModel viewModel;
 
 
     @Override
@@ -102,6 +103,8 @@ public class RentCarActivity extends AppCompatActivity implements OnDateSetListe
         car = (Car) i.getSerializableExtra("Car");
         setupDate(savedInstanceState);
         setupLocation();
+        viewModel = ViewModelProviders.of(this).get(RentViewModel.class);
+        observelocationResponse();
     }
 
     private void setupDate(Bundle savedInstanceState) {
@@ -188,14 +191,11 @@ public class RentCarActivity extends AppCompatActivity implements OnDateSetListe
         srcSpin = findViewById(R.id.src_spin);
         desSpin = findViewById(R.id.des_spin);
 //        locations = new ArrayList<>(Arrays.asList("One", "Two", "Three", "Four", "Five"));
-        RentViewModel.Factory factory = new RentViewModel.Factory();
-        final RentViewModel viewModel = ViewModelProviders.of(this,factory).get(RentViewModel.class);
-        observelocationResponse(viewModel);
-
+        viewModel.getLocations();
     }
 
-    private void observelocationResponse(RentViewModel viewModel) {
-        viewModel.getLocations().observe(this, new Observer<List<String>>() {
+    private void observelocationResponse() {
+        viewModel.getLocationsObservableData().observe(this, new Observer<List<String>>() {
             @Override
             public void onChanged(@Nullable List<String> location) {
                 locations = location;
@@ -328,7 +328,7 @@ public class RentCarActivity extends AppCompatActivity implements OnDateSetListe
         RentBuilder builder = new RentBuilder()
                 .setCarId(car.getId())
                 .setStartDate(startCalendar.getTime())
-                .setEndDate( endCalendar.getTime())
+                .setEndDate(endCalendar.getTime())
                 .setSrcLocation(srcSpin.getSelectedIndex())
                 .setDesLocation(desloc)
                 .setCost(cost)
