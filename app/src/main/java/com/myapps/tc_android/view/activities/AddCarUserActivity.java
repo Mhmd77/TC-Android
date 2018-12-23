@@ -69,6 +69,7 @@ public class AddCarUserActivity extends AppCompatActivity {
     private File image;
     private Car car;
     private CarViewModel viewModel;
+    private PostImageViewModel postImageViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +77,10 @@ public class AddCarUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_car_admin);
         ButterKnife.bind(this);
         imagePicker = new ImagePicker();
+        viewModel = ViewModelProviders.of(this).get(CarViewModel.class);
+        postImageViewModel = ViewModelProviders.of(this).get(PostImageViewModel.class);
+        observeAddCar();
+        observePostImage();
     }
 
     @OnClick(R.id.button_addCar)
@@ -89,20 +94,17 @@ public class AddCarUserActivity extends AppCompatActivity {
                     .setPrice(Integer.parseInt(editTextAddCarPrice.getText().toString()))
                     .setYear(Integer.parseInt(editTextAddCarYear.getText().toString()))
                     .setAutomate(editTextAddCarAutomate.isChecked());
-            CarViewModel.Factory factory = new CarViewModel.Factory(builder.createCar());
-            viewModel = ViewModelProviders.of(this, factory).get(CarViewModel.class);
-            observeAddCar(viewModel);
+            viewModel.addCar(builder.createCar());
         }
     }
 
-    private void observeAddCar(CarViewModel viewModel) {
+    private void observeAddCar() {
         viewModel.getCarObservableData().observe(this, new Observer<Car>() {
             @Override
             public void onChanged(@Nullable Car recievedCar) {
                 car = recievedCar;
                 if (image != null)
-                sendPhoto();
-                finish();
+                    sendPhoto();
             }
         });
     }
@@ -242,12 +244,10 @@ public class AddCarUserActivity extends AppCompatActivity {
     private void sendPhoto() {
         RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), image);
         MultipartBody.Part body = MultipartBody.Part.createFormData("file", image.getName(), reqFile);
-        PostImageViewModel.Factory factory = new PostImageViewModel.Factory(body, car.getId());
-        PostImageViewModel postImageViewModel = ViewModelProviders.of(this, factory).get(PostImageViewModel.class);
-        observePostImage(postImageViewModel);
+        postImageViewModel.postImage(body, car.getId());
     }
 
-    private void observePostImage(PostImageViewModel postImageViewModel) {
+    private void observePostImage() {
         postImageViewModel.getLiveEvent().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
