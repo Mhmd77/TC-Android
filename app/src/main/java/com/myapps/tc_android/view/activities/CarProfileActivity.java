@@ -43,8 +43,8 @@ public class CarProfileActivity extends AppCompatActivity {
     TextView textviewCarprofileCost;
     @BindView(R.id.textview_carprofile_color)
     TextView textviewCarprofileColor;
-    @BindView(R.id.textview_carprofile_description)
-    TextView textviewCarprofileDescription;
+    @BindView(R.id.textview_carprofile_automated)
+    TextView textviewCarprofileAutomated;
     @BindView(R.id.button_edit_carprofile)
     ImageButton buttonEditCarprofile;
     @BindView(R.id.button_delete_car_profile)
@@ -53,6 +53,8 @@ public class CarProfileActivity extends AppCompatActivity {
     CircleImageView imageviewCarLogo;
     @BindView(R.id.button_reserve)
     Button buttonReserve;
+    @BindView(R.id.textview_carprofile_description)
+    TextView textviewCarprofileDescription;
     private CarViewModel viewModel;
 
     @Override
@@ -90,12 +92,13 @@ public class CarProfileActivity extends AppCompatActivity {
         textviewCarprofileKilometer.setText(String.valueOf(car.getKilometer()));
         textviewCarprofileColor.setText(car.getColor());
         textviewCarprofileCost.setText(String.valueOf(car.getPrice()));
+        textviewCarprofileDescription.setText(car.getDescription());
         if (car.isAutomate()) {
-            textviewCarprofileDescription.setText("AUTOMATE");
+            textviewCarprofileAutomated.setText(R.string.automate);
         } else {
-            textviewCarprofileDescription.setText("MANUAL");
+            textviewCarprofileAutomated.setText(R.string.manual);
         }
-        if(this.car.getUser_id() == UserHolder.Instance().getUser().getId()) {
+        if (this.car.getUser_id() == UserHolder.Instance().getUser().getId()) {
             buttonReserve.setVisibility(View.GONE);
             buttonDeleteCarProfile.setVisibility(View.VISIBLE);
             buttonEditCarprofile.setVisibility(View.VISIBLE);
