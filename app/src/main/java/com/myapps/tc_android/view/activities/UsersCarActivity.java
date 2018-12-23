@@ -32,8 +32,8 @@ public class UsersCarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_users_car);
         ButterKnife.bind(this);
-        initCars();
         initRecyclerView();
+        initCars();
     }
 
     private void initRecyclerView() {
