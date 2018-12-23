@@ -44,6 +44,7 @@ public class UpdateCarAdminActivity extends AppCompatActivity {
 
 
     private Car carOld, newCar;
+    private UpdateCarViewModel viewModel;
 
 
     @Override
@@ -54,6 +55,8 @@ public class UpdateCarAdminActivity extends AppCompatActivity {
         Intent i = getIntent();
         carOld = (Car) i.getSerializableExtra("Car");
         setVariables(carOld);
+        viewModel = ViewModelProviders.of(this).get(UpdateCarViewModel.class);
+        observeViewModel();
     }
 
     private void setVariables(Car car) {
@@ -78,17 +81,12 @@ public class UpdateCarAdminActivity extends AppCompatActivity {
                     .setYear(Integer.parseInt(editTextUpdateCarYear.getText().toString()))
                     .setAutomate(checkboxUpdateCarAutomate.isChecked());
             newCar = builder.createCar();
-            updateCar();
+            viewModel.updateCar(newCar, carOld.getId());
         }
     }
 
-    private void updateCar() {
-        UpdateCarViewModel.Factory factory = new UpdateCarViewModel.Factory(newCar, carOld.getId());
-        final UpdateCarViewModel viewModel = ViewModelProviders.of(this, factory).get(UpdateCarViewModel.class);
-        observeViewModel(viewModel);
-    }
 
-    private void observeViewModel(UpdateCarViewModel viewModel) {
+    private void observeViewModel() {
         viewModel.getLiveEvent().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
@@ -99,7 +97,7 @@ public class UpdateCarAdminActivity extends AppCompatActivity {
                     Snackbar.make(button_update_car, "Update Car Failed", Toast.LENGTH_SHORT).setAction("Retry", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            updateCar();
+                            viewModel.updateCar(newCar, carOld.getId());
                         }
                     }).show();
                 }
