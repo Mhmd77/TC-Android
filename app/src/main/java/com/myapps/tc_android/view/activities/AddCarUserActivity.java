@@ -256,7 +256,7 @@ public class AddCarUserActivity extends AppCompatActivity {
             public void onChanged(@Nullable Boolean aBoolean) {
                 if (true) {
                     finish();
-                    startActivity(new Intent(AddCarUserActivity.this, HomePageActivity.class));
+                    //startActivity(new Intent(AddCarUserActivity.this, HomePageActivity.class));
                 } else {
                     Snackbar.make(buttonAddCar, "Upload Image Failed", Toast.LENGTH_SHORT).setAction("Retry", new View.OnClickListener() {
                         @Override
