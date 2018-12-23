@@ -8,12 +8,12 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -23,9 +23,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.myapps.tc_android.R;
-import com.myapps.tc_android.service.model.CarBuilder;
-import com.myapps.tc_android.service.model.ApiResponse;
 import com.myapps.tc_android.service.model.Car;
+import com.myapps.tc_android.service.model.CarBuilder;
+import com.myapps.tc_android.service.model.UserHolder;
 import com.myapps.tc_android.viewmodel.CarViewModel;
 import com.myapps.tc_android.viewmodel.PostImageViewModel;
 
@@ -93,7 +93,8 @@ public class AddCarAdminActivity extends AppCompatActivity {
                     .setKilometer(Integer.parseInt(editTextAddCarKilometer.getText().toString()))
                     .setPrice(Integer.parseInt(editTextAddCarPrice.getText().toString()))
                     .setYear(Integer.parseInt(editTextAddCarYear.getText().toString()))
-                    .setAutomate(editTextAddCarAutomate.isChecked());
+                    .setAutomate(editTextAddCarAutomate.isChecked())
+                    .setUserId(UserHolder.Instance().getUser().getId());
             viewModel.addCar(builder.createCar());
         }
     }
