@@ -107,10 +107,14 @@ public class AddCarAdminActivity extends AppCompatActivity {
                     car = recievedCar;
                     if (image != null)
                         sendPhoto();
-                    else finish();
+                    else finishmyactivity();
                 }
             }
         });
+    }
+
+    private void finishmyactivity() {
+        finish();
     }
 
     private boolean validate() {
