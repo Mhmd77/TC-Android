@@ -85,7 +85,7 @@ public class ListCarsAdminFragment extends Fragment implements CarsRecyclerView.
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                int lastItemPosition = manager.findLastCompletelyVisibleItemPosition();
+                int lastItemPosition = manager.findLastVisibleItemPosition();
                 if (lastItemPosition > 1) {
                     floatingActionButtonReturnTop.show();
                 } else {

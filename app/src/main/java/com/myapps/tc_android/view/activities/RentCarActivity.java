@@ -102,9 +102,9 @@ public class RentCarActivity extends AppCompatActivity implements OnDateSetListe
         Intent i = getIntent();
         car = (Car) i.getSerializableExtra("Car");
         setupDate(savedInstanceState);
-        setupLocation();
         viewModel = ViewModelProviders.of(this).get(RentViewModel.class);
         observelocationResponse();
+        setupLocation();
     }
 
     private void setupDate(Bundle savedInstanceState) {

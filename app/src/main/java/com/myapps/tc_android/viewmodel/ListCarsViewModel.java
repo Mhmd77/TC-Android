@@ -22,9 +22,10 @@ public class ListCarsViewModel extends ViewModel {
         return listCarsObservableData;
     }
 
-    public void getCars(){
+    public void getCars() {
         ApiRepository.getInstance().getListCars(listCarsObservableData);
     }
+
     public void sortListOfCars(String field, int ascending) {
         ApiRepository.getInstance().sortListCars(listCarsObservableData, field, ascending);
     }

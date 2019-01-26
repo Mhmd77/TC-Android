@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -106,10 +107,14 @@ public class CarProfileActivity extends AppCompatActivity {
             buttonEditCarprofile.setVisibility(View.VISIBLE);
         }
         //setting image
-        Log.i(CarProfileActivity.class.getSimpleName(), ApiRepository.getBaseUrl() + ApiService.imageApi + car.getImageUrl());
-        Picasso.get()
-                .load(ApiRepository.getBaseUrl() + ApiService.imageApi + car.getImageUrl())
-                .into(imageviewCarLogo);
+        if (car.getImageUrl() != null) {
+            Log.i(CarProfileActivity.class.getSimpleName(), ApiRepository.getBaseUrl() + ApiService.imageApi + car.getImageUrl());
+            Picasso.get()
+                    .load(ApiRepository.getBaseUrl() + ApiService.imageApi + car.getImageUrl())
+                    .into(imageviewCarLogo);
+        } else {
+            imageviewCarLogo.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.sample));
+        }
     }
 
 

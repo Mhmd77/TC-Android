@@ -70,6 +70,10 @@ public class CarBuilder {
         return this;
     }
     public Car createCar() {
+<<<<<<< HEAD
         return new Car(id,user_id, name, factory, year, kilometer, color, description, automate, price, imageUrl);
+=======
+        return new Car(id, user_id, name, factory, year, kilometer, color, description, automate, price, imageUrl);
+>>>>>>> ca5c7331ab57335642b90722a33b28b007edcf21
     }
 }
