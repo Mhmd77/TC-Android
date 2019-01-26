@@ -36,6 +36,8 @@ public class CarViewAdapter {
     ViewFlipper flipper;
     @View(R.id.imageview_car_logo)
     ImageView imageViewCarLogo;
+    @View(R.id.textview_car_description)
+    TextView textViewCarDescription;
     private Car car;
     private Context context;
     private PlaceHolderView placeholder;
@@ -52,6 +54,7 @@ public class CarViewAdapter {
         txtFactory.setText(car.getFactory());
         txtKilometer.setText(String.valueOf(car.getKilometer()));
         txtPrice.setText(String.valueOf(car.getPrice()));
+        textViewCarDescription.setText(car.getDescription());
         if (car.getImageUrl() != null) {
             Picasso.get()
                     .load(ApiRepository.getBaseUrl() + ApiService.imageApi + car.getImageUrl())

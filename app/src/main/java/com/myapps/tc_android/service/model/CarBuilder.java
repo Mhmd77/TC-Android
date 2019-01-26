@@ -70,6 +70,6 @@ public class CarBuilder {
         return this;
     }
     public Car createCar() {
-        return new Car(id, UserHolder.Instance().getUser().getId(), name, factory, year, kilometer, color, description, automate, price, imageUrl);
+        return new Car(id, user_id, name, factory, year, kilometer, color, description, automate, price, imageUrl);
     }
 }
