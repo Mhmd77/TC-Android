@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/viewFlipper_Rent"
+    android:layout_width="match_parent"
+    android:layout_height="100dp">
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="8dp"
+        android:id="@+id/rent_card">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/rent_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/car_name_rent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/font_normal"
+                android:text="Car Name : "
+                android:textColor="@color/blackColor"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/rent_layout"
+                app:layout_constraintTop_toTopOf="@id/rent_layout" />
+
+            <TextView
+                android:id="@+id/get_car_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:fontFamily="@font/font_normal"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@id/car_name_rent"
+                app:layout_constraintTop_toTopOf="@id/car_name_rent" />
+
+            <TextView
+                android:id="@+id/username_rent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:fontFamily="@font/font_normal"
+                android:text="UserName : "
+                android:textColor="@color/blackColor"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@id/get_car_name"
+                app:layout_constraintTop_toTopOf="@id/car_name_rent" />
+
+            <TextView
+                android:id="@+id/get_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:fontFamily="@font/font_normal"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@id/username_rent"
+                app:layout_constraintTop_toTopOf="@id/car_name_rent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cost"
+                android:layout_marginTop="20dp"
+                android:textSize="16sp"
+                android:fontFamily="@font/font_normal"
+                android:text="Cost : "
+                android:textColor="@color/blackColor"
+                app:layout_constraintStart_toStartOf="@id/car_name_rent"
+                app:layout_constraintTop_toBottomOf="@id/car_name_rent"/>
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/get_cost"
+            android:textColor="@color/blackColor"
+            android:layout_marginStart="20dp"
+            android:textSize="16sp"
+            android:fontFamily="@font/font_normal"
+            app:layout_constraintStart_toEndOf="@id/cost"
+            app:layout_constraintTop_toTopOf="@id/cost" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/kilometer"
+                android:text="Kilometer : "
+                android:layout_marginStart="30dp"
+                android:textColor="@color/blackColor"
+                android:textSize="16sp"
+                android:fontFamily="@font/font_normal"
+                app:layout_constraintStart_toEndOf="@id/get_cost"
+                app:layout_constraintTop_toTopOf="@id/cost" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/get_kilometer"
+                android:textColor="@color/blackColor"
+                android:layout_marginStart="20dp"
+                android:textSize="16sp"
+                android:fontFamily="@font/font_normal"
+                app:layout_constraintStart_toEndOf="@id/kilometer"
+                app:layout_constraintTop_toTopOf="@id/cost" />
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+</ViewFlipper>
