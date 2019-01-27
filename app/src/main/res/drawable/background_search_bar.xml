@@ -9,6 +9,8 @@
     <item android:bottom="5px">
         <shape android:shape="rectangle">
             <padding
+                android:top="10dp"
+                android:bottom="10dp"
                 android:left="10dp"
                 android:right="10dp" />
             <solid android:color="#FFFFFF" />
