@@ -67,4 +67,7 @@ public interface ApiService {
 
     @GET("/api/v1/rent/locations")
     Call<ApiResponse<List<String>>> getLocations();
+
+    @GET("/api/v1/rent/user")
+    Call<ApiResponse<List<RentCar>>> getRentUser();
 }

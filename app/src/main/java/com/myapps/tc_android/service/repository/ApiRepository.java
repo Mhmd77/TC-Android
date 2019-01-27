@@ -221,4 +221,11 @@ public class ApiRepository {
         GetLocationsInterceptor getLocations = new GetLocationsInterceptor();
         getLocations.doRequest(data);
     }
+
+    public void getRentUser(MutableLiveData<List<RentCar>> data) {
+        GetListRentInteractor getRentUser = new GetListRentInteractor();
+        getRentUser.doRequest(data);
+    }
+
+
 }
