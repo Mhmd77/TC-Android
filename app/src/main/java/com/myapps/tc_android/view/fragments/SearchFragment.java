@@ -9,12 +9,12 @@ import android.view.ViewGroup;
 
 import com.myapps.tc_android.R;
 
-public class RentFragment extends android.support.v4.app.Fragment {
-    public RentFragment() {
+public class SearchFragment extends android.support.v4.app.Fragment {
+    public SearchFragment() {
     }
 
-    public static RentFragment newInstance() {
-        RentFragment fragment = new RentFragment();
+    public static SearchFragment newInstance() {
+        SearchFragment fragment = new SearchFragment();
         return fragment;
     }
 
@@ -27,6 +27,6 @@ public class RentFragment extends android.support.v4.app.Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_rent, container, false);
+        return inflater.inflate(R.layout.fragment_search, container, false);
     }
 }

@@ -6,16 +6,13 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.view.fragments.HomeFragment;
 import com.myapps.tc_android.view.fragments.ProfileFragment;
-import com.myapps.tc_android.view.fragments.RentFragment;
+import com.myapps.tc_android.view.fragments.SearchFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,7 +39,7 @@ public class HomePageActivity extends AppCompatActivity implements BottomNavigat
     private void initFragmnets() {
         fm = getSupportFragmentManager();
         homeFragment = HomeFragment.newInstance();
-        rentFragment = RentFragment.newInstance();
+        rentFragment = SearchFragment.newInstance();
         profileFragment = ProfileFragment.newInstance();
         active = homeFragment;
         fm.beginTransaction().add(R.id.frame_layout_container, profileFragment, "3").hide(profileFragment).commit();
@@ -57,7 +54,7 @@ public class HomePageActivity extends AppCompatActivity implements BottomNavigat
                 fm.beginTransaction().hide(active).show(homeFragment).commit();
                 active = homeFragment;
                 return true;
-            case R.id.navigation_rent:
+            case R.id.navigation_search:
                 fm.beginTransaction().hide(active).show(rentFragment).commit();
                 active = rentFragment;
                 return true;
