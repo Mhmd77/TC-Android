@@ -36,7 +36,7 @@
         <activity
             android:name=".view.activities.AddCarUserActivity"
             android:windowSoftInputMode="stateVisible|adjustPan" />
-        <activity android:name=".view.activities.HomePageActivity" />
+        <activity android:name=".view.activities.HomePageActivity" android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".view.activities.HomePageAdminActivity" />
         <activity android:name=".view.activities.UsersCarActivity" />
         <activity android:name=".view.activities.RentCarActivity">
