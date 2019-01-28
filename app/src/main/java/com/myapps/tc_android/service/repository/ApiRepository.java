@@ -221,4 +221,9 @@ public class ApiRepository {
         GetLocationsInterceptor getLocations = new GetLocationsInterceptor();
         getLocations.doRequest(data);
     }
+
+    public void searchCars(MutableLiveData<List<Car>> data, String query) {
+        SearchInterceptor search = new SearchInterceptor(query);
+        search.doRequest(data);
+    }
 }

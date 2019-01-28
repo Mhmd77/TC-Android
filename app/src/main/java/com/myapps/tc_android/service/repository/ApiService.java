@@ -67,4 +67,7 @@ public interface ApiService {
 
     @GET("/api/v1/rent/locations")
     Call<ApiResponse<List<String>>> getLocations();
+
+    @GET("/api/v1/search/{query}")
+    Call<ApiResponse<List<Car>>> searchCars(@Path("query") String query);
 }
