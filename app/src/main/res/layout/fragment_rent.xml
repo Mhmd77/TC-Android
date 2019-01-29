@@ -1,42 +1,6 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipeLayout_main_rents"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/sortbar"
-        android:layout_margin="8dp">
-
-        <com.mindorks.placeholderview.PlaceHolderView
-            android:id="@+id/placeHolder_main_rents"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerHorizontal="true" />
-
-    </android.support.v4.widget.SwipeRefreshLayout>
-
-    <com.github.ybq.android.spinkit.SpinKitView
-        android:id="@+id/spinnerLoading"
-        style="@style/SpinKitView.Large.Circle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        app:SpinKit_Color="@color/colorAccent" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton_returnTop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_keyboard_arrow_up_white_24dp"
-        android:visibility="gone" />
-
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>
