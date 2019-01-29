@@ -1,16 +1,14 @@
 package com.myapps.tc_android.service.repository;
 
 import com.myapps.tc_android.service.model.ApiResponse;
-import com.myapps.tc_android.service.model.Car;
 import com.myapps.tc_android.service.model.RentCar;
 
-import java.util.List;
 
 import retrofit2.Call;
 
-public class GetListRentInteractor extends GenericRequestHandler<List<RentCar>> {
+public class GetRentInteractor extends GenericRequestHandler<RentCar> {
     @Override
-    protected Call<ApiResponse<List<RentCar>>> makeRequest() {
+    protected Call<ApiResponse<RentCar>> makeRequest() {
         return ApiRepository.apiService.getRentUser();
     }
 }
