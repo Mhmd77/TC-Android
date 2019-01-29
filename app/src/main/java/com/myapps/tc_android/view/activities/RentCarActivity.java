@@ -190,7 +190,6 @@ public class RentCarActivity extends AppCompatActivity implements OnDateSetListe
         }
         srcSpin = findViewById(R.id.src_spin);
         desSpin = findViewById(R.id.des_spin);
-//        locations = new ArrayList<>(Arrays.asList("One", "Two", "Three", "Four", "Five"));
         viewModel.getLocations();
     }
 
