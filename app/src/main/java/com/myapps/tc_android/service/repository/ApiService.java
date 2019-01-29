@@ -22,7 +22,7 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface ApiService {
-    String BASE_URL = "http://172.17.3.62:5000/";
+    String BASE_URL = "http://172.17.8.233:5000/";
     String imageApi = "api/v1/images/";
 
     @POST("/api/v1/users/login")
@@ -69,5 +69,7 @@ public interface ApiService {
     Call<ApiResponse<List<String>>> getLocations();
 
     @GET("/api/v1/rent/user")
-    Call<ApiResponse<List<RentCar>>> getRentUser();
+    Call<ApiResponse<RentCar>> getRentUser();
+
+
 }

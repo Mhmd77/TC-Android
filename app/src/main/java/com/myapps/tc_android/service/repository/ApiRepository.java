@@ -1,7 +1,6 @@
 package com.myapps.tc_android.service.repository;
 
 
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
 
@@ -222,8 +221,8 @@ public class ApiRepository {
         getLocations.doRequest(data);
     }
 
-    public void getRentUser(MutableLiveData<List<RentCar>> data) {
-        GetListRentInteractor getRentUser = new GetListRentInteractor();
+    public void getRentUser(MutableLiveData<RentCar> data) {
+        GetRentInteractor getRentUser = new GetRentInteractor();
         getRentUser.doRequest(data);
     }
 
