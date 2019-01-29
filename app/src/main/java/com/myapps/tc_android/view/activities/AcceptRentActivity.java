@@ -25,7 +25,7 @@ import butterknife.OnClick;
 
 public class AcceptRentActivity extends AppCompatActivity {
     Car car;
-    RentCar rentCar;
+    RentCar rent;
     List<String> locations;
     @BindView(R.id.res_text)
     TextView resText;
@@ -68,7 +68,7 @@ public class AcceptRentActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         Intent i = getIntent();
         car = (Car) i.getSerializableExtra("Car");
-        rentCar = (RentCar) i.getSerializableExtra("Rent");
+        rent = (RentCar) i.getSerializableExtra("Rent");
         locations = i.getStringArrayListExtra("Locations");
         setVariables();
         viewModel = ViewModelProviders.of(this).get(AcceptRentViewModel.class);
@@ -77,18 +77,18 @@ public class AcceptRentActivity extends AppCompatActivity {
 
     private void setVariables() {
         carNameRent.setText(car.getName());
-        usernameRent.setText(UserHolder.Instance().getUser().getName());
-        getStartingDate.setText(rentCar.getStartDate().toString());
-        getEndDate.setText(rentCar.getEndDate().toString());
-        getSrcLocation.setText(locations.get(rentCar.getSrcLocation()));
-        getDesLocation.setText(locations.get(rentCar.getDesLocation()));
-        getCost.setText(String.valueOf(rentCar.getCost()));
-        getKilometer.setText(String.valueOf(rentCar.getKilometer()));
+        usernameRent.setText(UserHolder.Instance().getUser().getUsername());
+        getStartingDate.setText(rent.getStartDate().toString());
+        getEndDate.setText(rent.getEndDate().toString());
+        getSrcLocation.setText(locations.get(rent.getSrcLocation()));
+        getDesLocation.setText(locations.get(rent.getDesLocation()));
+        getCost.setText(String.valueOf(rent.getCost()));
+        getKilometer.setText(String.valueOf(rent.getKilometer()));
     }
 
     @OnClick(R.id.accept_reserve)
     public void onViewClicked() {
-        viewModel.rentCar(rentCar);
+        viewModel.rentCar(rent);
     }
 
     private void observeRentResponse() {
