@@ -7,10 +7,10 @@ import android.arch.lifecycle.ViewModel;
 import com.myapps.tc_android.service.model.RentCar;
 import com.myapps.tc_android.service.repository.ApiRepository;
 
-public class GetRentViewModel extends ViewModel {
+public class GetReceiptViewModel extends ViewModel {
     private MutableLiveData<RentCar> RentsObservableData;
 
-    public GetRentViewModel() {
+    public GetReceiptViewModel() {
         this.RentsObservableData = new MutableLiveData<>();
     }
 
@@ -21,5 +21,6 @@ public class GetRentViewModel extends ViewModel {
     public void getRentUser() {
         ApiRepository.getInstance().getRentUser(RentsObservableData);
     }
+
 }
 
