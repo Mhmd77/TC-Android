@@ -72,7 +72,7 @@ public class AcceptRentActivity extends AppCompatActivity {
         locations = i.getStringArrayListExtra("Locations");
         setVariables();
         viewModel = ViewModelProviders.of(this).get(AcceptRentViewModel.class);
-//        observeRentResponse();
+        observeRentResponse();
     }
 
     private void setVariables() {
@@ -89,20 +89,19 @@ public class AcceptRentActivity extends AppCompatActivity {
     @OnClick(R.id.accept_reserve)
     public void onViewClicked() {
         viewModel.rentCar(rent);
-        finish();
     }
 
-//    private void observeRentResponse() {
-//        viewModel.getRentObservableData().observe(this, new Observer<RentCar>() {
-//            @Override
-//            public void onChanged(@Nullable RentCar rentCar) {
-//                if (rentCar == null) {
-//                    Log.e("Rent", "Rent did not add successfully");
-//                } else {
-//                    Toast.makeText(AcceptRentActivity.this, "You Rent " + car.getName(), Toast.LENGTH_LONG).show();
-//                    finish();
-//                }
-//            }
-//        });
-//    }
+    private void observeRentResponse() {
+        viewModel.getRentObservableData().observe(this, new Observer<RentCar>() {
+            @Override
+            public void onChanged(@Nullable RentCar rentCar) {
+                if (rentCar == null) {
+                    Log.e("Rent", "Rent did not add successfully");
+                } else {
+                    Toast.makeText(AcceptRentActivity.this, "You Rent " + car.getName(), Toast.LENGTH_LONG).show();
+                    finish();
+                }
+            }
+        });
+    }
 }
