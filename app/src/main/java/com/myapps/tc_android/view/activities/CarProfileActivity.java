@@ -17,10 +17,12 @@ import android.widget.Toast;
 
 import com.myapps.tc_android.R;
 import com.myapps.tc_android.service.model.Car;
+import com.myapps.tc_android.service.model.RentCar;
 import com.myapps.tc_android.service.model.UserHolder;
 import com.myapps.tc_android.service.repository.ApiRepository;
 import com.myapps.tc_android.service.repository.ApiService;
 import com.myapps.tc_android.viewmodel.CarViewModel;
+import com.myapps.tc_android.viewmodel.GetReceiptViewModel;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -57,6 +59,7 @@ public class CarProfileActivity extends AppCompatActivity {
     @BindView(R.id.textview_carprofile_description)
     TextView textviewCarprofileDescription;
     private CarViewModel viewModel;
+    private GetReceiptViewModel viewModel2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,14 +69,28 @@ public class CarProfileActivity extends AppCompatActivity {
         Intent i = getIntent();
         carId = i.getIntExtra("carId", -1);
         viewModel = ViewModelProviders.of(this).get(CarViewModel.class);
+        viewModel2 = ViewModelProviders.of(this).get(GetReceiptViewModel.class);
+        observeViewModelRentViewModel(viewModel2);
         obserViewModel();
         viewModel.getCar(carId);
+        viewModel2.getRentUser();
         if (UserHolder.Instance().getUser().getRole().equals("admin") == false) {
             buttonEditCarprofile.setVisibility(View.GONE);
             buttonDeleteCarProfile.setVisibility(View.GONE);
             buttonReserve.setVisibility(View.VISIBLE);
         }
 
+    }
+
+    private void observeViewModelRentViewModel(GetReceiptViewModel viewModel) {
+        viewModel.getRentObservableData().observe(this, new Observer<RentCar>() {
+            @Override
+            public void onChanged(@Nullable RentCar rentCar) {
+               if(rentCar != null){
+                   buttonReserve.setVisibility(View.INVISIBLE);
+               }
+            }
+        });
     }
 
     private void obserViewModel() {
